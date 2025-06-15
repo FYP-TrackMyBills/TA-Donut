@@ -28,7 +28,7 @@ Berdasarkan latar belakang dan masalah yang dihadapi oleh individu untuk melakuk
 
 \section{Tujuan}
 
-Penelitian ini bertujuan untuk mengembangkan sistem berbasis \emph{computer vision} dan \dl untuk memindai, mengonversi, dan mengekstrak data dari bukti pembayaran dengan format yang berbeda-beda secara akurat dan cepat untuk mendukung pencatatan dan pengelolaan transaksi keuangan secara digital
+Penelitian ini bertujuan untuk mengembangkan sistem berbasis \emph{computer vision} dan \dl{} untuk memindai, mengonversi, dan mengekstrak data dari bukti pembayaran dengan format yang berbeda-beda secara akurat dan cepat untuk mendukung pencatatan dan pengelolaan transaksi keuangan secara digital
 
 \section{Batasan Masalah}
 
@@ -38,13 +38,13 @@ Dalam pemenuhan solusi untuk menjawab masalah yang ada, terdapat berbagai jenis 
 	\item Dokumen keuangan yang diterima hanya dalam format gambar digital dengan format JPG, JPEG, atau PNG dengan kualitas gambar yang jelas dan tidak blur. 
 	\item  Pengembangan sistem dibatasi untuk memproses dokumen dari bank-bank digital ternama, yaitu SeaBank dan Neobank, bank-bank konvensional ternama, yaitu BCA dan BNI, aplikasi pembayaran digital populer, yaitu ShopeePay, OVO, dan Gopay.
 	\item  Proses ekstraksi data dari struk pembayaran dibatasi pada informasi esensial transaksi yaitu:  
-	\begin{itemize}
+	\begin{enumerate}
 		\item Nominal pembayaran 
 		\item ID transaksi 
 		\item Aplikasi pembayaran 
 		\item Penerima pembayaran
 		\item Tanggal dan waktu transaksi 
-	\end{itemize}
+	\end{enumerate}
 	\item Sistem dikembangkan untuk memproses satu dokumen bukti pembayaran dalam satu waktu.
 	\item Pengujian sistem akan dilakukan dengan dataset minimal 100 sampel bukti pembayaran yang dikumpulkan dengan memperhatikan variasi sampel bukti pembayaran.
 	\item Sistem dirancang untuk beroperasi dalam \emph{platform mobile} Android dan tidak mencakup pengembangan untuk \emph{platform desktop} atau iOS.
@@ -54,15 +54,13 @@ Dalam pemenuhan solusi untuk menjawab masalah yang ada, terdapat berbagai jenis 
 
 \section{Metodologi}
 
-Metodologi yang akan digunakan pada tugas akhir ini adalah \crispfull. Metodologi \crisp{} adalah kerangka kerja standar yang dirancang untuk memandu proses analisis data dan pengembangan solusi berbasis data secara sistematis (Saltz 2021). \crisp{} menjadi metodologi yang cocok untuk digunakan karena melibatkan proses pengolahan data yang sistematis dan iteratif, khususnya untuk mengembangkan solusi untuk menjawab rumusan masalah yang telah didefinisikan sebelumnya. Tahapan \crisp{} tergambar pada \autoref{fig:crisp-dm}.
+Metodologi yang akan digunakan pada tugas akhir ini adalah \crispfull. Metodologi \crisp{} adalah kerangka kerja standar yang dirancang untuk memandu proses analisis data dan pengembangan solusi berbasis data secara sistematis \parencite{saltz2021crisp}. \crisp{} menjadi metodologi yang cocok untuk digunakan karena melibatkan proses pengolahan data yang sistematis dan iteratif, khususnya untuk mengembangkan solusi untuk menjawab rumusan masalah yang telah didefinisikan sebelumnya. Tahapan \crisp{} tergambar pada \autoref{fig:crisp-dm}.
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=.8\textwidth]{../images/crispdm.png}
-	\caption{Proses dalam Metodologi \crisp{}}
+	\includegraphics[width=.8\textwidth]{images/crispdm.png}
+	\caption{Proses dalam Metodologi \crisp{} \parencite{saltz2021crisp}}
 	\label{fig:crisp-dm}
 \end{figure}
-
-\pagebreak
 
 \crisp{} mencakup beberapa tahapan, yakni sebagai berikut:
