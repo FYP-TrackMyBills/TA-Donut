@@ -5,6 +5,10 @@
 %
 %--------------------------------------------------------------------%
 
+% Configure caption format - remove colon separator
+\usepackage{caption}
+\captionsetup{labelsep=space}  % Use space instead of colon
+
 \newcommand{\namapenulis}{Vincent Franstyo}
 \newcommand{\nimpenulis}{18221100}
 
@@ -22,11 +26,14 @@
 %--------------------------------------------------------------------%
 
 % Core Technologies
-\newcommand{\cv}{\emph{Computer Vision} (CV)}
+\newcommand{\cvfull}{\emph{computer vision} (CV)}
+\newcommand{\cv}{CV}
 \newcommand{\dl}{\emph{deep learning}}
 \newcommand{\ml}{\emph{Machine Learning}}
 \newcommand{\aifull}{\emph{Artificial Intelligence} (AI)}
-\newcommand{\nlp}{\emph{Natural Language Processing} (NLP)}
+\newcommand{\ai}{AI}
+\newcommand{\nlp}{NLP}
+\newcommand{\nlpfull}{\emph{Natural Language Processing} (NLP)}
 
 % Model Architectures
 \newcommand{\transformer}{Transformer}
@@ -72,7 +79,7 @@
 
 % Methodology
 \newcommand{\crisp}{\MakeUppercase{crisp-dm}}
-\newcommand{\crispfull}{\MakeUppercase{crisp-dm} (\emph{Cross-Industry Standard Process for Data Mining})}
+\newcommand{\crispfull}{\emph{Cross-Industry Standard Process for Data Mining} (\MakeUppercase{crisp-dm})}
 
 % Evaluation Metrics
 \newcommand{\mcer}{\MakeUppercase{mcer}}
