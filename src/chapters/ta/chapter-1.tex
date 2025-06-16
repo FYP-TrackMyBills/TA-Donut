@@ -16,19 +16,19 @@ transaksi non-tunai. Survei dari Jawa Pos Radar Lawu mengungkapkan bahwa 57\% da
 
 Kemudahan ini mendorong peningkatan frekuensi transaksi digital di kalangan pengguna yang mengakibatkan kenaikan pada angka volume transaksi. Namun, seiring dengan meningkatnya volume transaksi, belum terdapat sistem dengan mekanisme pencatatan transaksi yang akurat dan cepat. Banyak pengguna masih harus melakukan pencatatan manual untuk memantau pengeluaran mereka yang rentan terhadap kesalahan dan memakan waktu. Salah satu solusi potensial untuk masalah ini adalah penerapan teknologi berbasis \cvfull{} dan \dl{} yang dapat melakukan pemindaian dan ekstraksi data dari dokumen gambar secara akurat, seperti \ocrfull, \cnnfull, \transformer, dan lainnya.
 
-\layoutlm{} dan \bert{} merupakan model transformer yang menggabungkan informasi visual dan tekstual untuk memahami dokumen. Namun, kedua model ini masih bergantung pada \ocr. Ketergantungan ini membuat kedua model tersebut kurang efisien. Oleh karena itu, sistem yang dapat mengonversi dan mengekstrasi data dari bukti pembayaran berbasis kertas menjadi dokumen digital yang tidak bergantung pada OCR menjadi sistem yang diperlukan. 
+\layoutlm{} dan \bert{} merupakan model transformer yang menggabungkan informasi visual dan tekstual untuk memahami dokumen. Namun, kedua model ini masih bergantung pada \ocr. Ketergantungan ini membuat kedua model tersebut kurang efisien. Oleh karena itu, sistem yang dapat mengonversi dan mengekstrak data dari bukti pembayaran berbasis kertas menjadi dokumen digital yang tidak bergantung pada OCR menjadi sistem yang diperlukan. 
 
 \section{Rumusan Masalah}
 
 Berdasarkan latar belakang dan masalah yang dihadapi oleh individu untuk melakukan pengelolaan bukti dan struk pembayaran, dapat dirumuskan masalah yang akan diselesaikan adalah sebagai berikut.
 
 \begin{center}
-	"Bagaimana cara mengonversi dan mengektraksi data dari bukti dan struk pembayaran yang berbasis kertas dan bervariasi menjadi dokumen digital?"
+	"Bagaimana cara mengembangkan sistem yang dapat mengonversi dan mengektraksi data dari bukti dan struk pembayaran yang berbasis kertas dan bervariasi menjadi dokumen digital?"
 \end{center}
 
 \section{Tujuan}
 
-Penelitian ini bertujuan untuk mengembangkan sistem berbasis \emph{computer vision} dan \dl{} untuk memindai, mengonversi, dan mengekstrak data dari bukti pembayaran dengan format yang berbeda-beda secara akurat dan cepat untuk mendukung pencatatan dan pengelolaan transaksi keuangan secara digital
+Penelitian ini bertujuan untuk mengembangkan sistem berbasis \emph{computer vision} dan \dl{} untuk memindai, mengonversi, dan mengekstrak data dari bukti pembayaran dengan format yang berbeda-beda secara akurat dan cepat untuk mendukung pencatatan dan pengelolaan transaksi keuangan secara digital.
 
 \section{Batasan Masalah}
 
@@ -36,7 +36,7 @@ Dalam pemenuhan solusi untuk menjawab masalah yang ada, terdapat berbagai jenis 
 \begin{enumerate}
 	\item Sistem hanya dapat memproses dokumen keuangan, seperti bukti pembayaran QRIS, transfer, dan struk yang dicetak dan tidak ditulis 
 	\item Dokumen keuangan yang diterima hanya dalam format gambar digital dengan format JPG, JPEG, atau PNG dengan kualitas gambar yang jelas dan tidak blur. 
-	\item  Pengembangan sistem dibatasi untuk memproses dokumen dari bank-bank digital ternama, yaitu SeaBank dan Neobank, bank-bank konvensional ternama, yaitu BCA dan BNI, aplikasi pembayaran digital populer, yaitu ShopeePay, OVO, dan Gopay.
+	\item  Pengembangan sistem dibatasi untuk memproses dokumen dari bank-bank digital ternama, yaitu SeaBank dan Neobank, bank-bank konvensional ternama, yaitu BCA dan BNI, aplikasi pembayaran digital populer, yaitu \ovo{}, \shopeepay{}, dan \gopay{}.
 	\item  Proses ekstraksi data dari struk pembayaran dibatasi pada informasi esensial transaksi yaitu:  
 	\begin{enumerate}
 		\item Nominal pembayaran 
@@ -54,7 +54,7 @@ Dalam pemenuhan solusi untuk menjawab masalah yang ada, terdapat berbagai jenis 
 
 \section{Metodologi}
 
-Metodologi yang akan digunakan pada tugas akhir ini adalah \crispfull. Metodologi \crisp{} adalah kerangka kerja standar yang dirancang untuk memandu proses analisis data dan pengembangan solusi berbasis data secara sistematis \parencite{saltz2021crisp}. \crisp{} menjadi metodologi yang cocok untuk digunakan karena melibatkan proses pengolahan data yang sistematis dan iteratif, khususnya untuk mengembangkan solusi untuk menjawab rumusan masalah yang telah didefinisikan sebelumnya. Tahapan \crisp{} tergambar pada \autoref{fig:crisp-dm}.
+Metodologi yang akan digunakan pada tugas akhir ini adalah \dsrmfull. Metodologi \dsrm{} adalah kerangka kerja standar yang dirancang untuk memandu proses analisis data dan pengembangan solusi berbasis data secara sistematis \parencite{saltz2021crisp}. \crisp{} menjadi metodologi yang cocok untuk digunakan karena melibatkan proses pengolahan data yang sistematis dan iteratif, khususnya untuk mengembangkan solusi untuk menjawab rumusan masalah yang telah didefinisikan sebelumnya. Tahapan \crisp{} tergambar pada \autoref{fig:crisp-dm}.
 
 \begin{figure}[htbp]
 	\centering
