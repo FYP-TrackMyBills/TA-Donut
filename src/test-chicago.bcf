@@ -3554,14 +3554,13 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">references.thesis.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1" intorder="1" nocite="1">kim2021donut</bcf:citekey>
-    <bcf:citekey order="2" intorder="2" nocite="1">vaswani2017attention</bcf:citekey>
-    <bcf:citekey order="5" intorder="1">peffers2007dsrm</bcf:citekey>
-    <bcf:citekey order="6" intorder="1">peffers2007dsrm</bcf:citekey>
-    <bcf:citekey order="7" intorder="1">peffers2007dsrm</bcf:citekey>
-    <bcf:citekey order="8" intorder="1">kim2021donut</bcf:citekey>
-    <bcf:citekey order="9" intorder="1">vaswani2017attention</bcf:citekey>
-    <bcf:citekey order="10" intorder="1">lewis2019bart</bcf:citekey>
+    <bcf:citekey order="1" intorder="1">kim2021donut</bcf:citekey>
+    <bcf:citekey order="2" intorder="1">vaswani2017attention</bcf:citekey>
+    <bcf:citekey order="3" intorder="1">saltz2021crisp</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">liu2021swin</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">kim2021donut</bcf:citekey>
+    <bcf:citekey order="5" intorder="2">vaswani2017attention</bcf:citekey>
+    <bcf:citekey order="5" intorder="3">liu2021swin</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

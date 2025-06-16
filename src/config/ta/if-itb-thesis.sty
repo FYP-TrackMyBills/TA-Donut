@@ -33,7 +33,10 @@
 
 % Format citation
 \usepackage[utf8]{inputenc}
-\usepackage[style=apa,backend=biber]{biblatex}
+% Add csquotes for proper quote handling (fixes biblatex warning)
+\usepackage{csquotes}
+% Author-Year style with CMS format and English terms (shows "Peffers 2007", "et al." not "dkk")
+\usepackage[style=chicago-authordate,backend=biber,sorting=nty,mincitenames=1,maxcitenames=2,minbibnames=1,maxbibnames=999]{biblatex}
 \usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{subfig}
@@ -41,6 +44,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{blindtext}
+% Simple blindtext configuration - avoid language-specific issues
 \usepackage{sectsty}
 \usepackage{chngcntr}
 \usepackage{etoolbox}

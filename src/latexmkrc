@@ -1,0 +1,26 @@
+# LaTeX makefile configuration
+# Configure latexmk to use biber instead of bibtex for biblatex
+
+# Specify biber as the bibliography processor
+$biber = 'biber %O %S';
+
+# Tell latexmk to use biber for .bib files
+$bibtex_use = 2;
+
+# Additional biber options
+add_cus_dep('glo', 'gls', 0, 'run_makeglossaries');
+add_cus_dep('acn', 'acr', 0, 'run_makeglossaries');
+
+sub run_makeglossaries {
+    if ( $silent ) {
+        system "makeglossaries -q '$_[0]'";
+    }
+    else {
+        system "makeglossaries '$_[0]'";
+    };
+}
+
+# Clean up additional files
+push @generated_exts, 'glo', 'gls', 'glg';
+push @generated_exts, 'acn', 'acr', 'alg';
+push @generated_exts, 'bbl', 'bcf', 'blg', 'run.xml', 'atoc', 'wrt';

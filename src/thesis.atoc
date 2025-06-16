@@ -1,38 +1,41 @@
 \value {tocdepth}=-1
 \babel@toc {bahasa}{}\relax 
 \babel@toc {bahasa}{}\relax 
-\contentsline {chapter}{ABSTRAK}{v}{chapter*.3}%
-\contentsline {chapter}{KATA PENGANTAR}{vi}{chapter*.4}%
-\contentsline {chapter}{DAFTAR ISI}{viii}{chapter*.5}%
-\contentsline {chapter}{DAFTAR LAMPIRAN}{ix}{chapter*.7}%
-\contentsline {chapter}{DAFTAR GAMBAR}{x}{chapter*.8}%
-\contentsline {chapter}{DAFTAR TABEL}{xi}{chapter*.9}%
+\contentsline {chapter}{ABSTRAK}{iv}{chapter*.3}%
+\contentsline {chapter}{KATA PENGANTAR}{v}{chapter*.4}%
+\contentsline {chapter}{DAFTAR ISI}{vii}{chapter*.5}%
+\contentsline {chapter}{DAFTAR LAMPIRAN}{viii}{chapter*.7}%
+\contentsline {chapter}{DAFTAR GAMBAR}{ix}{chapter*.8}%
+\contentsline {chapter}{DAFTAR TABEL}{x}{chapter*.9}%
 \contentsline {chapter}{\numberline {I}Pendahuluan}{1}{chapter.1}%
 \contentsline {section}{\numberline {I.1}Latar Belakang}{1}{section.1.1}%
-\contentsline {section}{\numberline {I.2}Rumusan Masalah}{1}{section.1.2}%
+\contentsline {section}{\numberline {I.2}Rumusan Masalah}{2}{section.1.2}%
 \contentsline {section}{\numberline {I.3}Tujuan}{2}{section.1.3}%
-\contentsline {section}{\numberline {I.4}Batasan Masalah}{2}{section.1.4}%
-\contentsline {section}{\numberline {I.5}Metodologi}{2}{section.1.5}%
-\contentsline {section}{\numberline {I.6}Jadwal Pelaksanaan Tugas Akhir}{2}{section.1.6}%
-\contentsline {chapter}{\numberline {II}Studi Literatur}{3}{chapter.2}%
-\contentsline {section}{\numberline {II.1}Menyisipkan Persamaan}{3}{section.2.1}%
-\contentsline {subsection}{\numberline {II.1.1}Contoh Bikin Equation}{3}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {II.1.2}Bikin Matrix}{4}{subsection.2.1.2}%
-\contentsline {chapter}{\numberline {III}Analisis Persoalan dan Rancangan Solusi}{5}{chapter.3}%
-\contentsline {section}{\numberline {III.1}Analisis}{5}{section.3.1}%
-\contentsline {section}{\numberline {III.2}Rancangan}{5}{section.3.2}%
-\contentsline {chapter}{\numberline {IV}Implementasi dan Pengujian}{7}{chapter.4}%
-\contentsline {section}{\numberline {IV.1}Lingkungan}{7}{section.4.1}%
-\contentsline {section}{\numberline {IV.2}Implementasi}{7}{section.4.2}%
-\contentsline {section}{\numberline {IV.3}Pengujian}{8}{section.4.3}%
-\contentsline {chapter}{\numberline {V}Penutup}{9}{chapter.5}%
-\contentsline {section}{\numberline {V.1}Kesimpulan}{9}{section.5.1}%
-\contentsline {section}{\numberline {V.2}Saran}{9}{section.5.2}%
-\contentsline {chapter}{DAFTAR PUSTAKA}{10}{section*.10}%
+\contentsline {section}{\numberline {I.4}Batasan Masalah}{3}{section.1.4}%
+\contentsline {section}{\numberline {I.5}Metodologi}{4}{section.1.5}%
+\contentsline {chapter}{\numberline {II}Studi Literatur}{6}{chapter.2}%
+\contentsline {section}{\numberline {II.1}Contoh Subbab}{6}{section.2.1}%
+\contentsline {subsection}{\numberline {II.1.1}Contoh Subsubbab}{7}{subsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {II.1.1.1}Subsubsubbab}{7}{subsubsection.2.1.1.1}%
+\contentsline {paragraph}{\numberline {II.1.1.1.1}sub sub sub sub bab}{8}{paragraph.2.1.1.1.1}%
+\contentsline {section}{\numberline {II.2}Menyisipkan Persamaan}{9}{section.2.2}%
+\contentsline {subsection}{\numberline {II.2.1}Contoh Bikin Equation}{9}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {II.2.2}Bikin Matrix}{9}{subsection.2.2.2}%
+\contentsline {chapter}{\numberline {III}Analisis Persoalan dan Rancangan Solusi}{10}{chapter.3}%
+\contentsline {section}{\numberline {III.1}Analisis}{10}{section.3.1}%
+\contentsline {section}{\numberline {III.2}Rancangan}{10}{section.3.2}%
+\contentsline {chapter}{\numberline {IV}Implementasi dan Pengujian}{12}{chapter.4}%
+\contentsline {section}{\numberline {IV.1}Lingkungan}{12}{section.4.1}%
+\contentsline {section}{\numberline {IV.2}Implementasi}{12}{section.4.2}%
+\contentsline {section}{\numberline {IV.3}Pengujian}{13}{section.4.3}%
+\contentsline {chapter}{\numberline {V}Penutup}{14}{chapter.5}%
+\contentsline {section}{\numberline {V.1}Kesimpulan}{14}{section.5.1}%
+\contentsline {section}{\numberline {V.2}Saran}{14}{section.5.2}%
+\contentsline {chapter}{DAFTAR PUSTAKA}{15}{chapter*.14}%
 \value {tocdepth}=-1
 \value {tocdepth}=2
 \ttl@change@i {\@ne }{chapter}{0pt}{\bfseries }{Lampiran \thecontentslabel .\quad }{}{\hfill \contentspage }\relax 
 \ttl@change@v {chapter}{}{}{}\relax 
-\contentsline {chapter}{\numberline {A}Contoh gambar pengujian}{10}{appendix.A}%
+\contentsline {chapter}{\numberline {A}Contoh gambar pengujian}{16}{appendix.A}%
 \contentsfinish 
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

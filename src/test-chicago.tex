@@ -1,0 +1,38 @@
+% Test Chicago Style Citations
+% This file demonstrates the Chicago style citations
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[bahasa]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[style=chicago-notes,backend=biber]{biblatex}
+
+% Load Indonesian language mapping for Chicago style
+\DeclareLanguageMapping{bahasa}{bahasa-chicago}
+
+\addbibresource{references.thesis.bib}
+
+\begin{document}
+
+\title{Test Chicago Style Citations}
+\author{Vincent Franstyo}
+\date{}
+\maketitle
+
+\section{Sample Citations}
+
+% Footnote citations (Chicago Notes style)
+Model Donut merupakan transformer yang dirancang untuk pemahaman dokumen tanpa ketergantungan OCR.\footcite{kim2021donut}
+
+Arsitektur transformer pertama kali diperkenalkan dalam paper yang berpengaruh.\footcite{vaswani2017attention}
+
+Metodologi CRISP-DM digunakan dalam penelitian data science.\footcite{saltz2021crisp}
+
+Swin Transformer menggunakan pendekatan hierarkis dengan shifted windows.\footcite{liu2021swin}
+
+\section{Multiple Citations}
+
+Beberapa penelitian telah mengeksplorasi transformer untuk dokumen.\footcite{kim2021donut,vaswani2017attention,liu2021swin}
+
+\printbibliography[title=Daftar Pustaka]
+
+\end{document}
