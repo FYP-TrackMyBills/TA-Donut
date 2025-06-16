@@ -19,6 +19,7 @@ Kemudahan ini mendorong peningkatan frekuensi transaksi digital di kalangan peng
 \layoutlm{} dan \bert{} merupakan model transformer yang menggabungkan informasi visual dan tekstual untuk memahami dokumen. Namun, kedua model ini masih bergantung pada \ocr. Ketergantungan ini membuat kedua model tersebut kurang efisien. Oleh karena itu, sistem yang dapat mengonversi dan mengekstrak data dari bukti pembayaran berbasis kertas menjadi dokumen digital yang tidak bergantung pada OCR menjadi sistem yang diperlukan. 
 
 \section{Rumusan Masalah}
+\label{sec:rumusanmasalah}
 
 Berdasarkan latar belakang dan masalah yang dihadapi oleh individu untuk melakukan pengelolaan bukti dan struk pembayaran, dapat dirumuskan masalah yang akan diselesaikan adalah sebagai berikut.
 
@@ -27,10 +28,12 @@ Berdasarkan latar belakang dan masalah yang dihadapi oleh individu untuk melakuk
 \end{center}
 
 \section{Tujuan}
+\label{sec:tujuan}
 
 Penelitian ini bertujuan untuk mengembangkan sistem berbasis \emph{computer vision} dan \dl{} untuk memindai, mengonversi, dan mengekstrak data dari bukti pembayaran dengan format yang berbeda-beda secara akurat dan cepat untuk mendukung pencatatan dan pengelolaan transaksi keuangan secara digital.
 
 \section{Batasan Masalah}
+\label{sec:batasanmasalah}
 
 Dalam pemenuhan solusi untuk menjawab masalah yang ada, terdapat berbagai jenis batasan yang perlu dipertimbangkan. Batasan-batasan tersebut ditentukan berdasarkan jangka waktu yang tersedia dan lingkup masalah yang akan diselesaikan. Berikut adalah batasan selama pengerjaan tugas akhir ini:
 \begin{enumerate}
@@ -53,14 +56,29 @@ Dalam pemenuhan solusi untuk menjawab masalah yang ada, terdapat berbagai jenis 
 \end{enumerate}
 
 \section{Metodologi}
+\label{sec:metodologi}
 
-Metodologi yang akan digunakan pada tugas akhir ini adalah \dsrmfull. Metodologi \dsrm{} adalah kerangka kerja standar yang dirancang untuk memandu proses analisis data dan pengembangan solusi berbasis data secara sistematis \parencite{saltz2021crisp}. \crisp{} menjadi metodologi yang cocok untuk digunakan karena melibatkan proses pengolahan data yang sistematis dan iteratif, khususnya untuk mengembangkan solusi untuk menjawab rumusan masalah yang telah didefinisikan sebelumnya. Tahapan \crisp{} tergambar pada \autoref{fig:crisp-dm}.
+Metodologi yang akan digunakan pada tugas akhir ini adalah \dsrmfull. Metodologi \dsrm{} menjadi metodologi yang cocok untuk digunakan karena menggabungkan prinsip, praktik, dan prosedur yang diperlukan, serta memenuhi tujuan menghasilkan artefak (sistem) yang dapat digunakan untuk mempresentasikan dan mengevaluasi penelitian dalam bidang Sistem Informasi \parencite{peffers2007dsrm}. Tahapan \dsrm{} tergambar pada \autoref{fig:dsrm}.
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=.8\textwidth]{images/crispdm.png}
-	\caption{Proses dalam Metodologi \crisp{} \parencite{saltz2021crisp}}
-	\label{fig:crisp-dm}
+	\includegraphics[width=.8\textwidth]{images/dsrm.png}
+	\caption{Proses dalam Metodologi \dsrm{} \parencite{peffers2007dsrm}}
+	\label{fig:dsrm}
 \end{figure}
 
-\crisp{} mencakup beberapa tahapan, yakni sebagai berikut:
+\dsrm{} mencakup beberapa tahapan, yakni sebagai berikut:
+\begin{enumerate}
+	\item \emph{Problem Identification and Motivation}~\\
+	Tahapan \emph{problem identification and motivation} bertujuan untuk mengidentifikasi masalah yang ada dan ingin diselesaikan. Pada tahap ini, peneliti melakukan analisis terhadap permasalahan yang ada, yaitu mencari cara untuk mengembangkan sistem yang dapat mengonversi dan mengekstraksi data dari bukti-bukti pembayaran digital dan struk pembayaran kertas yang dicetak digital dengan format yang bervariatif menjadi dokumen digital seperti yang telah dijelaskan pada \autoref{sec:latarbelakang} dan \autoref{sec:rumusanmasalah}.
+	\item \emph{Define the Objectives for a Solution}~\\
+	Pada tahapan ini, peneliti akan mendefinisikan tujuan dari solusi yang akan dikembangkan. Tujuan dari penelitian ini adalah mengembangkan sistem berbasis \emph{computer vision} dan \dl{} untuk memindai, mengonversi, dan mengekstraksi data dari bukti pembayaran dengan format yang berbeda-beda secara akurat dan cepat untuk mendukung pencatatan dan pengelolaan transaksi keuangan secara digital seperti yang telah dijelaskan pada \autoref{sec:tujuan}.
+	\item \emph{Design and Development}~\\
+	Tahapan \emph{design and development} merupakan tahapan untuk merancang dan mengembangkan sistem yang akan digunakan untuk menyelesaikan masalah yang telah diidentifikasi. Pada tahap ini, peneliti akan merancang arsitektur sistem, memilih teknologi yang akan digunakan, dan mengembangkan sistem sesuai dengan spesifikasi yang telah ditentukan.	Peneliti juga akan mengumpulkan dan melakukan eksplorasi pada data yang akan digunakan untuk melatih model \dl{} yang akan digunakan dalam sistem. Data yang digunakan adalah data bukti pembayaran digital dan struk pembayaran kertas yang dicetak digital dengan format yang bervariatif. Eksplorasi data dilakukan untuk mengidentifikasi variasi data yang diperlukan untuk mengembangkan sistem sesuai dengan spesifikasi yang diinginkan.
+	\item \emph{Demonstration}~\\
+	Tahapan \emph{demonstration} merupakan tahapan untuk mendemonstrasikan sistem yang telah dikembangkan. Pada tahap ini, peneliti akan melakukan pengujian terhadap sistem yang telah dikembangkan untuk memastikan bahwa sistem dapat berfungsi sesuai dengan spesifikasi yang telah ditentukan. Pengujian dilakukan dengan menggunakan \dataset{} asli yang telah dikumpulkan. 
+	\item \emph{Evaluation}~\\
+	Tahapan \emph{evaluation} merupakan tahapan untuk mengevaluasi sistem yang telah dikembangkan. Pada tahap ini, peneliti akan melakukan evaluasi terhadap sistem yang telah dikembangkan dengan metrik yang telah didefinisikan untuk setiap fitur yang ada pada sistem. Evaluasi akan dibagi menjadi dua jenis, yaitu evaluasi terhadap fungsionalitas sistem dan evaluasi terhadap performa model. 
+	\item \emph{Communication}~\\
+	Tahapan \emph{communication} merupakan tahapan untuk mengkomunikasikan hasil penelitian yang telah dilakukan. Pada tahap ini, peneliti akan menyusun laporan penelitian yang akan digunakan sebagai media untuk mengkomunikasikan hasil penelitian yang telah dilakukan. Laporan penelitian akan mencakup pendahuluan, studi literatur, analisis masalah, desain solusi, evaluasi, dan kesimpulan dan saran yang perlu disampaikan dan diketahui oleh pembaca. 
+\end{enumerate}
