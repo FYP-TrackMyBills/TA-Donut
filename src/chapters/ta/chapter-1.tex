@@ -5,18 +5,18 @@
 
 Transaksi pembayaran merupakan bagian penting dari aktivitas ekonomi, baik dalam lingkup individu maupun organisasi. Proses ini mencakup pengalihan dana antara pihak yang terlibat untuk memenuhi kewajiban finansial. Dalam perkembangannya, metode pembayaran telah bertransformasi dari yang awalnya menggunakan uang tunai dan cek menjadi transfer bank dan sistem yang lebih modern berbasis digital. Transformasi ini bertujuan untuk meningkatkan efisiensi, keamanan, dan kenyamanan dalam melakukan transaksi.
 
-\qrisfull{} menjadi salah satu faktor pesatnya perkembangan teknologi pembayaran digital di Indonesia. \qris{} diluncurkan oleh Bank Indonesia pada tahun 2019 dan menjadi metode pembayaran yang populer dalam waktu kurang dari lima tahun karena kemudahan dan efisiensinya. Generasi Z dan millenial, sebagai pengguna utama metode pembayaran ini, merasakan kemudahan dalam melakukan pembayaran atau pengeluaran uang. Goodstats menunjukkan bahwa 38\% Gen Z menggunakan \qris{} dalam kehidupan sehari-hari, sementara di kalangan millenial angkanya mencapai 
-25\%. 
+\qrisfull{} menjadi salah satu faktor pesatnya perkembangan teknologi pembayaran digital di Indonesia. \qris{} diluncurkan oleh Bank Indonesia pada tahun 2019 dan menjadi metode pembayaran yang populer dalam waktu kurang dari lima tahun karena kemudahan dan efisiensinya. Generasi Z dan millenial, sebagai pengguna utama metode pembayaran ini, merasakan kemudahan dalam melakukan pembayaran atau pengeluaran uang. Goodstats menunjukkan bahwa 38\% Gen Z menggunakan \qris{} dalam kehidupan sehari-hari, sementara di kalangan millenial angkanya mencapai
+25\%.
 
-Pada April 2024, Bank Indonesia melaporkan jumlah pengguna \qris{} mencapai angka 48,12 juta dan jumlah merchant yang menggunakan mencapai 31,61 juta. Total nilai transaksi dengan menggunakan metode pembayaran \qris{} telah mencapai Rp 31,65 triliun, yaitu meningkat sebesar 149,46\% secara tahunan 
-pada bulan Februari 2024. Peningkatan ini mencerminkan adopsi yang signifikan di kalangan masyarakat, khususnya Gen Z dan millenial, yang cenderung memilih 
-transaksi non-tunai. Survei dari Jawa Pos Radar Lawu mengungkapkan bahwa 57\% dari kedua generasi ini lebih memilih transaksi non-tunai, dengan \qris{} menjadi salah satu metode yang paling efektif. 
+Pada April 2024, Bank Indonesia melaporkan jumlah pengguna \qris{} mencapai angka 48,12 juta dan jumlah merchant yang menggunakan mencapai 31,61 juta. Total nilai transaksi dengan menggunakan metode pembayaran \qris{} telah mencapai Rp 31,65 triliun, yaitu meningkat sebesar 149,46\% secara tahunan
+pada bulan Februari 2024. Peningkatan ini mencerminkan adopsi yang signifikan di kalangan masyarakat, khususnya Gen Z dan millenial, yang cenderung memilih
+transaksi non-tunai. Survei dari Jawa Pos Radar Lawu mengungkapkan bahwa 57\% dari kedua generasi ini lebih memilih transaksi non-tunai, dengan \qris{} menjadi salah satu metode yang paling efektif.
 
 \newpage
 
 Kemudahan ini mendorong peningkatan frekuensi transaksi digital di kalangan pengguna yang mengakibatkan kenaikan pada angka volume transaksi. Namun, seiring dengan meningkatnya volume transaksi, belum terdapat sistem dengan mekanisme pencatatan transaksi yang akurat dan cepat. Banyak pengguna masih harus melakukan pencatatan manual untuk memantau pengeluaran mereka yang rentan terhadap kesalahan dan memakan waktu. Salah satu solusi potensial untuk masalah ini adalah penerapan teknologi berbasis \cvfull{} dan \dl{} yang dapat melakukan pemindaian dan ekstraksi data dari dokumen gambar secara akurat, seperti \ocrfull, \cnnfull, \transformer, dan lainnya.
 
-\layoutlm{} dan \bert{} merupakan model transformer yang menggabungkan informasi visual dan tekstual untuk memahami dokumen. Namun, kedua model ini masih bergantung pada \ocr. Ketergantungan ini membuat kedua model tersebut kurang efisien. Oleh karena itu, sistem yang dapat mengonversi dan mengekstrak data dari bukti pembayaran berbasis kertas menjadi dokumen digital yang tidak bergantung pada OCR menjadi sistem yang diperlukan. 
+\layoutlm{} dan \bert{} merupakan model transformer yang menggabungkan informasi visual dan tekstual untuk memahami dokumen. Namun, kedua model ini masih bergantung pada \ocr. Ketergantungan ini membuat kedua model tersebut kurang efisien. Oleh karena itu, sistem yang dapat mengonversi dan mengekstrak data dari bukti pembayaran berbasis kertas menjadi dokumen digital yang tidak bergantung pada OCR menjadi sistem yang diperlukan.
 
 \section{Rumusan Masalah}
 \label{sec:rumusanmasalah}
@@ -37,17 +37,17 @@ Penelitian ini bertujuan untuk mengembangkan sistem berbasis \emph{computer visi
 
 Dalam pemenuhan solusi untuk menjawab masalah yang ada, terdapat berbagai jenis batasan yang perlu dipertimbangkan. Batasan-batasan tersebut ditentukan berdasarkan jangka waktu yang tersedia dan lingkup masalah yang akan diselesaikan. Berikut adalah batasan selama pengerjaan tugas akhir ini:
 \begin{enumerate}
-	\item Sistem hanya dapat memproses dokumen keuangan, seperti bukti pembayaran QRIS, transfer, dan struk yang dicetak dan tidak ditulis 
-	\item Dokumen keuangan yang diterima hanya dalam format gambar digital dengan format JPG, JPEG, atau PNG dengan kualitas gambar yang jelas dan tidak blur. 
+	\item Sistem hanya dapat memproses dokumen keuangan, seperti bukti pembayaran QRIS, transfer, dan struk yang dicetak dan tidak ditulis
+	\item Dokumen keuangan yang diterima hanya dalam format gambar digital dengan format JPG, JPEG, atau PNG dengan kualitas gambar yang jelas dan tidak blur.
 	\item  Pengembangan sistem dibatasi untuk memproses dokumen dari bank-bank digital ternama, yaitu SeaBank dan Neobank, bank-bank konvensional ternama, yaitu BCA dan BNI, aplikasi pembayaran digital populer, yaitu \ovo{}, \shopeepay{}, dan \gopay{}.
-	\item  Proses ekstraksi data dari struk pembayaran dibatasi pada informasi esensial transaksi yaitu:  
-	\begin{enumerate}
-		\item Nominal pembayaran 
-		\item ID transaksi 
-		\item Aplikasi pembayaran 
-		\item Penerima pembayaran
-		\item Tanggal dan waktu transaksi 
-	\end{enumerate}
+	\item  Proses ekstraksi data dari struk pembayaran dibatasi pada informasi esensial transaksi yaitu:
+	      \begin{enumerate}
+		      \item Nominal pembayaran
+		      \item ID transaksi
+		      \item Aplikasi pembayaran
+		      \item Penerima pembayaran
+		      \item Tanggal dan waktu transaksi
+	      \end{enumerate}
 	\item Sistem dikembangkan untuk memproses satu dokumen bukti pembayaran dalam satu waktu.
 	\item Pengujian sistem akan dilakukan dengan dataset minimal 100 sampel bukti pembayaran yang dikumpulkan dengan memperhatikan variasi sampel bukti pembayaran.
 	\item Sistem dirancang untuk beroperasi dalam \emph{platform mobile} Android dan tidak mencakup pengembangan untuk \emph{platform desktop} atau iOS.
@@ -70,15 +70,15 @@ Metodologi yang akan digunakan pada tugas akhir ini adalah \dsrmfull. Metodologi
 \dsrm{} mencakup beberapa tahapan, yakni sebagai berikut:
 \begin{enumerate}
 	\item \emph{Problem Identification and Motivation}~\\
-	Tahapan \emph{problem identification and motivation} bertujuan untuk mengidentifikasi masalah yang ada dan ingin diselesaikan. Pada tahap ini, peneliti melakukan analisis terhadap permasalahan yang ada, yaitu mencari cara untuk mengembangkan sistem yang dapat mengonversi dan mengekstraksi data dari bukti-bukti pembayaran digital dan struk pembayaran kertas yang dicetak digital dengan format yang bervariatif menjadi dokumen digital seperti yang telah dijelaskan pada \autoref{sec:latarbelakang} dan \autoref{sec:rumusanmasalah}.
+	      Tahapan \emph{problem identification and motivation} bertujuan untuk mengidentifikasi masalah yang ada dan ingin diselesaikan. Pada tahap ini, peneliti melakukan analisis terhadap permasalahan yang ada, yaitu mencari cara untuk mengembangkan sistem yang dapat mengonversi dan mengekstraksi data dari bukti-bukti pembayaran digital dan struk pembayaran kertas yang dicetak digital dengan format yang bervariatif menjadi dokumen digital seperti yang telah dijelaskan pada \autoref{sec:latarbelakang} dan \autoref{sec:rumusanmasalah}.
 	\item \emph{Define the Objectives for a Solution}~\\
-	Pada tahapan ini, peneliti akan mendefinisikan tujuan dari solusi yang akan dikembangkan. Tujuan dari penelitian ini adalah mengembangkan sistem berbasis \emph{computer vision} dan \dl{} untuk memindai, mengonversi, dan mengekstraksi data dari bukti pembayaran dengan format yang berbeda-beda secara akurat dan cepat untuk mendukung pencatatan dan pengelolaan transaksi keuangan secara digital seperti yang telah dijelaskan pada \autoref{sec:tujuan}.
+	      Pada tahapan ini, peneliti akan mendefinisikan tujuan dari solusi yang akan dikembangkan. Tujuan dari penelitian ini adalah mengembangkan sistem berbasis \emph{computer vision} dan \dl{} untuk memindai, mengonversi, dan mengekstraksi data dari bukti pembayaran dengan format yang berbeda-beda secara akurat dan cepat untuk mendukung pencatatan dan pengelolaan transaksi keuangan secara digital seperti yang telah dijelaskan pada \autoref{sec:tujuan}.
 	\item \emph{Design and Development}~\\
-	Tahapan \emph{design and development} merupakan tahapan untuk merancang dan mengembangkan sistem yang akan digunakan untuk menyelesaikan masalah yang telah diidentifikasi. Pada tahap ini, peneliti akan merancang arsitektur sistem, memilih teknologi yang akan digunakan, dan mengembangkan sistem sesuai dengan spesifikasi yang telah ditentukan.	Peneliti juga akan mengumpulkan dan melakukan eksplorasi pada data yang akan digunakan untuk melatih model \dl{} yang akan digunakan dalam sistem. Data yang digunakan adalah data bukti pembayaran digital dan struk pembayaran kertas yang dicetak digital dengan format yang bervariatif. Eksplorasi data dilakukan untuk mengidentifikasi variasi data yang diperlukan untuk mengembangkan sistem sesuai dengan spesifikasi yang diinginkan.
+	      Tahapan \emph{design and development} merupakan tahapan untuk merancang dan mengembangkan sistem yang akan digunakan untuk menyelesaikan masalah yang telah diidentifikasi. Pada tahap ini, peneliti akan merancang arsitektur sistem, memilih teknologi yang akan digunakan, dan mengembangkan sistem sesuai dengan spesifikasi yang telah ditentukan.	Peneliti juga akan mengumpulkan dan melakukan eksplorasi pada data yang akan digunakan untuk melatih model \dl{} yang akan digunakan dalam sistem. Data yang digunakan adalah data bukti pembayaran digital dan struk pembayaran kertas yang dicetak digital dengan format yang bervariatif. Eksplorasi data dilakukan untuk mengidentifikasi variasi data yang diperlukan untuk mengembangkan sistem sesuai dengan spesifikasi yang diinginkan.
 	\item \emph{Demonstration}~\\
-	Tahapan \emph{demonstration} merupakan tahapan untuk mendemonstrasikan sistem yang telah dikembangkan. Pada tahap ini, peneliti akan melakukan pengujian terhadap sistem yang telah dikembangkan untuk memastikan bahwa sistem dapat berfungsi sesuai dengan spesifikasi yang telah ditentukan. Pengujian dilakukan dengan menggunakan \dataset{} asli yang telah dikumpulkan. 
+	      Tahapan \emph{demonstration} merupakan tahapan untuk mendemonstrasikan sistem yang telah dikembangkan. Pada tahap ini, peneliti akan melakukan pengujian terhadap sistem yang telah dikembangkan untuk memastikan bahwa sistem dapat berfungsi sesuai dengan spesifikasi yang telah ditentukan. Pengujian dilakukan dengan menggunakan \dataset{} asli yang telah dikumpulkan.
 	\item \emph{Evaluation}~\\
-	Tahapan \emph{evaluation} merupakan tahapan untuk mengevaluasi sistem yang telah dikembangkan. Pada tahap ini, peneliti akan melakukan evaluasi terhadap sistem yang telah dikembangkan dengan metrik yang telah didefinisikan untuk setiap fitur yang ada pada sistem. Evaluasi akan dibagi menjadi dua jenis, yaitu evaluasi terhadap fungsionalitas sistem dan evaluasi terhadap performa model. 
+	      Tahapan \emph{evaluation} merupakan tahapan untuk mengevaluasi sistem yang telah dikembangkan. Pada tahap ini, peneliti akan melakukan evaluasi terhadap sistem yang telah dikembangkan dengan metrik yang telah didefinisikan untuk setiap fitur yang ada pada sistem. Evaluasi akan dibagi menjadi dua jenis, yaitu evaluasi terhadap fungsionalitas sistem dan evaluasi terhadap performa model.
 	\item \emph{Communication}~\\
-	Tahapan \emph{communication} merupakan tahapan untuk mengkomunikasikan hasil penelitian yang telah dilakukan. Pada tahap ini, peneliti akan menyusun laporan penelitian yang akan digunakan sebagai media untuk mengkomunikasikan hasil penelitian yang telah dilakukan. Laporan penelitian akan mencakup pendahuluan, studi literatur, analisis masalah, desain solusi, evaluasi, dan kesimpulan dan saran yang perlu disampaikan dan diketahui oleh pembaca. 
+	      Tahapan \emph{communication} merupakan tahapan untuk mengkomunikasikan hasil penelitian yang telah dilakukan. Pada tahap ini, peneliti akan menyusun laporan penelitian yang akan digunakan sebagai media untuk mengkomunikasikan hasil penelitian yang telah dilakukan. Laporan penelitian akan mencakup pendahuluan, studi literatur, analisis masalah, desain solusi, evaluasi, dan kesimpulan dan saran yang perlu disampaikan dan diketahui oleh pembaca.
 \end{enumerate}
