@@ -33,10 +33,9 @@
 
 % Format citation
 \usepackage[utf8]{inputenc}
-\usepackage[style=apa,backend=biber]{biblatex}
+\usepackage[style=authoryear,backend=biber, sorting=nyt]{biblatex}
+\DeclareLanguageMapping{bahasa}{bahasa-cms.lbx}
 \usepackage[format=hang, justification=raggedright]{caption}
-% \usepackage[style=chicago-authordate,backend=biber]{biblatex}
-% \DeclareLanguageMapping{bahasa}{bahasa-cms}
 \usepackage{csquotes} % Untuk kutipan
 \usepackage{amsmath}
 \usepackage{longtable}
@@ -99,6 +98,10 @@
 	{\chaptertitlename\ \thechapter.\quad}{0pt}
 	{\bfseries}
 }
+
+\makeatletter
+\def\tagform@#1{\maketag@@@{#1}}
+\makeatother
 
 % Hilangkan titik pada toc
 \makeatletter
