@@ -61,7 +61,7 @@ make format         # Auto-format your LaTeX code
 
 ### Citing References
 ```latex
-According to \cite{kim2021donut}, the Donut model...
+According to \parencite{kim2021donut}, the Donut model...
 ```
 
 ### Cross-References

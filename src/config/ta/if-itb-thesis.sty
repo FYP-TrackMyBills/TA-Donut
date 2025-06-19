@@ -33,8 +33,10 @@
 
 % Format citation
 \usepackage[utf8]{inputenc}
-\usepackage[style=authoryear,backend=biber, sorting=nyt]{biblatex}
-\DeclareLanguageMapping{bahasa}{bahasa-cms.lbx}
+% \usepackage[style=authoryear,backend=biber,sorting=nyt]{biblatex}
+% \DeclareLanguageMapping{bahasa-cms}{bahasa-cms}
+\usepackage[authordate,backend=biber, language=bahasa]{biblatex-chicago}
+\AtEveryBibitem{\clearfield{month}}
 \usepackage[format=hang, justification=raggedright]{caption}
 \usepackage{csquotes} % Untuk kutipan
 \usepackage{amsmath}
@@ -149,7 +151,7 @@
 
 % Setting nomor pada subbsubsubbab
 \setcounter{secnumdepth}{4}
-
+            
 \makeatletter
 
 \makeatother
