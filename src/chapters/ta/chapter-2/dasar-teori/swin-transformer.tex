@@ -1,10 +1,37 @@
 \subsection{\swin}
 \label{subsec:swin}
 
-Swin Transformer adalah sebuah arsitektur Vision Transformer yang
-dirancang untuk backbone dalam berbagai tugas computer vision seperti klasifikasi
-gambar, deteksi objek, dan segmentasi semantik. Nama "Swin" berasal dari konsep
-"Shifted Window" yang menjadi elemen utama dalam desainnya. Tidak seperti
-Vision Transformer (ViT) yang menggunakan metode self-attention secara global
-pada seluruh gambar, Swin Transformer memperkenalkan self-attention berbasis
-local window yang secara signifikan mengurangi kompleksitas komputasi (Liu dkk., 2021).
+\swin{} adalah sebuah arsitektur \vitfull{} yang dirancang sebagai penopang dalam berbagai tugas \cv{} seperti klasifikasi gambar, deteksi objek, dan segmentasi semantik. Nama "Swin" berasal dari konsep
+"\emph{Shifted Window}" yang menjadi elemen utama dalam desainnya. Tidak seperti \vit{} yang menggunakan metode \selfattention{} secara global
+pada seluruh gambar, \swin{} memperkenalkan \selfattention{} berbasis \emph{local window} yang secara signifikan mengurangi kompleksitas komputasi \parencite{liu2021swin}. Perbedaan pendekatan \swin{} dan \vit{} dapat dilihat pada \autoref{fig:Swin-vs-ViT}. 
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/swin-vit.png}
+    \caption{Perbandingan antara \swin{} dan \vitfull{} \parencite{liu2021swin}.}
+    \label{fig:Swin-vs-ViT}
+\end{figure}
+
+
+\autoref{fig:Swin-shifted-window} menujukkan pendekatan \shiftedwindow{} pada \swin. Selain itu, \swin{} mengadopsi arsitektur hierarkis yang mirip dengan \cnn. Arsitektur ini memungkinkan ekstraksi fitur pada berbagai skala dan menjadikannya lebih efisien dan fleksibel untuk menangani gambar resolusi tinggi dan berbagai tugas prediksi.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/swin-shifted-window.png}
+    \caption{Pendekatan \shiftedwindow{} pada \swin{} \parencite{liu2021swin}.}
+    \label{fig:Swin-shifted-window}
+\end{figure}
+
+Pada \swin, terdapat empat tahap. Pada setiap tahap, resolusi fitur akan secara bertahap dikurangi saat melalui lapisan \emph{patch merging} seperti pada \autoref{fig:swin-architecture}. Contohnya pada tahap satu, resolusi gambar $\frac{H}{4} \times \frac{W}{4}$ dengan dimensi fitur awal C. Kemudian pada tahap dua, resolusi dikurangi menjadi $\frac{H}{8} \times \frac{W}{8}$ dan 
+dimensi fitur dinaikkan menjadi 2C. Tahap ini akan berlanjut hingga pada tahap empat dengan resolusi $\frac{H}{32} \times \frac{W}{32}$ dan dimensi 8C. Dengan struktur ini, \swin{} mampu menangkap informasi pada berbagai skala, seperti fitur lokal 
+dan global, yang sangat penting dalam \emph{computer vision} seperti \emph{object detection}. 
+
+\autoref{fig:swin-architecture} menunjukkan arsitektur dan cara kerja \swin. Gambar yang masuk dengan dimensi $H \times W$ akan dikonversi menjadi beberapa patch atau potongan kecil $4 \times 4$ pixel. Setiap \patch{} ini kemudian dianggap sebagai token, dan fitur awalnya direpresentasikan oleh nilai RGB-nya. Fitur ini kemudian 
+diproyeksikan ke dimensi tertentu C melalui lapisan \emph{embedding} linier seperti yang ditunjukkan pada \autoref{fig:swin-architecture}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{images/swin-architecture.png}
+    \caption{Arsitektur dan cara kerja \swin{} \parencite{liu2021swin}.}
+    \label{fig:swin-architecture}
+\end{figure}
