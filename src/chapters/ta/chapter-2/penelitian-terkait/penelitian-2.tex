@@ -1,0 +1,38 @@
+\subsection{\textit{An End-to-End OCR-Free Solution for Identity Document Understanding}}
+\label{sec:penelitian-2}
+Penelitian yang dilakukan oleh \cite{carta2024end}  menunjukkan penggunaan model \donut{} untuk melakukan ekstraksi data dari dokumen identitas. Dokumen yang digunakan dapat berupa kartu identitas elektronik, kartu identitas, surat izin 
+mengemudi, dan kartu kesehatan. Evaluasi dilakukan dengan membandingkan model yang telah mengalami proses \textit{fine-tuning} dan model basis yang ada dengan mempertimbangkan faktor \fscore, \mcerfull, \tedfull. 
+
+\subsubsection{Gambaran Umum}
+Sebuah penelitian oleh \cite{carta2024end} mempresentasikan hasil implementasi \donut{} untuk pengenalan dokumen identitas. Tujuan utama dari penelitian ini adalah menyediakan solusi untuk menjawab tantangan dalam melakukan ekstraksi dan verifikasi data dokumen identitas secara manual pada servis digital. Penelitian ini menggunakan teknologi terbaru pada \textit{Document Understanding} (DU) dan \ml{} untuk otomasi pengenalan dokumen identitas. Solusi yang digunakan menggunakan proses \textit{fine-tuning} dua tahap, yaitu model \textit{pre-trained} dan pelatihan pada \dataset{} sintetis dan asli. Hal ini dilakukan dengan tujuan untuk mengekstrak informasi dari kartu identitas secara efisien. Selama pengembangan, terdapat isu seperti data asli yang terbatas, kualitas gambar yang buruk, dan format identitas yang beragam. 
+
+\subsubsection{Analisis dan Metode}
+Solusi yang ditawarkan menggunakan arsitektur \transformer{} \donut{} yang mengutilisasi \swin{} sebagai \encoder{} dan BART sebagai \decoder{}. Arsitektur ini memberikan implementasi yang bebas dari \ocr{} untuk ekstraksi teks dan pemahaman \emph{layout}. Walaupun \donut{} adalah \textit{pre-trained model}, \donut{} tetap memerlukan dataset yang besar untuk melalui proses \emph{fine-tuning}. Terdapat dua fase \emph{fine-tuning} yang dilakukan, yaitu \emph{fine-tuning} dengan data sintetis dengan format, konten, dan \emph{layout} bervariasi dan \emph{fine-tuning} dengan data dokumen identitas asli untuk meningkatkan akurasi solusi yang ditawarkan. Dokumen identitas yang digunakan terdiri dari \emph{Electronic ID Card} (EIC), \emph{Identity Card} (IC), \emph{Health Card} (HC), dan \emph{Driving License} (DL). Evaluasi terhadap solusi dilakukan dengan menggunakan metrik \fscore, \mcerfull, dan \tedfull. Eksperimen dilakukan pada 20\% \emph{test data} dan 80\% \emph{train data} dengan hasil perbandingan implementasi \donut{} sebelum dan setelah \textit{fine-tuning} disajikan pada \autoref{tab:donut-comparison-on-id-documents}. 
+
+\begin{table}[h!]
+    \centering % Centers the table on the page
+    \caption{Hasil perbandingan implementasi Donut sebelum dan setelah \textit{fine-tuning} \parencite{carta2024end}}
+    \label{tab:donut-comparison-on-id-documents}
+    \begin{tabularx}{\textwidth}{|X|C|C|C|C|C|C|}
+        \hline
+        % --- First Header Row ---
+        % The "Dokumen" cell spans 2 rows vertically.
+        % The "Donut Base" and "Donut Synth" cells each span 3 columns horizontally.
+        \multirow{2}{*}{Dokumen} & \multicolumn{3}{c|}{Donut Base} & \multicolumn{3}{c|}{Donut Synth} \\
+        \cline{2-7} % Creates a horizontal line from column 2 to 7
+        
+        % --- Second Header Row ---
+        % The first column is left blank because the multirow cell is occupying it.
+        & TED & F1 & mCER & TED & F1 & mCER \\
+        \hline% Double line to separate header from body
+        
+        % --- Table Body ---
+        EIC & 0.821 & 0.441 & 0.136 & 0.893 & 0.554 & 0.084 \\ \hline
+        IC  & 0.769 & 0.594 & 0.171 & 0.885 & 0.712 & 0.090 \\ \hline
+        HC  & 0.959 & 0.891 & 0.039 & 0.986 & 0.943 & 0.014 \\ \hline
+        DL  & 0.929 & 0.813 & 0.057 & 0.973 & 0.866 & 0.025 \\ \hline
+    \end{tabularx}
+\end{table}
+
+\subsubsection{Kesimpulan}
+Implementasi solusi dengan menggunakan arsitektur \donut{} dapat  melakukan ekstraksi informasi secara akurat dari dokumen identitas tanpa memerlukan implementasi \ocr{} yang konvensional. Proses \textit{fine-tuning} dua tahap sangat direkomendasikan karena ketersediaan data asli yang terbatas \parencite{carta2024end}. Eksperimen yang dilakukan mengonfirmasi proses \textit{fine-tuning} akan meningkatkan performa dari \emph{base model}.  

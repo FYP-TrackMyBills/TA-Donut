@@ -1,3 +1,23 @@
 \subsection{\textit{A Comprehensive Analysis of LayoutLM and Donut for Document Classification}}
 \label{sec:penelitian-1}
-Penelitian oleh \cite{}
+Penelitian oleh \cite{bajrami2023comprehensive}  akan melakukan analisis komparasi dari dua buah \textit{pre-trained model} berbasis \transformer{}, yaitu \layoutlm{} dan \donut, untuk klasifikasi dokumen. Penelitian ini melakukan perbandingan performa kedua model pada dua \dataset{} dengan karakteristik berbeda dengan melakukan evaluasi 
+terhadap nilai \accuracy, \precision, dan \fscore{} dari kedua model. 
+
+\subsubsection{Gambaran Umum}
+Penelitian ini memiliki tujuan untuk membandingkan performa dari model \donut{} dan \layoutlm{} untuk melakukan klasifikasi dokumen. Studi ini akan 
+melakukan komparasi menggunakan sejumlah data yang terdiri dari data-data yang tidak terstuktur (\textit{unstructured data}), seperti struk, \textit{invoice}, dan catatan tulis tangan.
+
+\subsubsection{Analisis dan Metode}
+\layoutlm{} adalah model yang mengombinasikan deteksi objek, pengenalan teks, dan analisis \textit{layout}. \layoutlm{} memiliki dependensi terhadap teknologi \ocr{} untuk melakukan ekstraksi teks dari dokumen berbentuk gambar. \donut{} adalah sebuah model \transformer{} untuk melakukan 
+pemahaman dokumen yang telah bersifat \sotafull{} dan tidak memerlukan integrasi \ocr.
+
+Analisis komparasi kedua model ini dilakukan pada dua jenis \dataset. \datasetfl{} pertama adalah sebuah \dataset{} dengan jumlah 10.000 sampel data yang terdiri dari dokumen perusahaan dengan kompleksitas yang lebih tinggi. Dataset 
+kedua terdiri dari 50.000 sampel yang lebih terdiversifikasi. Kedua model di-\textit{fine-tuned} dengan menggunakan \textit{transfer learning} dengan \textit{pre-trained weights} dan evaluasi dilakukan dengan metrik \accuracy, \precision, dan \fscore.  
+
+Pada \dataset{} 1, hasil yang didapatkan dari model \layoutlm{} memiliki akurasi yang lebih tinggi, yaitu pada angka 0,88 dibandingkan dengan penggunaan model \donut{} pada angka 0,74. Hal ini mengindikasikan bahwa \layoutlm{} lebih unggul untuk menangani dokumen dengan struktur yang lebih kompleks dibandingkan \donut{}. Pada \dataset{} 2, \donut{} memiliki angka akurasi yang lebih tinggi, yaitu 0,91, dibandingkan \layoutlm{} dengan angka 0,82 \parencite{bajrami2023comprehensive}.
+
+\subsubsection{Kesimpulan}
+
+\layoutlm{} dan \donut{} merupakan pilihan yang efektif untuk melakukan klasifikasi dokumen, tetapi dengan kebutuhan yang berbeda. \layoutlm{} lebih 
+cocok untuk digunakan pada dokumen dengan kompleksitas yang lebih tinggi, namun hasil yang didapatkan lebih lama karena memiliki \textit{pipeline} yang lebih 
+panjang akibat adanya proses \ocr{} terlebih dahulu. \donut{} lebih cocok untuk digunakan pada \dataset{} dengan diversifikasi dokumen yang lebih banyak dan dapat menghasilkan dengan lebih cepat akibat \emph{pipeline} yang lebih pendek akibat tidak perlu integrasi dengan \ocr. Dokumen yang memiliki \textit{noise} atau resolusi yang buruk akan mengurangi akurasi secara signifikan baik untuk \layoutlm{} atau \donut.
