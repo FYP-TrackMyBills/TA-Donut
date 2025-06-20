@@ -26,7 +26,7 @@
 
 	      \pagebreak
 
-	      Perhitungan attention dilakukan dengan formula seper	ti yang ditunjukkan pada persamaan \eqref{eq:attention-softmax} \parencite{vaswani2017attention} yang didefinisikan sebagai berikut:
+	      Perhitungan \attention{} dilakukan dengan formula seperti yang ditunjukkan pada persamaan \eqref{eq:attention-softmax} \parencite{vaswani2017attention} yang didefinisikan sebagai berikut:
 
 	      \begin{equation}
 		      \label{eq:attention-softmax}
@@ -34,7 +34,7 @@
 	      \end{equation}
 
 	\item \ffnfull~\\
-	      Setelah attention dihitung, informasi dari setiap elemen diproses melalui jaringan feed-forward yang sama untuk setiap posisi dalam urutan. Jaringan ini terdiri dari dua lapisan linear dengan fungsi aktivasi ReLU pada \autoref{eq:ffn} \parencite{vaswani2017attention}:
+	      Setelah \attention{} dihitung, informasi dari setiap elemen diproses melalui jaringan \emph{feed-forward} yang sama untuk setiap posisi dalam urutan. Jaringan ini terdiri dari dua lapisan linear dengan fungsi aktivasi ReLU pada persamaan \eqref{eq:ffn} \parencite{vaswani2017attention}:
 
 	      \begin{equation}
 		      \label{eq:ffn}

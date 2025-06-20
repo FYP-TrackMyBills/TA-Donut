@@ -101,8 +101,12 @@
 	{\bfseries}
 }
 
+% \makeatletter
+% \def\tagform@#1{\maketag@@@{#1}}
+% \makeatother
+
 \makeatletter
-\def\tagform@#1{\maketag@@@{#1}}
+\renewcommand{\eqref}[1]{\textup{\ref{#1}}}
 \makeatother
 
 % Hilangkan titik pada toc

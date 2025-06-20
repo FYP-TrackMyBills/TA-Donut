@@ -4,8 +4,8 @@
 \bartfull adalah adalah model \ml{} yang dirancang untuk memahami, menghasilkan, dan merekonstruksi teks dalam bahasa alami (\emph{natural language}). \bart{} merupakan \emph{denoising autoencoder} yang dilatih untuk memperbaiki teks yang telah "dirusak" (di-\emph{noise}) oleh berbagai transformasi sehingga mampu mengembalikan teks ke bentuk aslinya \parencite{lewis2019bart}. Arsitektur \bart{} menggabungkan kelebihan model \bert{} yang memiliki \emph{encoder bidirectional} dan GPT yang menggunakan \emph{decoder autoregressive}. Hal ini menjadikannya sangat fleksibel untuk berbagai tugas \nlpfull.
 
 \bart{} dibangun di atas arsitektur transformer yang terdiri atas dua 
-komponen utama, yaitu \emph{bidirectional encoder dan autoregressive decoder}. 
-\emph{Bidirectional Encoder} akan mengolah teks input dengan cara memahami hubungan antar token secara dua arah. \emph{Autoregressive decoder} akan menghasilkan teks secara berurutan, token demi token, dengan mempertimbangkan \emph{sequence} yang sudah dihasilkan.
+komponen utama, yaitu \emph{bidirectional encoder} dan \textit{autoregressive decoder}. 
+\emph{Bidirectional encoder} akan mengolah teks input dengan cara memahami hubungan antar token secara dua arah. \emph{Autoregressive decoder} akan menghasilkan teks secara berurutan, token demi token, dengan mempertimbangkan \emph{sequence} yang sudah dihasilkan.
 
 \pagebreak
 
