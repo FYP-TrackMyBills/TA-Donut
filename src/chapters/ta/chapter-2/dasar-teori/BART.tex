@@ -1,12 +1,23 @@
-\subsection{Transformer}
-\label{subsec:transformer}
+\subsection{\bartfull}
+\label{subsec:bart}
 
-Transformer adalah suatu jenis arsitektur jarigan yang baru dalam deep learning yang digunakan untuk mentransformasi sebuah deretan data menjadi sesuatu dengan karakteristik, seperti panjang atau format, yang berbeda. Transformer tidak menggunakan lapisan rekursif (RNN) atau konvolusi (CNN).  Transformer menggunakan mekanisme self-attention yang memungkinkannya
-untuk memahami hubungan antar elemen dalam sebuah deretan atau urutan
-(sequence). Tidak seperti pada RNN, mekanisme self-attention tidak perlu
-memperhatikan jarak antar elemen. Hal ini membuat transformer menjadi sangat efisien untuk memproses data sekuensial. Transformer banyak digunakan pada proses penerjemahan bahasa, rangkuman teks, dan pengenalan suara.
+\bartfull adalah adalah model \ml{} yang dirancang untuk memahami, menghasilkan, dan merekonstruksi teks dalam bahasa alami (\emph{natural language}). \bart{} merupakan \emph{denoising autoencoder} yang dilatih untuk memperbaiki teks yang telah "dirusak" (di-\emph{noise}) oleh berbagai transformasi sehingga mampu mengembalikan teks ke bentuk aslinya \parencite{lewis2019bart}. Arsitektur \bart{} menggabungkan kelebihan model \bert{} yang memiliki \emph{encoder bidirectional} dan GPT yang menggunakan \emph{decoder autoregressive}. Hal ini menjadikannya sangat fleksibel untuk berbagai tugas \nlpfull.
 
-Transformer terdiri atas dua komponen utama, yaitu encoder dan decoder. Encoder bertugas untuk membaca dan memproses sequence masukan, sementara decoder menghasilkan sequence keluaran berdasarkan informasi dari encoder.
+\bart{} dibangun di atas arsitektur transformer yang terdiri atas dua 
+komponen utama, yaitu \emph{bidirectional encoder dan autoregressive decoder}. 
+\emph{Bidirectional Encoder} akan mengolah teks input dengan cara memahami hubungan antar token secara dua arah. \emph{Autoregressive decoder} akan menghasilkan teks secara berurutan, token demi token, dengan mempertimbangkan \emph{sequence} yang sudah dihasilkan.
 
-Encoder dan decoder terdiri dari beberapa lapisan yang identik, dengan
-masing-masing memiliki dua sublapisan utama, yaitu:
+\pagebreak
+
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{images/bart.png}
+\caption{Cara kerja \bart{} \parencite{lewis2019bart}.}
+\label{fig:bart}
+\end{figure}
+
+\autoref{fig:bart} menunjukkan cara \bart{} bekerja. Teks input akan “dirusak” terlebih dahulu, kemudian dibaca oleh \encoder. Hasil bacaan \encoder{} akan diteruskan ke \decoder{} untuk mengembalikan bagian teks yang “dirusak” secara 
+\textit{autoregressive}. Dengan kemampuannya untuk merekonstruksi teks dari masukan yang rusak, \bart{} menjadi suatu \transformer{} yang sangat baik untuk memahami struktur bahasa dan menghasilkan teks yang koheren walaupun masukan dinilai 
+rusak. Penggunaan \bart{} mirip dengan \bert{} dan GPT, seperti klasifikasi teks, generasi teks, dan penejermahan teks. 
+
+

@@ -17,7 +17,7 @@ pada seluruh gambar, \swin{} memperkenalkan \selfattention{} berbasis \emph{loca
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\textwidth]{images/swin-shifted-window.png}
+    \includegraphics[width=0.7\textwidth]{images/swin-shifted-window.png}
     \caption{Pendekatan \shiftedwindow{} pada \swin{} \parencite{liu2021swin}.}
     \label{fig:Swin-shifted-window}
 \end{figure}
@@ -35,3 +35,12 @@ diproyeksikan ke dimensi tertentu C melalui lapisan \emph{embedding} linier sepe
     \caption{Arsitektur dan cara kerja \swin{} \parencite{liu2021swin}.}
     \label{fig:swin-architecture}
 \end{figure}
+
+\swin{} menggunakan \emph{Window Multi-Head Self-Attention} (W
+MSA). Dengan metode ini, mekanisme \selfattention{} hanya dilakukan dalam \emph{window} lokal yang \emph{non-overlapping}. Contohnya ditunjukkan pada \autoref{fig:Swin-shifted-window}. 
+Setiap \emph{window} memiliki ukuran $M \times M$ (umumnya $7 \times 7$) dan dengan membatasi \emph{attention} pada setiap \emph{window}, kompleksitas komputasi berkurang dari kuadratik menjadi linear terhadap ukuran gambar.
+
+Untuk memungkinkan koneksi \emph{cross-window}, \swin{} 
+menggunakan metode \emph{Shifted Window Multi-Head Self-Attention} (SW-MSA). 
+Dalam metode ini, setiap window akan bergeser pada lapisan berikutnya dengan jarak tertentu (misalnya setengah ukuran jendela). Ini menciptakan koneksi cross window tanpa menambah banyak beban komputasi. Proses ini dapat dilihat pada \autoref{fig:Swin-shifted-window}. Window pada lapisan $l$ dan $l+1$ digeser untuk menciptakan interaksi 
+satu sama lain. Dalam proses self-attention, Swin Transformer menggunakan \textit{relative position bias} untuk menangkap hubungan spasial antar \patch{}.
