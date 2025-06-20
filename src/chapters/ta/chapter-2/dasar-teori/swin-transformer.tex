@@ -36,8 +36,7 @@ diproyeksikan ke dimensi tertentu C melalui lapisan \emph{embedding} linier sepe
     \label{fig:swin-architecture}
 \end{figure}
 
-\swin{} menggunakan \emph{Window Multi-Head Self-Attention} (W
-MSA). Dengan metode ini, mekanisme \selfattention{} hanya dilakukan dalam \emph{window} lokal yang \emph{non-overlapping}. Contohnya ditunjukkan pada \autoref{fig:Swin-shifted-window}. 
+\swin{} menggunakan \emph{Window Multi-Head Self-Attention} (W-MSA). Dengan metode ini, mekanisme \selfattention{} hanya dilakukan dalam \emph{window} lokal yang \emph{non-overlapping}. Contohnya ditunjukkan pada \autoref{fig:Swin-shifted-window}. 
 Setiap \emph{window} memiliki ukuran $M \times M$ (umumnya $7 \times 7$) dan dengan membatasi \emph{attention} pada setiap \emph{window}, kompleksitas komputasi berkurang dari kuadratik menjadi linear terhadap ukuran gambar.
 
 Untuk memungkinkan koneksi \emph{cross-window}, \swin{} 

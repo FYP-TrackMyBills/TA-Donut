@@ -16,6 +16,14 @@
 % Setting margin
 \usepackage[top=2cm,bottom=2cm,left=4cm,right=3cm]{geometry}
 
+% remove hyphenation
+% \hbadness=99999
+
+% % Disable hyphenation
+% \hyphenpenalty=10000
+% \exhyphenpenalty=10000
+% \tolerance=1000
+
 % Math package
 \usepackage{mathptmx}
 
@@ -38,6 +46,10 @@
 \usepackage[authordate,backend=biber, language=bahasa]{biblatex-chicago}
 \AtEveryBibitem{\clearfield{month}}
 \usepackage[format=hang, justification=raggedright]{caption}
+
+% Custom settings for tables
+\captionsetup[table]{justification=raggedright, singlelinecheck=false, format=hang} % Left-align and hang for tables
+
 \usepackage{csquotes} % Untuk kutipan
 \usepackage{amsmath}
 \usepackage{longtable}
@@ -46,6 +58,11 @@
 \usepackage{titling}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{multirow}
+
+% Define a new column type 'C' for centered columns in tabularx
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
 \usepackage{blindtext}
 \usepackage{sectsty}
 \usepackage{chngcntr}
