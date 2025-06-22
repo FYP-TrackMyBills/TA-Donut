@@ -46,7 +46,8 @@
 
 \input{chapters/ta/forewords}
 
-\titleformat*{\section}{\centering\bfseries\Large\MakeUpperCase}
+% Temporarily override section formatting for TOC-related sections
+% \titleformat*{\section}{\centering\bfseries\Large\MakeUpperCase}
 \titlespacing*{\chapter}{0pt}{0pt}{4pt}
 
 % Setting judul toc, lot, lof, bib
@@ -63,7 +64,17 @@
 
 \newpage
 
-\titleformat*{\section}{\bfseries\large}
+% Uniform section formatting - all levels at 12pt (normalsize)
+% MOVED: Section formatting moved after chapter config for proper application
+% \titleformat*{\section}{\normalfont\normalsize\bfseries}
+% \titleformat*{\subsection}{\normalfont\normalsize\bfseries}
+% \titleformat*{\subsubsection}{\normalfont\normalsize\bfseries}
+
+% Custom 4th level formatting (subsubsubsection)
+% \titleformat{\subsubsubsection}
+% {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+% \titlespacing*{\subsubsubsection}
+% {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 \pagenumbering{arabic}
 
 %----------------------------------------------------------------%
@@ -73,6 +84,25 @@
 \renewcommand{\chaptername}{BAB}
 \renewcommand{\thechapter}{\Roman{chapter}}
 %----------------------------------------------------------------%
+
+% CRITICAL: Apply uniform section formatting - all levels at 12pt (normalsize)
+% This placement after chapter config ensures it overrides document class defaults
+\makeatletter
+\titleformat*{\section}{\normalfont\normalsize\bfseries}
+\titleformat*{\subsection}{\normalfont\normalsize\bfseries}
+\titleformat*{\subsubsection}{\normalfont\normalsize\bfseries}
+
+% Custom 4th level formatting (subsubsubsection)
+\titleformat{\subsubsubsection}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\subsubsubsection}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+% Force font size consistency - override any document class variations
+\def\section{\@startsection{section}{1}{\z@}{-3.5ex plus -1ex minus -.2ex}{2.3ex plus .2ex}{\normalfont\normalsize\bfseries}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{-3.25ex plus -1ex minus -.2ex}{1.5ex plus .2ex}{\normalfont\normalsize\bfseries}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{-3.25ex plus -1ex minus -.2ex}{1.5ex plus .2ex}{\normalfont\normalsize\bfseries}}
+\makeatother
 
 %----------------------------------------------------------------%
 % Dafter Bab
@@ -97,8 +127,8 @@
 \titlespacing*{\chapter}{0pt}{0pt}{0pt}
 \titlespacing*{\section}{0pt}{0pt}{*1}
 
-% Setting judul anak lampiran
-\titleformat*{\section}{\bfseries}
+% Setting judul anak lampiran - maintain 12pt consistency
+\titleformat*{\section}{\normalfont\normalsize\bfseries}
 
 \input{chapters/ta/appendix/appendix}
 
