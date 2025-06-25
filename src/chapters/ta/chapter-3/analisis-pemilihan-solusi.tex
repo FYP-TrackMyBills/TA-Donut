@@ -5,17 +5,37 @@ Subbab ini akan menjelaskan mengenai desain konsep solusi yang akan digunakan pa
 
 \subsection{Alternatif Solusi}
 \label{subsec:alternatif-solusi}
-Subbab ini akan membahas tentang alternatif solusi yang dapat digunakan untuk memenuhi kebutuhan sistem yang telah diidentifikasi pada \autoref{sec:analisis-kebutuhan}. Penulis akan mengeksplorasi berbagai alternatif solusi yang dapat digunakan untuk memenuhi kebutuhan sistem yang telah diidentifikasi pada \autoref{sec:analisis-kebutuhan}. Penulis akan mempertimbangkan alternatif solusi untuk dua aspek utama pada sistem, yaitu metode ekstraksi data dokumen dan \emph{platform} pengembangan sistem. 
+Setiap alternatif solusi yang akan dijelaskan pada subbab ini merupakan alternatif yang dipertimbangkan untuk memenuhi kebutuhan ekstraksi data dokumen.Metode ekstraksi data dokumen adalah metode yang digunakan untuk mengekstrak data dari dokumen digital yang digunakan, yaitu struk dan bukti pembayaran. Alternatif solusi yang dipertimbangkan adalah sebagai berikut:
+\begin{enumerate}
+    \item \donut{} ~\\ Model ini memperkenalkan pendekatan yang revolusioner karena tidak memerlukan modul \ocr{} yang terpisah. Secara teknis, Donut menggunakan arsitektur \textit{encoder-decoder} berbasis \transformer. \textit{Encoder} (biasanya \swin) memproses gambar dokumen secara langsung sebagai piksel, lalu \textit{decoder} (seperti \bart) menerjemahkan representasi visual tersebut langsung menjadi keluaran terstruktur (misalnya, format \json) sesuai dengan instruksi yang diberikan. Kemampuannya untuk belajar dari gambar ke teks secara \textit{end-to-end} menjadikannya sangat fleksibel dan kuat untuk berbagai jenis dokumen tanpa bergantung pada kualitas hasil \ocr  \parencite{kim2021donut}.
 
-\subsubsection{Metode Ekstraksi Data Dokumen}
-\label{subsubsec:model-ekstraksi-data-dokumen}
-Metode ekstraksi data dokumen adalah metode yang digunakan untuk mengekstrak data dari dokumen yang telah diterima. Dengan mempertimbangkan kebutuhan sistem yang telah diidentifikasi pada \autoref{sec:analisis-kebutuhan}, penulis akan mengeksplorasi beberapa alternatif solusi untuk metode ekstraksi data dokumen. Alternatif solusi yang dapat digunakan sebagai metode ekstraksi data dokumen dapat dilihat pada \autoref{tab:alternatif-solusi-ekstraksi-data-dokumen}
+    \item \layoutlm ~\\ Model ini adalah salah satu pelopor dalam menggabungkan informasi teks, tata letak, dan visual dari sebuah dokumen. Berbeda dengan model bahasa seperti \bert{} yang hanya memahami teks, \layoutlm{} memperkaya representasi token teks dengan menyertakan \textit{embedding} posisi 2D (koordinat x,y dari \emph{bounding box}) dan \textit{embedding} visual. Dengan demikian, model ini dapat memahami konteks yang berasal dari struktur dokumen. \layoutlm{} menjadi model yang sangat efektif untuk tugas ekstraksi informasi dari dokumen semi-terstruktur seperti formulir dan faktur. \parencite{xu2020layoutlm}
+
+    \item \bert{} ~\\
+    \bert{} adalah model bahasa murni dan tidak memiliki kemampuan untuk memproses gambar atau tata letak secara inheren. Dalam alur kerja ekstraksi data dokumen, peran BERT berada di tahap \textit{downstream} setelah teks diekstraksi oleh sistem \ocr. Teks mentah dari \ocr{} kemudian dimasukkan ke \bert{} untuk tugas-tugas \nlp{} seperti Klasifikasi Teks atau \emph{Named Entity Recognition} (NER). Jadi, \bert{} tidak mengekstraksi data dari gambar, melainkan dari teks yang sudah diekstraksi. \parencite{koroteev2021bert}
+
+    \item \templatematching{} ~\\ \templatematching{} adalah salah satu metode \cv yang menggeser sebuah gambar "templat" kecil di atas gambar sumber yang lebih besar. Pada setiap posisi, sebuah metrik kemiripan (seperti korelasi silang) dihitung. Lokasi dengan skor kemiripan tertinggi dianggap sebagai posisi dari objek yang dicari. Metode ini cepat dan sederhana, namun kurang andal terhadap perubahan skala, rotasi, pencahayaan, atau deformasi pada objek \parencite{bradski2008learning}.
+
+    \item \crnn ~\\ 
+    \crnn{} adalah arsitektur \dl{} yang menjadi standar de facto untuk pengenalan teks atau \ocr{} dan merupakan gabungan dari \cnn{} dan \rnn. \cnn{} berfungsi sebagai ekstraktor fitur visual yang kuat dari gambar teks. Fitur-fitur ini kemudian diolah sebagai sebuah urutan (sekuens) oleh \rnn, biasanya jenis LSTM, yang dapat memprediksi urutan karakter. Kombinasi ini sangat efektif untuk mengenali baris teks dengan berbagai gaya dan variasi \parencite{shi2016end}.
+
+    \item \yolo ~\\ \yolo{} adalah standar model yang digunakan dalam deteksi objek \textit{real-time}. Dalam konteks dokumen, \yolo{} tidak digunakan untuk membaca teks, melainkan untuk mendeteksi lokasi (\emph{bounding box}) dari elemen-elemen visual secara cepat, seperti tabel, gambar, logo, atau blok tanda tangan. \yolo{} cenderung kurang akurat untuk objek kecil atau tumpang tindih karena mekanismenya yang hanya memiliki satu kali proses \parencite{diwan2023object}. 
+    
+    \item \rcnn{} ~\\ \rcnn{} dan keluarganya (Fast R-CNN, Faster R-CNN) adalah arsitektur deteksi objek dua tahap (\textit{two-stage detector}). Tahap pertama adalah menghasilkan "proposal wilayah" (\textit{region proposals}), yaitu area-area potensial di mana objek mungkin berada. Tahap kedua adalah mengklasifikasikan setiap proposal ini menggunakan \cnn. Pendekatan dua tahap ini membuat \rcnn{} secara umum lebih akurat daripada \yolo, terutama untuk deteksi objek yang kompleks, namun dengan kecepatan yang lebih lambat. Dalam analisis dokumen, \rcnn{} digunakan untuk lokalisasi elemen visual yang memerlukan presisi tinggi \parencite{xie2021oriented}.
+\end{enumerate}
+
+\subsection{Analisis Penentuan Solusi}
+\label{subsec:analisis-penentuan-solusi}
+
+Subbab ini akan menjelaskan mengenai analisis yang digunakan untuk menentukan solusi yang akan digunakan pada sistem yang akan dikembangkan. Penulis akan menganalisis berbagai alternatif solusi yang telah diidentifikasi pada \autoref{subsec:alternatif-solusi} berdasarkan kriteria yang telah ditentukan sesuai dengan kebutuhan sistem. Hasil analisis akan digunakan untuk menentukan solusi yang paling sesuai untuk perancangan dan pengembangan sistem pada \autoref{chapter:desain-implementasi}.
+
+Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan yang digunakan dari masing-masing alternatif solusi dari subbab sebelumnya. Kelebihan dan kekurangan setiap alternatif solusi akan disajikan dalam bentuk tabel pada \autoref{tab:model-comparison-fixed}. Tabel ini akan memberikan gambaran yang jelas mengenai kelebihan dan kekurangan dari masing-masing alternatif solusi sesuai dengan kebutuhan sistem.
 
 \begin{table}[h!]
 \caption{Perbandingan Kelebihan dan Kekurangan Model (Versi Perbaikan)}
 \label{tab:model-comparison-fixed}
 % We now use >{\RaggedRight}X to make the text left-aligned, which is better for lists.
-\begin{tabularx}{\textwidth}{| l | >{\RaggedRight}X | >{\RaggedRight}X |}
+\begin{tabularx}{\textwidth}{| X | >{\RaggedRight}X | >{\RaggedRight}X |}
 \hline
 \textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
 \hline
@@ -93,10 +113,3 @@ Template Matching &
 \\ \hline
 \end{tabularx}
 \end{table}
-
-
-\subsubsection{Platform Pengembangan Sistem}
-\label{subsubsec:platform-pengembangan-sistem}
-
-\subsection{Analisis Penentuan Solusi}
-\label{subsec:analisis-penentuan-solusi}
