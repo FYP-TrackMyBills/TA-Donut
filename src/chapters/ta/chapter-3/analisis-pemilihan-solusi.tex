@@ -29,86 +29,131 @@ Setiap alternatif solusi yang akan dijelaskan pada subbab ini merupakan alternat
 
 Subbab ini akan menjelaskan mengenai analisis yang digunakan untuk menentukan solusi yang akan digunakan pada sistem yang akan dikembangkan. Penulis akan menganalisis berbagai alternatif solusi yang telah diidentifikasi pada \autoref{subsec:alternatif-solusi} berdasarkan kriteria yang telah ditentukan sesuai dengan kebutuhan sistem. Hasil analisis akan digunakan untuk menentukan solusi yang paling sesuai untuk perancangan dan pengembangan sistem pada \autoref{chapter:desain-implementasi}.
 
-Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan yang digunakan dari masing-masing alternatif solusi dari subbab sebelumnya. Kelebihan dan kekurangan setiap alternatif solusi akan disajikan dalam bentuk tabel pada \autoref{tab:model-comparison-fixed}. Tabel ini akan memberikan gambaran yang jelas mengenai kelebihan dan kekurangan dari masing-masing alternatif solusi sesuai dengan kebutuhan sistem.
+Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan yang digunakan dari masing-masing alternatif solusi dari subbab sebelumnya. Kelebihan dan kekurangan setiap alternatif solusi akan disajikan dalam bentuk tabel pada \autoref{tab:model-comparison}. Tabel ini akan memberikan gambaran yang jelas mengenai kelebihan dan kekurangan dari masing-masing alternatif solusi sesuai dengan kebutuhan sistem.
 
+% --- TABEL PERTAMA ---
 \begin{table}[h!]
-\caption{Perbandingan Kelebihan dan Kekurangan Model (Versi Perbaikan)}
-\label{tab:model-comparison-fixed}
-\begin{tabularx}{\textwidth}{| X | >{\RaggedRight}X | >{\RaggedRight}X |}
+\caption{Perbandingan Kelebihan dan Kekurangan Model}
+\label{tab:model-comparison}
+% Mengatur agar list tidak memakan banyak ruang vertikal
+\setlist[enumerate]{itemsep=0mm, topsep=1mm, nosep}
+\begin{tabularx}{\linewidth}{|l|X|X|}
 \hline
 \textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
 \hline
 
 % --- Donut Model ---
-\donut{} &
-- Tidak memiliki ketergantungan pada OCR (\textit{end-to-end processing}) \newline
-- Memiliki \textit{pipeline} yang lebih sederhana \newline
-- Cocok untuk variasi dokumen yang beragam \newline
-- Merupakan SOTA untuk VDU (\textit{Visual Document Understanding}) \newline
-- Merupakan \textit{pre-trained model}
+\textbf{Donut} &
+\begin{enumerate}
+    \item Tidak memiliki ketergantungan pada OCR (\textit{end-to-end processing})
+    \item Memiliki \textit{pipeline} yang lebih sederhana
+    \item Cocok untuk variasi dokumen yang beragam
+    \item Merupakan SOTA untuk VDU (\textit{Visual Document Understanding})
+    \item Merupakan \textit{pre-trained model}
+\end{enumerate}
 &
-- Memerlukan data pelatihan dalam jumlah besar \newline
-- Membutuhkan kebutuhan komputasi yang tinggi untuk pelatihan \newline
-- Kurang optimal untuk dokumen dengan kualitas rendah
+\begin{enumerate}
+    \item Memerlukan data pelatihan dalam jumlah besar
+    \item Membutuhkan kebutuhan komputasi yang tinggi untuk pelatihan
+    \item Kurang optimal untuk dokumen dengan kualitas rendah
+\end{enumerate}
 \\ \hline
 
 % --- LayoutLM Model ---
-LayoutLM &
-- Cocok untuk dokumen yang lebih kompleks dengan elemen tabel dan formulir \newline
-- Dapat digunakan untuk dokumen terstruktur dan semi-terstruktur \newline
-- Merupakan \textit{pre-trained model}
+\textbf{LayoutLM} &
+\begin{enumerate}
+    \item Cocok untuk dokumen yang lebih kompleks dengan elemen tabel dan formulir
+    \item Dapat digunakan untuk dokumen terstruktur dan semi-terstruktur
+    \item Merupakan \textit{pre-trained model}
+\end{enumerate}
 &
-- Memiliki ketergantungan pada OCR \newline
-- Kurang optimal untuk dokumen dengan kualitas rendah
+\begin{enumerate}
+    \item Memiliki ketergantungan pada OCR
+    \item Kurang optimal untuk dokumen dengan kualitas rendah
+\end{enumerate}
 \\ \hline
+\end{tabularx}
+\end{table}
+
+
+% --- TABEL KEDUA (LANJUTAN) ---
+\begin{table}[h!]
+\ContinuedFloat % Perintah ini mencegah nomor tabel bertambah
+\caption{Perbandingan Kelebihan dan Kekurangan Model (lanjutan)}
+% Mengatur agar list tidak memakan banyak ruang vertikal
+\setlist[enumerate]{itemsep=0mm, topsep=1mm, nosep}
+\begin{tabularx}{\linewidth}{|l|X|X|}
+\hline
+\textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
+\hline
 
 % --- BERT Model ---
-\bert{} &
-- Cocok untuk dokumen yang lebih kompleks dengan elemen tabel dan formulir \newline
-- Dapat digunakan untuk dokumen terstruktur dan semi-terstruktur \newline
-- Merupakan \textit{pre-trained model}
+\textbf{BERT} &
+\begin{enumerate}
+    \item Cocok untuk dokumen yang lebih kompleks dengan elemen tabel dan formulir
+    \item Dapat digunakan untuk dokumen terstruktur dan semi-terstruktur
+    \item Merupakan \textit{pre-trained model}
+\end{enumerate}
 &
-- Kurang cocok untuk dokumen dengan elemen visual atau spasial \newline
-- Memiliki ketergantungan pada OCR
+\begin{enumerate}
+    \item Kurang cocok untuk dokumen dengan elemen visual atau spasial
+    \item Memiliki ketergantungan pada OCR
+\end{enumerate}
 \\ \hline
 
 % --- Template Matching ---
-Template Matching &
-- Cepat dan ringan untuk dokumen dengan pola seragam \newline
-- Kemudahan implementasi \newline
-- Tidak memerlukan data pelatihan yang beragam
+\textbf{\makecell[l]{Template \\ Matching}} &
+\begin{enumerate}
+    \item Cepat dan ringan untuk dokumen dengan pola seragam
+    \item Kemudahan implementasi
+    \item Tidak memerlukan data pelatihan yang beragam
+\end{enumerate}
 &
-- Kurang fleksibel untuk berbagai variasi format dokumen \newline
-- Variasi posisi dan kualitas dokumen menjadi tantangan \newline
-- Metode yang tergolong konvensional
+\begin{enumerate}
+    \item Kurang fleksibel untuk berbagai variasi format dokumen
+    \item Variasi posisi dan kualitas dokumen menjadi tantangan
+    \item Metode yang tergolong konvensional
+\end{enumerate}
 \\ \hline
 
 % --- CRNN ---
-\crnn{} &
-- Cocok untuk pengenalan teks dalam gambar \newline
-- Sangat cocok untuk menangani teks dengan font dan orientasi yang bervariasi
+\textbf{CRNN} &
+\begin{enumerate}
+    \item Cocok untuk pengenalan teks dalam gambar
+    \item Sangat cocok untuk menangani teks dengan font dan orientasi yang bervariasi
+\end{enumerate}
 &
-- Tidak optimal untuk menangani elemen visual dan spasial dalam gambar \newline
-- Hanya berfokus pada teks
+\begin{enumerate}
+    \item Tidak optimal untuk menangani elemen visual dan spasial dalam gambar
+    \item Hanya berfokus pada teks
+\end{enumerate}
 \\ \hline
 
 % --- YOLO ---
-\yolo &
-- Model yang cepat untuk melakukan pengenalan objek secara \textit{real-time} \newline
-- Cocok untuk pengenalan elemen visual dengan ukuran signifikan dengan cepat
+\textbf{YOLO} &
+\begin{enumerate}
+    \item Model yang cepat untuk melakukan pengenalan objek secara \textit{real-time}
+    \item Cocok untuk pengenalan elemen visual dengan ukuran signifikan dengan cepat
+\end{enumerate}
 &
-- Kurang efektif untuk tugas berbasis teks atau dokumen \newline
-- Tidak dirancang untuk dokumen dengan berbagai elemen teks
+\begin{enumerate}
+    \item Kurang efektif untuk tugas berbasis teks atau dokumen
+    \item Tidak dirancang untuk dokumen dengan berbagai elemen teks
+\end{enumerate}
 \\ \hline
 
 % --- R-CNN ---
-\rcnn{} &
-- Lebih akurat untuk melakukan deteksi objek pada gambar yang kompleks dibandingkan dengan YOLO \newline
-- Cocok untuk dokumen dengan elemen visual yang signifikan
+\textbf{R-CNN} &
+\begin{enumerate}
+    \item Lebih akurat untuk melakukan deteksi objek pada gambar yang kompleks dibandingkan dengan YOLO
+    \item Cocok untuk dokumen dengan elemen visual yang signifikan
+\end{enumerate}
 &
-- Lebih lambat untuk melakukan pengenalan objek dibandingkan dengan YOLO \newline
-- Membutuhkan pelatihan yang intens \newline
-- Kurang cocok untuk melakukan pengenalan teks yang bervariasi
+\begin{enumerate}
+    \item Lebih lambat untuk melakukan pengenalan objek dibandingkan dengan YOLO
+    \item Membutuhkan pelatihan yang intens
+    \item Kurang cocok untuk melakukan pengenalan teks yang bervariasi
+\end{enumerate}
 \\ \hline
 \end{tabularx}
 \end{table}

@@ -16,6 +16,60 @@ Pengguna sistem ini adalah Gen Z dan milenial yang memiliki kebiasaan berbelanja
 Berdasarkan identifikasi masalah pengguna pada \autoref{subsec:identifikasi-masalah-pengguna}, penulis mengidentifikasi kebutuhan fungsional yang harus dipenuhi oleh sistem yang akan dikembangkan. Kebutuhan fungsional adalah kebutuhan yang berisi pernyataan mengenai 
 penjelasan layanan-layanan yang akan disediakan oleh sistem. Kebutuhan fungsional sistem ini akan disajikan dalam bentuk tabel pada \autoref{tab:kebutuhan-fungsional}.
 
+\begin{table}[h!]
+\caption{Kebutuhan Fungsional Sistem}
+\label{tab:kebutuhan-fungsional}
+\begin{tabularx}{\linewidth}{|l|X|}
+\hline
+\textbf{Kode} & \textbf{Kebutuhan Fungsional} \\
+\hline
+FR-01 & Sistem harus dapat menerima masukan berupa gambar struk \linebreak pembayaran dari pengguna \\
+\hline
+FR-02 & Sistem harus dapat menerima masukan berupa gambar bukti\linebreak pembayaran QRIS dan Transfer dari pengguna \\
+\hline
+FR-03 & Sistem hanya dapat memproses satu dokumen dalam satu waktu \\
+\hline
+FR-04 & Sistem dapat melakukan pemotongan gambar struk yang diterima \\
+\hline
+FR-05 & Sistem dapat mengekstrak data dari dokumen struk dan bukti \linebreak pembayaran yang diterima \\
+\hline
+FR-06 & Sistem dapat menampilkan hasil ekstraksi data kepada pengguna\linebreak melalui antarmuka pengguna \\
+\hline
+FR-07 & Sistem dapat melakukan perubahan hasil ekstraksi data yang\linebreak ditampilkan \\
+\hline
+\end{tabularx}
+\end{table}
+
 \subsection{Kebutuhan Non-Fungsional}
 \label{subsec:kebutuhan-non-fungsional}
 Kebutuhan non-fungsional adalah kebutuhan yang berisi pernyataan mengenai kualitas sistem yang akan dikembangkan. Berdasarkan identifikasi masalah pada \autoref{subsec:identifikasi-masalah-pengguna}, penulis akan mengidentifikasikan kebutuhan non-fungsional dari sistem yang akan dikembangkan. Kebutuhan non-fungsional sistem ini akan disajikan dalam bentuk tabel pada \autoref{tab:kebutuhan-non-fungsional}.
+
+\begin{table}[h!]
+\caption{Kebutuhan Non-Fungsional Sistem}
+\label{tab:kebutuhan-non-fungsional}
+\begin{tabularx}{\linewidth}{|l|l|X|}
+\hline
+\textbf{Kode} & \textbf{Kategori} & \textbf{Kebutuhan Non-fungsional} \\
+\hline
+NF-01 & Usability & Antarmuka pengguna (UI) dibatasi pada fitur-fitur \linebreak dasar untuk mengunggah gambar, memproses, dan \linebreak menampilkan hasil ekstraksi data. \\
+\hline
+NF-02 & \emph{Compatibility} & Sistem hanya dapat beroperasi pada sistem operasi \linebreak Android \\
+\hline
+NF-03 & \emph{Compatibility} & Sistem tidak mencakup pengembangan pada \emph{platform} desktop/laptop dan iOS \\
+\hline
+NF-04 & \emph{Compatibility} & Sistem mengharapkan masukan gambar dengan \linebreak kualitas yang jelas dan tidak blur \\
+\hline
+NF-05 & \emph{Compatibility} & Sistem dapat menerima dokumen bukti pembayaran QRIS dan transfer dari BCA, Seabank, Neobank, dan Gopay \\
+\hline
+NF-06 & \emph{Supportability} & Sistem dapat mengekstrak data dari dokumen struk \linebreak dengan \emph{on-device inference}. \\
+\hline
+NF-07 & \emph{Supportability} & Dokumen bukti QRIS dan transfer akan diproses pada \emph{server-side} \\
+\hline
+NF-08 & \emph{Supportability} & Implementasi sistem tidak mencakup integrasi  pihak ketiga \\
+\hline
+NF-09 & \emph{Performance} & Sistem dirancang tanpa ketergantungan pada \ocr. \\
+\hline
+NF-10 & \emph{Performance} & Evaluasi kinerja model akan menggunakan metrik \accuracy, \precision, \recall, \fscore, \ted, dan \mcer \\
+\hline
+\end{tabularx}
+\end{table}
