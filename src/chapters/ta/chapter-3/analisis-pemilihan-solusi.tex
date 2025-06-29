@@ -5,14 +5,23 @@ Subbab ini akan menjelaskan mengenai desain konsep solusi yang akan digunakan pa
 
 \subsection{Alternatif Solusi}
 \label{subsec:alternatif-solusi}
-Setiap alternatif solusi yang akan dijelaskan pada subbab ini merupakan alternatif yang dipertimbangkan untuk memenuhi kebutuhan ekstraksi data dokumen.Metode ekstraksi data dokumen adalah metode yang digunakan untuk mengekstrak data dari dokumen digital yang digunakan, yaitu struk dan bukti pembayaran. Alternatif solusi yang dipertimbangkan adalah sebagai berikut:
+Setiap alternatif solusi yang akan dijelaskan pada subbab ini merupakan alternatif yang dipertimbangkan untuk memenuhi kebutuhan ekstraksi data dokumen. Metode ekstraksi data dokumen adalah metode yang digunakan untuk mengekstrak data dari dokumen digital yang digunakan, yaitu struk dan bukti pembayaran. Alternatif solusi yang dapat dipertimbangkan dapat dibagi menjadi alternatif solusi yang memerlukan \ocr{} dan alternatif solusi yang tidak memerlukan \ocr. 
+
+\subsubsection{Alternatif Solusi yang Memerlukan OCR}
+\label{subsubsec:alternatif-solusi-memerlukan-ocr}
+Alternatif solusi yang memerlukan \ocr{} adalah alternatif solusi yang memerlukan proses ekstraksi teks dari gambar dokumen terlebih dahulu sebelum melakukan ekstraksi data. Proses ekstraksi teks ini biasanya dilakukan dengan menggunakan model \ocr{} yang telah dilatih sebelumnya. Beberapa alternatif solusi yang memerlukan \ocr{} antara lain:
 \begin{enumerate}
-    \item \donut{} ~\\ Model ini memperkenalkan pendekatan yang revolusioner karena tidak memerlukan modul \ocr{} yang terpisah. Secara teknis, Donut menggunakan arsitektur \textit{encoder-decoder} berbasis \transformer. \textit{Encoder} (biasanya \swin) memproses gambar dokumen secara langsung sebagai piksel, lalu \textit{decoder} (seperti \bart) menerjemahkan representasi visual tersebut langsung menjadi keluaran terstruktur (misalnya, format \json) sesuai dengan instruksi yang diberikan. Kemampuannya untuk belajar dari gambar ke teks secara \textit{end-to-end} menjadikannya sangat fleksibel dan kuat untuk berbagai jenis dokumen tanpa bergantung pada kualitas hasil \ocr{} \parencite{kim2021donut}.
-
     \item \layoutlm ~\\ Model ini adalah salah satu pelopor dalam menggabungkan informasi teks, tata letak, dan visual dari sebuah dokumen. Berbeda dengan model bahasa seperti \bert{} yang hanya memahami teks, \layoutlm{} memperkaya representasi token teks dengan menyertakan \textit{embedding} posisi 2D (koordinat x,y dari \emph{bounding box}) dan \textit{embedding} visual. Dengan demikian, model ini dapat memahami konteks yang berasal dari struktur dokumen. \layoutlm{} menjadi model yang sangat efektif untuk tugas ekstraksi informasi dari dokumen semi-terstruktur seperti formulir dan faktur \parencite{xu2020layoutlm}. 
-
     \item \bert{} ~\\
     \bert{} adalah model bahasa murni dan tidak memiliki kemampuan untuk memproses gambar atau tata letak secara inheren. Dalam alur kerja ekstraksi data dokumen, peran BERT berada di tahap \textit{downstream} setelah teks diekstraksi oleh sistem \ocr. Teks mentah dari \ocr{} kemudian dimasukkan ke \bert{} untuk tugas-tugas \nlp{} seperti Klasifikasi Teks atau \emph{Named Entity Recognition} (NER). Jadi, \bert{} tidak mengekstraksi data dari gambar, melainkan dari teks yang sudah diekstraksi \parencite{koroteev2021bert}. 
+\end{enumerate}
+
+\subsubsection{Alternatif Solusi yang Tidak Memerlukan OCR}
+\label{subsubsec:alternatif-solusi-tidak-memerlukan-ocr}
+Alternatif solusi yang tidak memerlukan \ocr{} adalah alternatif solusi yang dapat langsung mengekstrak data dari gambar dokumen tanpa perlu melakukan ekstraksi teks terlebih dahulu. Beberapa alternatif solusi yang tidak memerlukan \ocr{} antara lain:
+
+\begin{enumerate}
+    \item \donut{} ~\\ Model ini memperkenalkan pendekatan yang revolusioner karena tidak memerlukan modul \ocr{} yang terpisah. Secara teknis, Donut menggunakan arsitektur \textit{encoder-decoder} berbasis \transformer. \textit{Encoder} (biasanya \swin) memproses gambar dokumen secara langsung sebagai piksel, lalu \textit{decoder} (seperti \bart) menerjemahkan representasi visual tersebut langsung menjadi keluaran terstruktur (misalnya, format \json) sesuai dengan instruksi yang diberikan. Kemampuannya untuk belajar dari gambar ke teks secara \textit{end-to-end} menjadikannya sangat fleksibel dan kuat untuk berbagai jenis dokumen tanpa bergantung pada kualitas hasil \ocr{} \parencite{kim2021donut}.
 
     \item \templatematching{} ~\\ \templatematching{} adalah salah satu metode \cv yang menggeser sebuah gambar "templat" kecil di atas gambar sumber yang lebih besar. Pada setiap posisi, sebuah metrik kemiripan (seperti korelasi silang) dihitung. Lokasi dengan skor kemiripan tertinggi dianggap sebagai posisi dari objek yang dicari. Metode ini cepat dan sederhana, namun kurang andal terhadap perubahan skala, rotasi, pencahayaan, atau deformasi pada objek \parencite{bradski2008learning}.
 
@@ -72,20 +81,6 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
     \item Kurang optimal untuk dokumen dengan kualitas rendah
 \end{enumerate}
 \\ \hline
-\end{tabularx}
-\end{table}
-
-
-% --- TABEL KEDUA (LANJUTAN) ---
-\begin{table}[h!]
-\ContinuedFloat % Perintah ini mencegah nomor tabel bertambah
-\caption{Perbandingan Kelebihan dan Kekurangan Model (lanjutan)}
-% Mengatur agar list tidak memakan banyak ruang vertikal
-\setlist[enumerate]{itemsep=0mm, topsep=1mm, nosep}
-\begin{tabularx}{\linewidth}{|l|X|X|}
-\hline
-\textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
-\hline
 
 % --- BERT Model ---
 \textbf{BERT} &
@@ -102,7 +97,7 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
 \\ \hline
 
 % --- Template Matching ---
-\textbf{\makecell[l]{Template \\ Matching}} &
+\textbf{Template Matching} &
 \begin{enumerate}
     \item Cepat dan ringan untuk dokumen dengan pola seragam
     \item Kemudahan implementasi
@@ -115,6 +110,20 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
     \item Metode yang tergolong konvensional
 \end{enumerate}
 \\ \hline
+\end{tabularx}
+\end{table}
+
+
+% --- TABEL KEDUA (LANJUTAN) ---
+\begin{table}[h!]
+\ContinuedFloat % Perintah ini mencegah nomor tabel bertambah
+\caption{Perbandingan Kelebihan dan Kekurangan Model (lanjutan)}
+% Mengatur agar list tidak memakan banyak ruang vertikal
+\setlist[enumerate]{itemsep=0mm, topsep=1mm, nosep}
+\begin{tabularx}{\linewidth}{|p{1.75cm}|X|X|}
+\hline
+\textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
+\hline
 
 % --- CRNN ---
 \textbf{CRNN} &
@@ -145,15 +154,19 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
 % --- R-CNN ---
 \textbf{R-CNN} &
 \begin{enumerate}
-    \item Lebih akurat untuk melakukan deteksi objek pada gambar yang kompleks dibandingkan dengan YOLO
+    \item Lebih akurat untuk melakukan deteksi objek pada gambar yang kompleks dibandingkan dengan \newline YOLO
     \item Cocok untuk dokumen dengan elemen visual yang signifikan
 \end{enumerate}
 &
 \begin{enumerate}
-    \item Lebih lambat untuk melakukan pengenalan objek dibandingkan dengan YOLO
+    \item Lebih lambat untuk melakukan pengenalan objek dibandingkan dengan \newline YOLO
     \item Membutuhkan pelatihan yang intens
     \item Kurang cocok untuk melakukan pengenalan teks yang bervariasi
 \end{enumerate}
 \\ \hline
 \end{tabularx}
 \end{table}
+
+\pagebreak
+
+Berdasarkan analisis pada \autoref{tab:model-comparison}, penulis akan memilih \donut{} sebagai solusi yang akan digunakan pada sistem yang akan dikembangkan. Hal ini dikarenakan \donut{} memiliki kelebihan yang signifikan dibandingkan dengan alternatif solusi lainnya, yaitu tidak memerlukan ketergantungan pada \ocr{} dan dapat melakukan ekstraksi data secara langsung dari gambar dokumen. Selain itu, \donut{} juga merupakan model yang telah terbukti efektif dalam tugas ekstraksi informasi dari dokumen semi-terstruktur seperti formulir dan faktur. Meskipun \donut{} memerlukan data pelatihan dalam jumlah besar dan kebutuhan komputasi yang tinggi, penulis akan menggunakan model \donut{} yang telah dilatih sebelumnya untuk mengatasi masalah ini. Dengan demikian, penulis akan melanjutkan ke tahap perancangan dan pengembangan sistem pada \autoref{chapter:desain-implementasi} dengan menggunakan \donut{} sebagai solusi utama untuk ekstraksi data dokumen.
