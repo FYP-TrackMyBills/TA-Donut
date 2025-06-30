@@ -1,2 +1,73 @@
 \subsection{Perancangan Konversi dan Kompresi Model}
 \label{subsec:perancangan-konversi-dan-kompresi-model}
+
+ Proses konversi dan kompresi model \donut{} dari format PyTorch \emph{orisinil} ke format yang \emph{optimized} untuk \emph{on-device inference}. Proses tersebut diperlukan untuk mencapai tujuan model yang dapat digunakan pada perangkat \emph{mobile} Android. Subbab ini menjelaskan pendekatan yang digunakan untuk konversi model ke format \emph{Open Neural Network Exchange} (ONNX) dan strategi kompresi yang akan diterapkan pada model.
+
+\subsubsection{Strategi Konversi Model ke Format ONNX}
+\label{subsubsec:strategi-konversi-onnx}
+
+\emph{Open Neural Network Exchange} (ONNX) dipilih sebagai target format konversi utama karena memberikan keunggulan dalam hal portabilitas lintas \emph{platform} dan optimasi \emph{inference}. ONNX menyediakan dukungan luas untuk berbagai \emph{framework} dan perangkat keras, sehingga memungkinkan integrasi yang lebih baik dengan \emph{platform mobile}. Perubahan format menuju \onnx{} merupakan langkah penting untuk memastikan model dapat dioptimalkan 
+
+Arsitektur model \donut{} yang berbasis \textit{VisionEncoderDecoderModel} bukan merupakan arsitektur yang umum untuk dikonversi, sehingga konversi ke ONNX memerlukan pendekatan yang lebih kompleks dibandingkan model lainnya. \onnx{} telah menyediakan \emph{export tool}{}\footnote{\url{https://huggingface.co/spaces/onnx/export}} yang dapat digunakan untuk mengonversi model PyTorch ke format ONNX. \emph{Export tool} ini akan digunakan untuk melakukan konversi model \donut{} ke format ONNX dan model tersebut yang akan digunakan sebagai dasar untuk kompresi model lebih lanjut.
+
+\subsubsection{Strategi Kompresi dan Kuantisasi Model}
+\label{subsubsec:strategi-kompresi-kuantisasi}
+
+Setelah konversi ke format ONNX, diperlukan tahap kompresi untuk mengurangi ukuran model dan meningkatkan inference speed pada perangkat mobile dengan resource constraints. Beberapa teknik kuantisasi dirancang untuk dievaluasi secara komparatif.
+
+\paragraph{Dynamic Quantization Techniques}
+Dynamic quantization dipilih sebagai pendekatan utama karena tidak memerlukan calibration dataset dan dapat diaplikasikan langsung pada pre-trained model:
+
+\begin{enumerate}
+    \item \textbf{INT8 Dynamic Quantization}: 
+    \begin{itemize}
+        \item Target kompresi: 4x size reduction dari FP32 baseline
+        \item Metode: \texttt{quantize\_dynamic()} dengan \texttt{QuantType.QInt8}
+        \item Expected accuracy retention: 95-98\% dari original model performance
+        \item Cocok untuk general purpose mobile deployment
+    \end{itemize}
+    
+    \item \textbf{UINT8 Dynamic Quantization}: 
+    \begin{itemize}
+        \item Optimasi khusus untuk ARM processors (Android devices)
+        \item Hardware acceleration support melalui NNAPI
+        \item Target kompresi: 4x size reduction dengan inference speed improvement 2-3x
+        \item Recommended untuk production Android deployment
+    \end{itemize}
+    
+    \item \textbf{FP16 Precision Conversion}:
+    \begin{itemize}
+        \item Moderate compression dengan better accuracy retention
+        \item Target kompresi: 2x size reduction
+        \item Expected accuracy retention: 98-99\% dari original performance
+        \item Fallback option jika aggressive quantization menghasilkan accuracy degradation signifikan
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{Evaluasi Framework untuk Model Conversion}
+Untuk mengevaluasi efektivitas setiap strategi konversi dan kompresi, dirancang framework evaluasi komprehensif yang mengukur multiple metrics:
+
+\begin{enumerate}
+    \item \textbf{Performance Metrics}:
+    \begin{itemize}
+        \item Accuracy, Precision, Recall, dan F1-Score untuk field-level extraction
+        \item Tree Edit Distance (TED) untuk structural similarity
+        \item Modified Character Error Rate (mCER) untuk text-level similarity
+    \end{itemize}
+    
+    \item \textbf{Efficiency Metrics}:
+    \begin{itemize}
+        \item Model size reduction ratio
+        \item Inference time comparison (PyTorch vs ONNX vs Quantized)
+        \item Memory usage during inference
+        \item Mobile deployment feasibility assessment
+    \end{itemize}
+    
+    \item \textbf{Deployment Viability}:
+    \begin{itemize}
+        \item Implementation complexity score
+        \item Maintenance overhead assessment  
+        \item Cross-platform compatibility evaluation
+        \item Production reliability metrics
+    \end{itemize}
+\end{enumerate}
