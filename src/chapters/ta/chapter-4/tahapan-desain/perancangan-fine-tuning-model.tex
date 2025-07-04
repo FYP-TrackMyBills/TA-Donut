@@ -6,15 +6,15 @@ Subbab ini menjelaskan rancangan proses \emph{fine-tuning} model \donut{} untuk 
 \subsubsection{Pemilihan Model Dasar dan Konfigurasi Awal}
 \label{subsubsec:pemilihan-model-dasar}
 
-Model dasar yang dipilih untuk proses \emph{fine-tuning} pada \dataset{} bukti pembayaran QRIS dan transfer adalah model \donut{} yang telah di-\emph{fine-tune} pada \dataset{} CORD-v2 yang telah disediakan oleh naver-cloud-ix. Model tersebut diberi alias \donutcord. Model \donutcord{} dipilih dengan mempertimbangkan faktor-faktor berikut:
+Model dasar yang dipilih untuk proses \emph{fine-tuning} pada \dataset{} bukti pembayaran QRIS dan transfer adalah model \donut{} yang telah di-\emph{fine-tune} pada \dataset{} \linebreak CORD (\emph{Consolidated Receipt Dataset}) - v2 yang telah disediakan oleh naver-cloud-ix. Model tersebut diberi alias \donutcord. Model \donutcord{} dipilih dengan mempertimbangkan faktor-faktor berikut:
 
 \begin{enumerate}
-    \item \textbf{\emph{Domain similarity}}: Model \donutcord telah dilatih pada \dataset{} dokumen terstruktur yang memiliki kemiripan dengan struk dan bukti pembayaran dalam hal tata letak dan struktur informasi.
-    \item \textbf{Pre-trained capabilities}: Model ini telah memiliki kemampuan dasar dalam memahami dokumen semi-terstruktur, sehingga dapat mempercepat proses konvergensi selama \emph{fine-tuning}.
-    \item \textbf{Arsitektur optimal}: Kombinasi \swin{} \transformer{} sebagai \emph{encoder} visual dan \bart{} sebagai \emph{decoder} teks telah terbukti efektif untuk tugas \emph{Visual Document Understanding}.
+    \item \textbf{\emph{Domain similarity}}: Model \donutcord{} telah dilatih pada \dataset{} dokumen terstruktur yang memiliki kemiripan dengan struk dan bukti pembayaran dalam hal tata letak dan struktur informasi.
+    \item \textbf{\emph{Pre-trained capabilities}}: Model ini telah memiliki kemampuan dasar dalam memahami dokumen semi-terstruktur, sehingga dapat mempercepat proses konvergensi selama \emph{fine-tuning}.
+    \item \textbf{Arsitektur optimal}: Kombinasi \swin{} sebagai \emph{encoder} visual dan \bart{} sebagai \emph{decoder} teks telah terbukti efektif untuk tugas \emph{Visual Document Understanding}.
 \end{enumerate}
 
-Konfigurasi awal model melibatkan ekspansi vocabulary tokenizer untuk menambahkan token khusus domain pembayaran. Penulis menambahkan 14 token khusus yang terdiri dari:
+Konfigurasi awal model melibatkan ekspansi \emph{vocabulary tokenizer} untuk menambahkan token khusus domain pembayaran. Token yang ditambahkan berjumlah 14 token khusus yang terdiri dari:
 \begin{enumerate}
     \item Token pembuka dan penutup untuk setiap \emph{field}
     \begin{enumerate}
@@ -28,12 +28,9 @@ Konfigurasi awal model melibatkan ekspansi vocabulary tokenizer untuk menambahka
     \item Token \emph{task identifier}~\\ \texttt{<s\_payment\_proof>}, \texttt{</s\_payment\_proof>}
 \end{enumerate}
 
-Ekspansi vocabulary ini memerlukan penyesuaian dimensi embedding layer pada decoder dan konfigurasi ulang parameter \texttt{decoder\_start\_token\_id} untuk memastikan model memulai generasi dengan token task yang tepat.
+Ekspansi \emph{vocabulary} ini memerlukan penyesuaian dimensi \emph{embedding layer} pada \decoder{} dan konfigurasi ulang parameter \texttt{decoder\_start\_token\_id} untuk memastikan model memulai generasi dengan token \emph{task} yang tepat.
 
-\subsubsection{Desain Format Keluaran Terstruktur}
-\label{subsubsec:desain-format-keluaran}
-
-Penulis merancang format keluaran terstruktur yang memungkinkan ekstraksi informasi yang konsisten dan dapat diparsing secara otomatis. Format yang dirancang menggunakan markup berbasis XML dengan struktur hierarkis sebagai berikut:
+Format keluaran dari model juga perlu direstrukturisasi untuk memungkinkan ekstraksi informasi yang konsisten dan otomatis. Format yang dirancang menggunakan \emph{markup} berbasis XML dengan struktur hierarkis sebagai berikut:
 
 \begin{verbatim}
 <s_payment_proof>
@@ -46,15 +43,7 @@ Penulis merancang format keluaran terstruktur yang memungkinkan ekstraksi inform
 </s_payment_proof>
 \end{verbatim}
 
-Desain ini memiliki beberapa keunggulan:
-\begin{enumerate}
-    \item \textbf{Struktur yang jelas}: Setiap field memiliki delimiter yang eksplisit, memudahkan parsing dan validasi keluaran.
-    \item \textbf{Fleksibilitas}: Field yang tidak terdeteksi dapat diabaikan tanpa merusak struktur keseluruhan.
-    \item \textbf{Konsistensi}: Format yang tetap memungkinkan evaluasi otomatis dan sistem monitoring.
-    \item \textbf{Extensibility}: Struktur dapat diperluas untuk menambahkan field baru tanpa mengubah parser yang ada.
-\end{enumerate}
-
-Token \texttt{<s\_payment\_proof>} berfungsi sebagai task prompt yang memberikan konteks kepada model bahwa tugas yang dijalankan adalah ekstraksi informasi dari dokumen pembayaran, berbeda dari tugas lain seperti ekstraksi dokumen umum.
+Token \texttt{<s\_payment\_proof>} berfungsi sebagai task prompt yang memberikan konteks kepada model bahwa tugas yang dijalankan adalah ekstraksi informasi dari dokumen bukti pembayaran yang dapat berupa QRIS dan transfer dan berbeda dari tugas ekstraksi dokumen struk pembayaran pada \donutcord. Dengan demikian, model diarahkan untuk menghasilkan keluaran yang sesuai dengan format yang telah ditentukan.
 
 \subsubsection{Strategi Preprocessing Data}
 \label{subsubsec:strategi-preprocessing-data}
@@ -116,62 +105,3 @@ Penulis merancang custom collation function yang menangani:
     \item Proper label masking untuk padding tokens (-100 untuk ignore dalam loss calculation)
     \item Batch consistency handling untuk samples dengan ukuran berbeda
 \end{itemize}
-
-\subsubsection{Desain Sistem Evaluasi dan Monitoring}
-\label{subsubsec:desain-evaluasi-monitoring}
-
-Sistem evaluasi dirancang untuk memberikan insight mendalam tentang performa model pada level field individual maupun keseluruhan:
-
-\paragraph{Metrik Evaluasi}
-\begin{enumerate}
-    \item \textbf{Field-wise Accuracy}: Akurasi ekstraksi untuk setiap field secara terpisah menggunakan regex parsing
-    \item \textbf{Overall Sequence Accuracy}: Persentase prediksi yang tepat secara keseluruhan
-    \item \textbf{Partial Match Analysis}: Evaluasi komponen-komponen yang benar meskipun keseluruhan prediksi salah
-\end{enumerate}
-
-\paragraph{Real-time Monitoring}
-Penulis mengimplementasikan callback monitoring yang memberikan feedback real-time:
-\begin{itemize}
-    \item Sample prediction display setiap 5 epoch
-    \item Progress tracking dengan tqdm integration
-    \item Automatic model evaluation pada akhir setiap epoch
-    \item Best model saving berdasarkan validation loss
-\end{itemize}
-
-\paragraph{Prediction Post-processing}
-Sistem pembersihan output yang menangani:
-\begin{itemize}
-    \item Duplikasi start tokens
-    \item Spasi berlebih dalam field values
-    \item Normalisasi format output untuk konsistensi
-\end{itemize}
-
-\subsubsection{Strategi Robustness dan Generalisasi}
-\label{subsubsec:strategi-robustness}
-
-Untuk meningkatkan kemampuan generalisasi model pada berbagai variasi dokumen pembayaran, penulis merancang beberapa strategi:
-
-\paragraph{Error Handling Mechanism}
-\begin{enumerate}
-    \item \textbf{Graceful Degradation}: Jika sample mengalami error processing, sistem menggunakan dummy sample untuk menjaga training continuity
-    \item \textbf{Tokenization Safety}: Validasi range token ID untuk mencegah out-of-vocabulary errors
-    \item \textbf{Decode Error Recovery}: Safe decoding dengan fallback ke empty string untuk token yang tidak valid
-\end{enumerate}
-
-\paragraph{Data Quality Assurance}
-\begin{itemize}
-    \item Filtering sample dengan ground truth yang tidak lengkap
-    \item Validasi format gambar dan konversi otomatis ke RGB
-    \item Normalisasi nilai field untuk konsistensi (handling numerical values, date formats)
-\end{itemize}
-
-\paragraph{Generation Configuration}
-Konfigurasi generation yang dioptimalkan untuk task-specific requirements:
-\begin{itemize}
-    \item \textbf{Beam Search}: Menggunakan 4 beams untuk balance antara quality dan speed
-    \item \textbf{Length Control}: Max length 512 tokens dengan early stopping
-    \item \textbf{Repetition Prevention}: N-gram repetition penalty dan bad words filtering
-    \item \textbf{Token Constraints}: Proper EOS dan padding token handling
-\end{itemize}
-
-Rancangan \emph{fine-tuning} ini dirancang untuk menghasilkan model yang robust, akurat, dan dapat diandalkan untuk ekstraksi informasi dari berbagai jenis struk dan bukti pembayaran yang umum digunakan di Indonesia. Implementasi yang telah dirancang akan dijelaskan lebih lanjut pada \autoref{subsec:fine-tuned-model}.
