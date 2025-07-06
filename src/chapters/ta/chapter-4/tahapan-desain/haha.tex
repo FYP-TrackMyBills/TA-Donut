@@ -14,16 +14,16 @@ Model dasar yang dipilih untuk proses \emph{fine-tuning} pada \dataset{} bukti p
     \item \textbf{Arsitektur optimal}: Kombinasi \swin{} sebagai \emph{encoder} visual dan \bart{} sebagai \emph{decoder} teks telah terbukti efektif untuk tugas \emph{Visual Document Understanding}.
 \end{enumerate}
 
-Konfigurasi awal model melibatkan ekspansi \emph{vocabulary tokenizer} untuk menambahkan token khusus domain pembayaran. Token domain pembayaran QRIS dan Transfer tersebut berjumlah 14. Token khusus tersebut terdiri dari:
+Konfigurasi awal model melibatkan ekspansi \emph{vocabulary tokenizer} untuk menambahkan token khusus domain pembayaran. Token yang ditambahkan berjumlah 14 token khusus yang terdiri dari:
 \begin{enumerate}
     \item Token pembuka dan penutup untuk setiap \emph{field}
     \begin{enumerate}
-        \item \texttt{<s\_total\_amount>}, \texttt{</s\_total\_amount>}
-        \item \texttt{<s\_transaction\_time>}, \texttt{</s\_transaction\_time>}
-        \item \texttt{<s\_transaction\_identifier>}, \texttt{</s\_transaction\_identifier>}
-        \item \texttt{<s\_target\_name>}, \texttt{</s\_target\_name>}
-        \item \texttt{<s\_type>}, \texttt{</s\_type>}
-        \item \texttt{<s\_application>}, \texttt{</s\_application>}
+    \item \texttt{<s\_total\_amount>}, \texttt{</s\_total\_amount>}
+    \item \texttt{<s\_transaction\_time>}, \texttt{</s\_transaction\_time>}
+    \item \texttt{<s\_transaction\_identifier>}, \texttt{</s\_transaction\_identifier>}
+    \item \texttt{<s\_type>}, \texttt{</s\_type>}
+    \item \texttt{<s\_target\_name>}, \texttt{</s\_target\_name>}
+    \item \texttt{<s\_application>}, \texttt{</s\_application>}
     \end{enumerate}
     \item Token \emph{task identifier}~\\ \texttt{<s\_payment\_proof>}, \texttt{</s\_payment\_proof>}
 \end{enumerate}

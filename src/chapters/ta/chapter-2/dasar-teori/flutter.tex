@@ -1,0 +1,30 @@
+\subsection{\flutter}
+\label{subsec:flutter}
+
+\flutter{} adalah SDK (\emph{Software Development Kit}) UI \emph{open-source} dari Google yang diluncurkan pada tahun 2017, dirancang sebagai \emph{framework cross-platform} yang memungkinkan pengembang membuat aplikasi yang dikompilasi secara \emph{native} untuk mobile, web, desktop, dan perangkat \emph{embedded} dari satu basis kode. \emph{Framework} ini menggunakan bahasa pemrograman Dart dan mengimplementasikan paradigma UI reaktif dan deklaratif \parencite{flutter2021}.
+
+\subsubsection{Konsep Inti dan Karakteristik Teknis}
+
+\flutter memiliki beberapa karakteristik teknis utama yang membedakannya dari \emph{framework} pengembangan aplikasi lainnya. Arsitektur basis kode tunggal memungkinkan pendekatan tulis sekali dan \emph{deploy} di mana saja (\emph{write once, deploy anywhere}), memberikan efisiensi tinggi dalam pengembangan. Model pemrograman reaktif mengimplementasikan paradigma UI = f(state) dimana antarmuka pengguna bereaksi terhadap perubahan \emph{state} secara otomatis. Kompilasi \emph{native} memungkinkan \flutter mengkompilasi ke kode mesin ARM/Intel untuk kinerja optimal yang mendekati aplikasi \emph{native} asli.
+
+Arsitektur berbasis \emph{widget} menjadi ciri khas \flutter dimana segala sesuatu adalah \emph{widget} yang merupakan deskripsi \emph{immutable} dari komponen UI. Fitur \emph{hot reload} memungkinkan \emph{stateful hot reload} selama development untuk iterasi cepat tanpa kehilangan \emph{state} aplikasi, meningkatkan produktivitas pengembang secara signifikan.
+
+\subsubsection{Arsitektur Berlapis}
+
+\flutter terdiri dari empat \layer utama yang saling terintegrasi. \emph{Layer Framework} yang ditulis dalam Dart mencakup library \emph{widget} Material Design dan Cupertino untuk implementasi desain platform-specific. \emph{Layer widget} menyediakan abstraksi komposisi untuk membangun UI yang kompleks, sementara \emph{layer rendering} menangani manajemen \emph{layout} dan perhitungan posisi elemen. \emph{Layer foundation} menyediakan layanan inti seperti animasi, \emph{painting}, dan \emph{gestures} yang fundamental untuk interaksi pengguna.
+
+\emph{Layer Engine} yang ditulis dalam C++ berisi mesin grafis Skia untuk \emph{rendering} dengan transisi menuju Impeller untuk performa yang lebih baik. Runtime Dart dan \emph{virtual machine} berjalan pada layer ini untuk eksekusi kode aplikasi. \emph{Layout} teks dan operasi \emph{file} I/O juga dikelola pada layer ini, bersama dengan implementasi tingkat rendah dari \api inti \flutter.
+
+\emph{Layer Embedder} bersifat spesifik platform dan menangani integrasi dengan sistem operasi yang mendasarinya. Untuk Android menggunakan Java/C++, sedangkan iOS menggunakan Swift/Objective-C. Layer ini bertanggung jawab untuk koordinasi layanan sistem operasi, manajemen \emph{event loop}, dan eksposur \api spesifik platform untuk fungsionalitas yang tidak tersedia secara cross-platform.
+
+\subsubsection{\emph{Cross-Platform Development}}
+
+\flutter menyediakan efisiensi pengembangan yang signifikan dengan pengurangan waktu pengembangan hingga 50\% dibandingkan pengembangan \emph{native} tradisional. Satu tim pengembang dapat menargetkan \emph{multiple platform} secara bersamaan, mengurangi kebutuhan tenaga kerja dan kompleksitas manajemen proyek. Lingkungan pengembangan dan \emph{tooling} yang terpadu memungkinkan konsistensi dalam proses development, sementara logika bisnis dan komponen UI dapat dibagi antar platform.
+
+Konsistensi menjadi aspek penting dengan UI yang identik di semua platform, memberikan pengalaman pengguna yang seragam. Perilaku dan kinerja yang konsisten mengurangi bug spesifik platform dan memberikan pengalaman \emph{brand} yang terpadu. Hal ini sangat penting untuk aplikasi komersial yang memerlukan identitas visual yang kuat di berbagai platform.
+
+\subsubsection{Integrasi dengan \ml dan \cv}
+
+\flutter menyediakan beberapa jalur untuk integrasi \ml yang relevan untuk aplikasi \cv. Integrasi \tensorflow Lite dimungkinkan melalui paket \texttt{tflite\_flutter} yang memungkinkan inferensi model langsung pada perangkat. Dukungan tersedia untuk model kustom dan \emph{pre-trained}, dengan kompatibilitas \emph{multi-platform} untuk Android, iOS, dan Desktop. Akselerasi \emph{hardware} juga didukung melalui \gpu dan \emph{Neural Processing Units} untuk inferensi yang lebih cepat.
+
+Firebase ML Kit menyediakan \api ML \emph{on-device} untuk tugas umum seperti pengenalan teks, deteksi wajah, dan \emph{scanning barcode}. \emph{Labeling} gambar dan deteksi \emph{landmark} juga tersedia dengan kemampuan pemrosesan \emph{real-time} yang memadai untuk aplikasi produksi. Kemampuan \cv dalam \flutter mencakup pemrosesan \emph{stream} kamera \emph{real-time} untuk aplikasi yang memerlukan analisis video langsung. Klasifikasi gambar dan deteksi objek dapat diimplementasikan dengan mudah, begitu juga dengan implementasi \ocr untuk pengenalan teks. Pengenalan wajah dan autentikasi biometrik juga didukung untuk aplikasi keamanan \parencite{flutteronnx2022}.

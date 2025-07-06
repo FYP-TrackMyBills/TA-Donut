@@ -1,0 +1,20 @@
+\subsection{\onnx}
+\label{subsec:onnx}
+
+\emph{Open Neural Network Exchange} \onnx{} adalah format standar \emph{open-source} untuk merepresentasikan model \ml{} yang memungkinkan interoperabilitas antara berbagai \emph{framework} \dl. Dikembangkan oleh Facebook dan Microsoft pada tahun 2017, \onnx{} telah berkembang menjadi proyek yang lulus dari Linux Foundation AI dengan dukungan dari perusahaan teknologi besar termasuk IBM, Intel, AMD, ARM, Qualcomm, dan NVIDIA \parencite{onnxgithub2019}.
+
+\onnx{} berfungsi sebagai representasi universal yang menangkap struktur graf komputasi dari jaringan neural. Komponen arsitektur inti \onnx{} terdiri dari beberapa elemen penting. \emph{Node} merepresentasikan operasi matematika seperti Conv, Add, MatMul, dan operasi lainnya. \emph{Edge} merepresentasikan tensor yang mengalir antar operasi, sementara atribut mendefinisikan parameter spesifik operasi. \emph{Initializer} berfungsi untuk menyimpan bobot model dan konstanta yang diperlukan.
+
+% Konsep teknis utama \onnx{} meliputi representasi menengah (\emph{Intermediate Representation}) yang berfungsi sebagai representasi universal untuk menangkap struktur graf komputasi dari jaringan neural. \onnx{} dibangun menggunakan format serialisasi \emph{Protocol Buffers} (protobuf) Google untuk penyimpanan dan transmisi model yang efisien. Format ini juga mendefinisikan \emph{Operator Set} (Opset) yang merupakan koleksi operator berversi untuk mempertahankan kompatibilitas mundur. Arsitektur \onnx{} merepresentasikan jaringan neural sebagai graf terarah asiklik (DAG) dimana \emph{node} merepresentasikan operasi dan \emph{edge} merepresentasikan aliran data.
+
+% \subsubsection{Interoperabilitas dan Optimasi}
+
+\onnx{} menyediakan interoperabilitas yang memungkinkan konversi model yang independen, memfasilitasi konversi model antar \pytorch, \tensorflow, Keras, Scikit-learn, dan \emph{framework} lainnya. Hal ini memungkinkan jalur \emph{deployment} tunggal dimana pengembang dapat melakukan pelatihan di \emph{framework} apapun dan kemudian melakukan \emph{deploy} dimana saja menggunakan \onnx Runtime. Format ini bersifat agnostik terhadap \emph{hardware}, memungkinkan model berjalan di berbagai platform seperti CPU, GPU, dan akselerator khusus seperti TPU dan FPGA.
+
+% Dari aspek optimasi, \onnx{} menyediakan optimasi graf otomatis yang mencakup \emph{constant folding}, \emph{operator fusion}, dan eliminasi \emph{node} redundan. Format ini juga menyediakan optimasi spesifik \emph{hardware} yang memanfaatkan \emph{kernel} khusus untuk platform \emph{hardware} berbeda. Efisiensi memori juga menjadi keunggulan dengan alokasi memori yang dioptimalkan dan manajemen \emph{lifecycle} tensor yang efisien.
+
+% \subsubsection{Aplikasi dalam \ml dan \cv}
+
+% \onnx memiliki aplikasi luas dalam berbagai tugas \ml dan \cv. Dalam klasifikasi gambar, \onnx mendukung model seperti ResNet, EfficientNet, dan MobileNet untuk klasifikasi \emph{real-time}. Untuk deteksi objek, format ini kompatibel dengan model \yolo, SSD, dan \rcnn untuk berbagai aplikasi. Aplikasi lainnya mencakup segmentasi semantik dengan model U-Net dan DeepLab, sistem \ocr dan pemahaman dokumen untuk deteksi dan pengenalan teks, serta pengenalan wajah untuk sistem \emph{real-time} dan biometrik.
+
+% Implementasi industri \onnx mencakup berbagai layanan besar seperti layanan Microsoft yang meliputi pencarian Bing, aplikasi Office, dan Azure Cognitive Services. Dalam industri otomotif, \onnx digunakan dalam sistem mengemudi otonom. Sektor kesehatan memanfaatkan \onnx untuk analisis pencitraan medis dan sistem diagnostik, sementara manufaktur menggunakannya untuk sistem kontrol kualitas dan deteksi cacat \parencite{onnxruntime2020}.

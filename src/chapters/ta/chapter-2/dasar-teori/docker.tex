@@ -1,0 +1,32 @@
+\subsection{Docker}
+\label{subsec:docker}
+
+Docker \emph{containerization} adalah teknologi virtualisasi ringan yang mengemas aplikasi dan dependensinya ke dalam lingkungan eksekusi yang \emph{portable} dan terisolasi yang disebut \emph{container}. \emph{Container} adalah unit standar \emph{software} yang mengemas kode dan semua dependensinya sehingga aplikasi berjalan dengan cepat dan andal di berbagai lingkungan komputasi \parencite{merkel2014docker}.
+
+\subsubsection{Konsep Inti}
+
+Docker memiliki beberapa konsep inti yang fundamental untuk pemahaman teknologi kontainerisasi. \emph{Container} merupakan instance yang dapat dijalankan dari Docker \emph{image} yang menyediakan lingkungan eksekusi terisolasi. \emph{Image} adalah \emph{template read-only} dengan instruksi untuk membuat \emph{container}, dibangun dalam \layer yang dapat digunakan kembali. Dockerfile adalah \emph{file} teks berisi instruksi untuk membangun Docker \emph{image} dengan cara yang dapat direproduksi. \emph{Registry} merupakan sistem penyimpanan dan distribusi terpusat untuk \emph{container image} seperti Docker Hub yang memungkinkan berbagi dan distribusi \emph{image}.
+
+\subsubsection{Arsitektur Teknis}
+
+Docker terdiri dari beberapa komponen arsitektur yang terintegrasi dalam arsitektur \emph{multi-layer}. Docker \emph{Client} (CLI) menyediakan \emph{command-line interface} untuk interaksi pengguna dengan sistem Docker. Docker \emph{Daemon} (dockerd) berfungsi sebagai layanan \emph{background} yang mengelola objek Docker seperti \emph{image}, \emph{container}, \emph{network}, dan \emph{volume}. containerd berperan sebagai \emph{container runtime} tingkat tinggi yang mengelola \emph{lifecycle container} dan berinteraksi dengan sistem operasi. runc merupakan \emph{runtime} tingkat rendah yang mengimplementasikan spesifikasi OCI untuk eksekusi \emph{container} yang sebenarnya.
+
+Docker memanfaatkan fitur \emph{kernel} Linux untuk isolasi dan manajemen \emph{resource} melalui integrasi Linux \emph{kernel}. Isolasi \emph{namespace} memberikan isolasi proses antar \emph{container} sehingga setiap \emph{container} memiliki pandangan sistem yang terisolasi. \emph{Control Groups} (cgroups) menangani alokasi dan pembatasan \emph{resource} seperti CPU, memori, dan I/O untuk setiap \emph{container}. Organisasi proses dilakukan melalui manajemen dan pencegahan \emph{contention resource} antar \emph{container} untuk memastikan stabilitas sistem.
+
+\subsubsection{Perbandingan dengan Virtualisasi Tradisional}
+
+Docker menyediakan efisiensi yang signifikan dibandingkan virtualisasi tradisional dalam berbagai aspek kinerja. Waktu \emph{startup container} 10-100 kali lebih cepat dari VM karena tidak memerlukan booting sistem operasi lengkap. Efisiensi \emph{resource} menunjukkan pengurangan \emph{overhead resource} 50-80\% dibandingkan VM karena berbagi \emph{kernel} host. \emph{Density} memungkinkan 2-3 kali lebih banyak \emph{container} per \emph{host} dibandingkan VM dengan \emph{resource} yang sama. Kinerja \cpu mencapai 95-99\% dari \emph{bare metal} karena tidak ada lapisan virtualisasi \emph{hardware}. \emph{Overhead} memori minimal karena arsitektur \emph{kernel} bersama tanpa duplikasi sistem operasi.
+
+Aspek operasional Docker memberikan konsistensi melalui prinsip "\emph{Build once, run anywhere}" yang memungkinkan aplikasi berjalan identik di berbagai lingkungan. \emph{Portabilitas} memungkinkan \emph{deployment} mulus di berbagai lingkungan dari development hingga produksi. \emph{Scaling} cepat memungkinkan kemampuan \emph{horizontal scaling} yang cepat untuk menangani beban yang berubah. Optimasi \emph{resource} memberikan pemanfaatan \emph{hardware} yang lebih baik dengan efisiensi yang tinggi.
+
+\subsubsection{Aplikasi dalam \ml dan \cv}
+
+Docker menyediakan solusi ideal untuk \emph{deployment} model \ml melalui \emph{container-based} ML \emph{serving}. \emph{Model packaging} memungkinkan kontainerisasi model terlatih dengan lingkungan \emph{runtime} yang lengkap dan konsisten. Isolasi \emph{framework} memungkinkan \emph{framework} \ml berbeda seperti \tensorflow, \pytorch, dan scikit-learn berjalan dalam \emph{container} terpisah tanpa konflik dependensi. Manajemen dependensi mengatasi kompleksitas dependensi \emph{library} \ml yang sering berubah dan bertentangan. \emph{Version control} memungkinkan \emph{multiple} versi model di-\emph{deploy} bersamaan untuk A/B testing atau \emph{rollback}.
+
+Aplikasi \cv memanfaatkan Docker untuk kontainerisasi \emph{pipeline} pemrosesan gambar yang kompleks. \emph{Training} model dapat dilakukan dalam lingkungan terdistribusi di lingkungan terkontainerisasi untuk konsistensi dan skalabilitas. \emph{Inference serving} memungkinkan \emph{serving} model \cv \emph{real-time} dengan \api yang dapat di-\emph{scale} sesuai kebutuhan. \emph{Pipeline} data untuk \emph{preprocessing} dan augmentasi data dapat dikontainerisasi untuk memastikan konsistensi pemrosesan.
+
+\subsubsection{Penggunaan dalam Orkestra Microservices}
+
+Docker memungkinkan arsitektur \emph{microservices} yang skalabel melalui isolasi layanan dimana setiap \emph{microservice} berjalan dalam \emph{container} terpisah dengan dependensi yang terisolasi. \emph{Service discovery} dapat diintegrasikan dengan sistem \emph{service discovery} seperti Consul atau etcd untuk memungkinkan layanan saling menemukan dan berkomunikasi. \emph{Load balancing} memungkinkan distribusi \emph{traffic} antar \emph{container} menggunakan \emph{load balancer} untuk memastikan ketersediaan dan performa. \emph{Health monitoring} menyediakan \emph{health check} otomatis dan \emph{restart container} yang bermasalah untuk menjaga stabilitas sistem.
+
+Docker juga memungkinkan \emph{deployment} sistem di berbagai lingkungan \emph{cloud} (AWS, Google Cloud, Azure) atau \emph{on-premises} dengan konfigurasi yang minimal, memberikan fleksibilitas maksimal dalam strategi \emph{deployment} \parencite{ibmcontaineranalysis2017}.

@@ -1,0 +1,21 @@
+\subsubsection{\ted (\emph{Tree Edit Distance})}
+
+\ted adalah \emph{sequence minimum-cost} dari operasi edit \emph{node} yang diperlukan untuk mentransformasi satu \emph{tree} menjadi \emph{tree} lain \parencite{zhang1989tree}. Operasi edit yang dapat dilakukan meliputi \emph{delete} untuk menghapus \emph{node} dan menghubungkan \emph{children}-nya ke \emph{parent}, \emph{insert} untuk menambahkan \emph{node} antara \emph{node} yang ada dan \emph{children}-nya, dan \emph{relabel} untuk mengubah \emph{label} dari \emph{node}.
+
+Formulasi matematika \ted didefinisikan sebagai optimasi biaya minimum untuk transformasi struktur \emph{tree}.
+
+\begin{equation}
+\text{TED}(T_1, T_2) = \min\{\text{cost}(\text{sequence}) : \text{sequence transforms } T_1 \text{ to } T_2\}
+\end{equation}
+
+Definisi rekursif \ted memungkinkan perhitungan efisien melalui pemrograman dinamis.
+
+\begin{equation}
+\text{TED}(F, G) = \min \begin{cases}
+\text{TED}(F-v, G) + \text{cost}(\text{delete } v) \\
+\text{TED}(F, G-w) + \text{cost}(\text{insert } w) \\
+\text{TED}(F-v, G-w) + \text{cost}(\text{relabel } v \rightarrow w)
+\end{cases}
+\end{equation}
+
+\ted memiliki aplikasi luas dalam pemahaman dokumen terstruktur, mencakup analisis similaritas dokumen XML/HTML, analisis dan perbandingan \emph{layout} dokumen, pengenalan struktur dokumen yang kompleks, dan perbandingan data hierarkis. Dalam konteks pemahaman dokumen, \ted berguna untuk mengevaluasi seberapa baik model memahami struktur hierarkis informasi dalam dokumen terstruktur.
