@@ -1,107 +1,22 @@
-\subsection{Perancangan \emph{Fine-Tuning} Model \donut}
-\label{subsec:perancangan-fine-tuning-model}
+\subsection{Perancangan Evaluasi Model}
+\label{subsec:perancangan-evaluasi-model}
 
-Subbab ini menjelaskan rancangan proses \emph{fine-tuning} model \donut{} untuk tugas ekstraksi data bukti pembayaran. Perancangan ini mencakup pemilihan model dasar, konfigurasi arsitektur, desain format keluaran, strategi \emph{preprocessing} data, dan konfigurasi pelatihan untuk melakukan \emph{fine-tuning} model \donut{} pada \dataset{} yang telah dipersiapkan. Proses ini bertujuan untuk menghasilkan model yang mampu melakukan ekstraksi informasi dari bukti pembayaran dengan akurasi tinggi, serta dapat diintegrasikan ke dalam aplikasi \emph{mobile}.
+Perancangan evaluasi model pada penelitian ini mengadopsi pendekatan evaluasi terpadu (\textit{unified evaluation}) yang dirancang untuk mengukur kinerja model secara komprehensif dan konsisten. Sistem evaluasi ini tidak hanya mengukur akurasi dasar, tetapi juga mempertimbangkan aspek-aspek kritis seperti kualitas karakter yang diekstraksi, cakupan field, dan prioritas bisnis dari setiap field yang diekstraksi. Pendekatan evaluasi terpadu ini memungkinkan perbandingan yang adil antara berbagai model dan memberikan wawasan mendalam tentang kekuatan dan kelemahan masing-masing model dalam konteks aplikasi praktis.
 
-\subsubsection{Pemilihan Model Dasar dan Konfigurasi Awal}
-\label{subsubsec:pemilihan-model-dasar}
+\subsubsection{Arsitektur Evaluasi Terpadu}
 
-Model dasar yang dipilih untuk proses \emph{fine-tuning} pada \dataset{} bukti pembayaran QRIS dan transfer adalah model \donut{} yang telah di-\emph{fine-tune} pada \dataset{} \linebreak CORD (\emph{Consolidated Receipt Dataset}) - v2 yang telah disediakan oleh naver-cloud-ix. Model tersebut diberi alias \donutcord. Model \donutcord{} dipilih dengan mempertimbangkan faktor-faktor berikut:
+Sistem evaluasi terpadu dirancang dengan arsitektur modular yang dapat menangani berbagai jenis tugas pemahaman dokumen secara bersamaan. Arsitektur ini memisahkan logika evaluasi umum dari logika spesifik tugas, sehingga memungkinkan ekstensibilitas untuk tugas-tugas evaluasi baru di masa depan. Komponen utama arsitektur evaluasi meliputi pengatur konfigurasi tugas (\textit{task configuration manager}), pemroses data ground truth (\textit{ground truth processor}), generator prediksi (\textit{prediction generator}), kalkulator metrik (\textit{metrics calculator}), dan agregator hasil (\textit{results aggregator}).
 
-\begin{enumerate}
-    \item \textbf{\emph{Domain similarity}}: Model \donutcord{} telah dilatih pada \dataset{} dokumen terstruktur yang memiliki kemiripan dengan struk dan bukti pembayaran dalam hal tata letak dan struktur informasi.
-    \item \textbf{\emph{Pre-trained capabilities}}: Model ini telah memiliki kemampuan dasar dalam memahami dokumen semi-terstruktur, sehingga dapat mempercepat proses konvergensi selama \emph{fine-tuning}.
-    \item \textbf{Arsitektur optimal}: Kombinasi \swin{} sebagai \emph{encoder} visual dan \bart{} sebagai \emph{decoder} teks telah terbukti efektif untuk tugas \emph{Visual Document Understanding}.
-\end{enumerate}
+Pengatur konfigurasi tugas bertanggung jawab untuk mengelola parameter evaluasi yang spesifik untuk setiap jenis dokumen. Untuk tugas QRIS-TF, konfigurasi ini mencakup daftar field target seperti \texttt{total\_amount}, \texttt{transaction\_time}, \texttt{transaction\_identifier}, \texttt{type}, \texttt{target\_name}, dan \texttt{application}, serta bobot prioritas untuk setiap field. Pemroses data ground truth menangani normalisasi dan standardisasi format data referensi, memastikan konsistensi dalam perbandingan prediksi dengan ground truth. Generator prediksi mengimplementasikan logika inferensi model dengan parameter yang dioptimalkan untuk setiap tugas, termasuk pengaturan beam search, panjang maksimal sequence, dan strategi decoding.
 
-Konfigurasi awal model melibatkan ekspansi \emph{vocabulary tokenizer} untuk menambahkan token khusus domain pembayaran. Token yang ditambahkan berjumlah 14 token khusus yang terdiri dari:
-\begin{enumerate}
-    \item Token pembuka dan penutup untuk setiap \emph{field}
-    \begin{enumerate}
-    \item \texttt{<s\_total\_amount>}, \texttt{</s\_total\_amount>}
-    \item \texttt{<s\_transaction\_time>}, \texttt{</s\_transaction\_time>}
-    \item \texttt{<s\_transaction\_identifier>}, \texttt{</s\_transaction\_identifier>}
-    \item \texttt{<s\_type>}, \texttt{</s\_type>}
-    \item \texttt{<s\_target\_name>}, \texttt{</s\_target\_name>}
-    \item \texttt{<s\_application>}, \texttt{</s\_application>}
-    \end{enumerate}
-    \item Token \emph{task identifier}~\\ \texttt{<s\_payment\_proof>}, \texttt{</s\_payment\_proof>}
-\end{enumerate}
+\subsubsection{Metrik Evaluasi Komprehensif}
 
-Ekspansi \emph{vocabulary} ini memerlukan penyesuaian dimensi \emph{embedding layer} pada \decoder{} dan konfigurasi ulang parameter \texttt{decoder\_start\_token\_id} untuk memastikan model memulai generasi dengan token \emph{task} yang tepat.
+Sistem evaluasi mengimplementasikan enam metrik utama yang memberikan gambaran menyeluruh tentang kinerja model. \textit{Accuracy} mengukur persentase field yang diekstraksi dengan benar secara eksak, memberikan indikasi langsung tentang tingkat keberhasilan ekstraksi. \textit{Precision} dan \textit{Recall} dihitung berdasarkan klasifikasi true positive, false positive, dan false negative untuk setiap field, memberikan wawasan tentang kualitas prediksi dan cakupan deteksi. \textit{F1-score} sebagai harmonic mean dari precision dan recall memberikan metrik balanced yang mempertimbangkan kedua aspek tersebut.
 
-Format keluaran dari model juga perlu direstrukturisasi untuk memungkinkan ekstraksi informasi yang konsisten dan otomatis. Format yang dirancang menggunakan \emph{markup} berbasis XML dengan struktur hierarkis sebagai berikut:
+\textit{Mean Character Error Rate} (mCER) dihitung sebagai rata-rata edit distance karakter antara prediksi dan ground truth untuk semua field, dinormalisasi terhadap panjang ground truth. Metrik ini sangat penting untuk aplikasi ekstraksi data finansial karena kesalahan satu karakter dalam jumlah uang atau ID transaksi dapat mengakibatkan konsekuensi serius. \textit{Coverage} mengukur persentase field ground truth yang memiliki prediksi yang tidak kosong, memberikan indikasi tentang kemampuan model untuk mengidentifikasi keberadaan informasi dalam dokumen.
 
-\begin{verbatim}
-<s_payment_proof>
-<s_total_amount>nilai_total</s_total_amount>
-<s_transaction_time>waktu_transaksi</s_transaction_time>
-<s_transaction_identifier>id_transaksi</s_transaction_identifier>
-<s_type>jenis_transaksi</s_type>
-<s_target_name>nama_tujuan</s_target_name>
-<s_application>aplikasi_pembayaran</s_application>
-</s_payment_proof>
-\end{verbatim}
+\subsubsection{Sistem Pembobotan Field Berdasarkan Prioritas Bisnis}
 
-Token \texttt{<s\_payment\_proof>} berfungsi sebagai task prompt yang memberikan konteks kepada model bahwa tugas yang dijalankan adalah ekstraksi informasi dari dokumen bukti pembayaran yang dapat berupa QRIS dan transfer dan berbeda dari tugas ekstraksi dokumen struk pembayaran pada \donutcord. Dengan demikian, model diarahkan untuk menghasilkan keluaran yang sesuai dengan format yang telah ditentukan.
+Implementasi sistem pembobotan field mencerminkan realitas bahwa tidak semua field memiliki tingkat kepentingan yang sama dalam aplikasi praktis. Untuk konteks pembayaran QRIS, field \texttt{total\_amount} diberi bobot tertinggi (3.0) karena kesalahan dalam ekstraksi jumlah pembayaran memiliki dampak langsung terhadap akurasi transaksi keuangan. Field \texttt{type}, \texttt{application}, dan \texttt{target\_name} diberi bobot menengah (2.0) karena penting untuk kategorisasi dan verifikasi transaksi. Field \texttt{transaction\_time} dan \texttt{transaction\_identifier} diberi bobot standar (1.0) karena meskipun berguna untuk audit dan pelacakan, kesalahan pada field ini tidak secara langsung mempengaruhi validitas transaksi.
 
-\subsubsection{Strategi Preprocessing Data}
-\label{subsubsec:strategi-preprocessing-data}
-
-Mengingat karakteristik data metadata yang berpotensi mengalami korupsi atau format yang tidak konsisten, penulis merancang strategi preprocessing yang robust dengan beberapa tahapan:
-
-\paragraph{Pembersihan Metadata}
-Penulis mengimplementasikan parser multi-tahap untuk menangani file metadata yang berformat JSONL tetapi mengalami masalah formatting:
-\begin{enumerate}
-    \item \textbf{Parser Array JSON}: Mencoba parsing sebagai array JSON lengkap setelah menambahkan delimiter koma.
-    \item \textbf{Parser Line-by-Line}: Jika gagal, melakukan parsing objek JSON per baris dengan tracking brace count untuk rekonstruksi objek yang terpisah.
-    \item \textbf{Error Recovery}: Menangani karakter khusus dan trailing commas yang dapat menyebabkan parsing error.
-\end{enumerate}
-
-\paragraph{Pencocokan File Gambar}
-Sistem pencarian file gambar yang fleksibel diimplementasikan untuk mengatasi inkonsistensi penamaan file:
-\begin{itemize}
-    \item Pencocokan direct path
-    \item Pencocokan case-insensitive untuk handling variasi kapitalisasi
-    \item Pencocokan dengan berbagai ekstensi gambar (.jpg, .jpeg, .png)
-    \item Pencocokan partial untuk nama file tanpa ekstensi
-\end{itemize}
-
-\paragraph{Validasi dan Pembersihan Data}
-Setiap sample data divalidasi untuk memastikan:
-\begin{itemize}
-    \item Keberadaan file gambar yang valid
-    \item Kelengkapan ground truth annotation
-    \item Konsistensi format field value (normalisasi spasi internal)
-    \item Handling nilai null atau kosong
-\end{itemize}
-
-\subsubsection{Konfigurasi Pelatihan dan Optimisasi}
-\label{subsubsec:konfigurasi-pelatihan}
-
-Penulis merancang konfigurasi pelatihan yang mempertimbangkan keterbatasan sumber daya komputasi sambil memaksimalkan kualitas hasil \emph{fine-tuning}:
-
-\paragraph{Hyperparameter Selection}
-\begin{itemize}
-    \item \textbf{Learning Rate}: 3e-5, dipilih sebagai trade-off antara kecepatan konvergensi dan stabilitas pelatihan
-    \item \textbf{Batch Size}: 1 per device dengan gradient accumulation 8 steps, memberikan effective batch size 8
-    \item \textbf{Epochs}: 40 dengan early stopping patience 3 untuk mencegah overfitting
-    \item \textbf{Weight Decay}: 0.01 untuk regularisasi model
-\end{itemize}
-
-\paragraph{Optimisasi Memori}
-Untuk mengatasi keterbatasan memori GPU, penulis mengimplementasikan beberapa teknik optimisasi:
-\begin{enumerate}
-    \item \textbf{Mixed Precision Training}: Menggunakan FP16 untuk mengurangi penggunaan memori hingga 50\%
-    \item \textbf{Gradient Checkpointing}: Menukar komputasi tambahan dengan penghematan memori
-    \item \textbf{Memory Management}: Disable pin memory dan multiprocessing pada dataloader
-    \item \textbf{Garbage Collection}: Pembersihan cache CUDA secara eksplisit
-\end{enumerate}
-
-\paragraph{Data Collation Strategy}
-Penulis merancang custom collation function yang menangani:
-\begin{itemize}
-    \item Forcing decoder input dengan task start token
-    \item Proper label masking untuk padding tokens (-100 untuk ignore dalam loss calculation)
-    \item Batch consistency handling untuk samples dengan ukuran berbeda
-\end{itemize}
+Sistem pembobotan ini diimplementasikan dalam perhitungan metrik agregat dengan mengalikan kontribusi setiap field terhadap metrik keseluruhan dengan bobot yang sesuai. Pendekatan ini menghasilkan skor evaluasi yang lebih representatif terhadap performa model dalam skenario penggunaan nyata, di mana akurasi field kritis lebih diutamakan daripada field yang kurang kritis.

@@ -1,2 +1,34 @@
 \subsection{Perancangan Evaluasi Model}
 \label{subsec:perancangan-evaluasi-model}
+
+Perancangan evaluasi model pada penelitian ini diimplementasikan melalui skrip evaluasi komprehensif yang dirancang untuk mengukur kinerja model pada dua dataset berbeda, yaitu dataset CORD-v2 untuk evaluasi model Donut base dan dataset QRIS \textit{Payment Proof} untuk evaluasi model yang telah di-\textit{fine-tune}. Skrip evaluasi ini mengimplementasikan serangkaian tahapan sistematis mulai dari konfigurasi parameter evaluasi, pemrosesan data \textit{ground truth}, generasi prediksi, hingga perhitungan metrik dan analisis hasil. Pendekatan ini memungkinkan evaluasi yang konsisten dan dapat direproduksi untuk kedua jenis tugas pemahaman dokumen.
+
+\subsubsection{Konfigurasi Parameter dan Pembobotan Field}
+
+Tahap pertama implementasi evaluasi adalah penetapan konfigurasi parameter yang mencakup definisi field target dan sistem pembobotan berdasarkan prioritas bisnis. Untuk tugas QRIS-TF, field target yang dievaluasi meliputi \texttt{total\_amount}, \texttt{transaction\_time}, \texttt{transaction\_identifier}, \texttt{type}, \texttt{target\_name}, dan \texttt{application}. Sistem pembobotan field diimplementasikan dengan memberikan bobot 3.0 untuk field \texttt{total\_amount}, bobot 2.0 untuk field \texttt{type} dan \texttt{target\_name}, serta bobot 1.0 untuk field lainnya.
+
+Justifikasi pembobotan ini didasarkan pada tingkat kekritisan field dalam konteks aplikasi pembayaran digital. Field \texttt{total\_amount} mendapat bobot tertinggi karena kesalahan ekstraksi jumlah pembayaran berdampak langsung pada akurasi transaksi finansial dan dapat menyebabkan kerugian material. Field \texttt{type} dan \texttt{target\_name} mendapat bobot menengah karena penting untuk kategorisasi jenis transaksi dan identifikasi penerima pembayaran, yang krusial untuk verifikasi dan audit transaksi. Field seperti \texttt{transaction\_time} dan \texttt{transaction\_identifier} mendapat bobot standar karena meskipun berguna untuk pelacakan dan \textit{logging}, kesalahan pada field ini tidak secara langsung mempengaruhi validitas transaksi pembayaran.
+
+\subsubsection{Implementasi Fungsi Pemrosesan Data}
+
+Implementasi fungsi pemrosesan data dibagi menjadi dua kategori utama sesuai dengan jenis tugas yang dievaluasi. Untuk tugas CORD-v2, diimplementasikan fungsi \texttt{process\_cord\_json\_enhanced} yang menangani pemrosesan format JSON dari dataset receipt parsing, serta fungsi \texttt{parse\_cord\_xml\_output} yang memproses output model dalam format XML. Fungsi-fungsi ini menangani ekstraksi informasi menu items, harga total, dan metadata receipt lainnya dengan normalisasi teks yang konsisten.
+
+Untuk tugas QRIS-TF, diimplementasikan fungsi \texttt{parse\_qristf\_output} yang mengekstraksi field pembayaran menggunakan pattern matching berbasis regex untuk setiap field target. Fungsi \texttt{process\_qristf\_ground\_truth} menangani normalisasi data referensi dari format JSONL dataset. Semua fungsi pemrosesan mengimplementasikan mekanisme error handling yang robust dan normalisasi teks untuk memastikan konsistensi dalam perbandingan string.
+
+\subsubsection{Algoritma Perhitungan Metrik Evaluasi}
+
+Sistem evaluasi mengimplementasikan enam metrik utama yang dihitung melalui fungsi \texttt{calculate\_metrics}. \textit{Accuracy} dihitung sebagai persentase field yang memiliki kecocokan eksak antara prediksi dan \textit{ground truth}. \textit{Precision} dan \textit{Recall} dihitung berdasarkan klasifikasi \textit{true positive}, \textit{false positive}, dan \textit{false negative} untuk setiap field, di mana \textit{true positive} adalah field yang diprediksi dengan benar, \textit{false positive} adalah field yang diprediksi tetapi salah atau tidak ada dalam \textit{ground truth}, dan \textit{false negative} adalah field yang ada dalam \textit{ground truth} tetapi tidak diprediksi atau diprediksi salah.
+
+\textit{Mean Character Error Rate} (mCER) diimplementasikan menggunakan algoritma edit distance yang menghitung jarak minimum transformasi karakter antara string prediksi dan \textit{ground truth}, dinormalisasi terhadap panjang string referensi. Metrik \textit{Coverage} mengukur persentase field \textit{ground truth} yang memiliki prediksi tidak kosong, memberikan indikasi kemampuan model dalam mendeteksi keberadaan informasi dalam dokumen. \textit{F1-score} dihitung sebagai harmonic mean dari \textit{precision} dan \textit{recall}, memberikan metrik seimbang yang mempertimbangkan kedua aspek kualitas prediksi dan cakupan deteksi.
+
+\subsubsection{Pipeline Generasi Prediksi dan Inferensi Model}
+
+Pipeline generasi prediksi diimplementasikan melalui fungsi \texttt{generate\_predictions} yang menangani preprocessing gambar, tokenisasi prompt tugas, dan eksekusi inferensi model. Preprocessing gambar dilakukan menggunakan processor Donut yang mengonversi gambar input menjadi tensor pixel values dengan normalisasi yang sesuai. Untuk setiap jenis tugas, digunakan prompt khusus: \texttt{<s\_cord-v2>} untuk tugas CORD-v2 dan \texttt{<s\_payment\_proof>} untuk tugas QRIS-TF.
+
+Konfigurasi inferensi menggunakan beam search dengan 3 beam, panjang sequence maksimal 1024 token, dan repetition penalty 1.1 untuk mengurangi output repetitif. Parameter early stopping dinonaktifkan untuk memastikan eksplorasi sequence yang lengkap, sementara deterministic sampling (do\_sample=False) digunakan untuk memastikan reproducibility hasil evaluasi. Output model didekode menggunakan tokenizer dengan penghapusan special tokens dan normalisasi whitespace.
+
+\subsubsection{Framework Evaluasi Multi-Model dan Analisis Hasil}
+
+Framework evaluasi diimplementasikan melalui fungsi utama \texttt{evaluate\_model} yang menangani loading dataset, iterasi evaluasi per sampel, aggregasi metrik, dan error tracking. Evaluasi dilakukan pada kedua dataset validasi dan testing untuk memberikan gambaran komprehensif tentang generalisasi model. Setiap sampel yang diproses menghasilkan metrik individual yang kemudian diagregasi untuk menghasilkan statistik keseluruhan.
+
+Sistem tracking error menggunakan kelas \texttt{EvaluationResults} yang mencatat sampel yang gagal diproses, pesan error yang terjadi, dan nama file yang bermasalah untuk debugging. Analisis hasil mencakup perhitungan metrik rata-rata per sampel dan metrik overall yang dihitung berdasarkan total field yang diekstraksi. Output evaluasi disajikan dalam format tabel terstruktur dengan breakdown metrik yang memudahkan interpretasi performa model dan identifikasi area yang memerlukan perbaikan.
