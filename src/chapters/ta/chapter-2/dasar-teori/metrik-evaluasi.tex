@@ -1,64 +1,62 @@
 \subsection{Metrik Evaluasi}
 \label{subsec:metrik-evaluasi}
 
-Evaluasi kinerja sistem \cv dan \ml memerlukan metrik yang komprehensif dan sesuai dengan domain aplikasi. Untuk sistem pemahaman dokumen dan pengenalan teks, diperlukan kombinasi metrik klasifikasi standar dan metrik khusus untuk evaluasi pemahaman dokumen terstruktur dan akurasi pengenalan teks \parencite{rice1996ocr}.
+Evaluasi kinerja sistem \ml{} memerlukan metrik yang komprehensif dan sesuai dengan domain aplikasi. Sistem pemahaman dokumen dan pengenalan teks memerlukan kombinasi metrik klasifikasi standar dan metrik khusus untuk evaluasi pemahaman dokumen. Metrik evaluasi yang digunakan dalam penelitian ini mencakup \accuracy, \precision, \recall, \fscore, \coverage, dan \mcer{} (\emph{Mean Character Error Rate}).
 
 \subsubsection{Metrik Klasifikasi Standar}
 
-\accuracy mengukur proporsi prediksi yang benar baik positif maupun negatif di seluruh \emph{instance} dalam \dataset. Formula \accuracy didefinisikan sebagai perbandingan antara jumlah prediksi benar dengan total prediksi yang dibuat. Dalam konteks klasifikasi biner, \accuracy dihitung menggunakan matriks konfusi yang terdiri dari \emph{True Positive} (TP), \emph{True Negative} (TN), \emph{False Positive} (FP), dan \emph{False Negative} (FN).
+\accuracyfl{} mengukur proporsi prediksi yang benar baik positif maupun negatif di seluruh \emph{instance} dalam \dataset. Formula \accuracy{} didefinisikan sebagai perbandingan antara jumlah prediksi benar dengan total prediksi yang dibuat. Dalam konteks klasifikasi biner, \accuracy{} dihitung menggunakan matriks yang terdiri dari \emph{True Positive} (TP), \emph{True Negative} (TN), \emph{False Positive} (FP), dan \emph{False Negative} (FN). Persamaan \eqref{eq:accuracy} menunjukkan perhitungan \accuracy \parencite{jayaswal2020evalmetrics}. 
 
 \begin{equation}
+    \label{eq:accuracy}
 \text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
 \end{equation}
 
-\precision mengukur proporsi prediksi positif yang benar di antara semua prediksi positif yang dibuat model. Metrik ini sangat penting ketika biaya \emph{false positive} tinggi dalam aplikasi tertentu.
+\precisionfl{} mengukur proporsi prediksi positif yang benar di antara semua prediksi positif yang dibuat model. Metrik ini sangat penting ketika biaya \emph{false positive} tinggi dalam aplikasi tertentu. Persamaan \eqref{eq:precision} menunjukkan perhitungan \precision. Perhitungan \precision{} didefinisikan sebagai rasio antara \emph{True Positive} (TP) dengan jumlah total prediksi positif yang dibuat, yaitu jumlah \emph{True Positive} ditambah \emph{False Positive} \parencite{jayaswal2020evalmetrics}. \precisionfl{} tinggi menunjukkan bahwa model meminimalkan \emph{false positive}, memastikan prediksi positif kemungkinan besar benar dan dapat diandalkan untuk pengambilan keputusan.
 
 \begin{equation}
+    \label{eq:precision}
 \text{Precision} = \frac{TP}{TP + FP}
 \end{equation}
 
-\precision tinggi menunjukkan bahwa model meminimalkan \emph{false positive}, memastikan prediksi positif kemungkinan besar benar dan dapat diandalkan untuk pengambilan keputusan.
-
-\recall atau sensitivitas mengukur proporsi \emph{instance} positif aktual yang berhasil diidentifikasi dengan benar oleh model. Metrik ini kritikal ketika biaya \emph{false negative} tinggi dalam sistem yang memerlukan deteksi lengkap.
+\recallfl{} mengukur proporsi \emph{instance} positif aktual yang berhasil diidentifikasi dengan benar oleh model. Metrik ini kritikal ketika biaya \emph{false negative} tinggi dalam sistem yang memerlukan deteksi lengkap. Persamaan \eqref{eq:recall} menunjukkan rumus yang dapat digunakan untuk menghitung \recall \parencite{jayaswal2020evalmetrics}.\recallfl{} tinggi berarti model menangkap sebagian besar \emph{instance} positif, meminimalkan kemungkinan melewatkan data penting yang harus dideteksi.
 
 \begin{equation}
+    \label{eq:recall}
 \text{Recall} = \frac{TP}{TP + FN}
 \end{equation}
 
-\recall tinggi berarti model menangkap sebagian besar \emph{instance} positif, meminimalkan kemungkinan melewatkan data penting yang harus dideteksi.
-
-F1-\emph{score} adalah rata-rata harmonik dari \precision dan \recall, memberikan ukuran seimbang yang mempertimbangkan kedua metrik secara setara. Penggunaan rata-rata harmonik memiliki signifikansi khusus karena menghukum nilai ekstrem lebih dari rata-rata aritmatika.
+\fscore{} adalah rata-rata harmonik dari \precision{} dan \recall{}. \fscore{} memberikan ukuran seimbang yang mempertimbangkan kedua metrik secara setara. Persamaan \eqref{eq:fscore} menunjukkan rumus yang dapat digunakan untuk menghitung \fscore \parencite{jayaswal2020evalmetrics}. \fscore{} tinggi menunjukkan bahwa model tidak hanya akurat dalam prediksi positif tetapi juga menangkap sebagian besar \emph{instance} positif yang relevan. \fscore{} memerlukan \precision{} dan \recall{} tinggi untuk mencapai skor tinggi. \fscore{} akan menjadi nol jika salah satu dari \precision atau \recall adalah nol.
 
 \begin{equation}
+    \label{eq:fscore}
 \text{F1-Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
 \end{equation}
 
-F1-\emph{score} memerlukan \precision dan \recall tinggi untuk mencapai skor tinggi, menjadi nol jika salah satu dari \precision atau \recall adalah nol, dan lebih konservatif dari rata-rata aritmatika dengan menekankan keseimbangan antara kedua metrik.
-
 % \input{src/chapters/ta/chapter-2/dasar-teori/ted.tex}
 
-\subsubsection{\mcer (\emph{Mean Character Error Rate})}
+\subsubsection{\mcer{} (\emph{Mean Character Error Rate})}
 
-\mcer adalah rata-rata \emph{Character Error Rate} di beberapa dokumen atau segmen teks, memberikan ukuran komprehensif akurasi \ocr \parencite{holley2009ocr}. Metrik ini sangat relevan untuk sistem pengenalan teks yang bergantung pada akurasi pengenalan karakter.
+\mcer{} adalah rata-rata \emph{Character Error Rate} di beberapa dokumen atau segmen teks, memberikan ukuran komprehensif akurasi deteksi teks \parencite{holley2009ocr}. Metrik ini sangat relevan untuk sistem pengenalan teks yang bergantung pada akurasi pengenalan karakter. Persamaan \eqref{eq:mcer} menunjukkan rumus yang digunakan untuk menghitung \mcer dengan $\text{CER}_i$ adalah \emph{Character Error Rate} untuk dokumen $i$. Metrik ini mengukur kesalahan pengenalan karakter pada tingkat granular, memberikan wawasan tentang akurasi pengenalan teks pada level karakter.
 
 \begin{equation}
-\text{MCER} = \frac{1}{N} \times \sum_{i=1}^{N} \text{CER}_i
+    \label{eq:mcer}
+\text{mCER} = \frac{1}{N} \times \sum_{i=1}^{N} \text{CER}_i
 \end{equation}
 
-dimana $\text{CER}_i$ adalah \emph{Character Error Rate} untuk dokumen $i$ yang dihitung berdasarkan \emph{Levenshtein Distance}.
-
 \begin{equation}
+    \label{eq:cer}
 \text{CER}_i = \frac{S_i + D_i + I_i}{N_i}
 \end{equation}
 
-Parameter dalam perhitungan ini meliputi $S$ yang merepresentasikan jumlah substitusi karakter, $D$ untuk jumlah \emph{deletion} atau penghapusan karakter, $I$ untuk jumlah \emph{insertion} atau penambahan karakter, dan $N$ sebagai total jumlah karakter dalam \emph{ground truth}.
+Persamaan \eqref{eq:cer} menunjukkan cara perhitungan CER dengan parameter yang meliputi $S$ yang merepresentasikan jumlah substitusi karakter, $D$ untuk jumlah \emph{deletion} atau penghapusan karakter, $I$ untuk jumlah \emph{insertion} atau penambahan karakter, dan $N$ sebagai total jumlah karakter dalam \emph{ground truth}.
 
-\mcer digunakan secara luas dalam berbagai aplikasi evaluasi \ocr. \emph{Benchmark} mesin \ocr menggunakan \mcer untuk membandingkan kinerja algoritma yang berbeda dan melacak \emph{improvement} dari waktu ke waktu. Proyek digitalisasi menggunakan metrik ini untuk penilaian kualitas hasil konversi dokumen fisik ke digital.
+% \mcer{} digunakan secara luas dalam berbagai aplikasi evaluasi \ocr. \emph{Benchmark} mesin \ocr{} menggunakan \mcer{} untuk membandingkan kinerja algoritma yang berbeda dan memantau perkembangan dari waktu ke waktu. Proyek digitalisasi menggunakan metrik ini untuk menilai kualitas hasil konversi dokumen fisik ke digital.
 
-\subsubsection{Integrasi Metrik untuk Evaluasi Sistem}
+% \subsubsection{Integrasi Metrik untuk Evaluasi Sistem}
 
-Evaluasi sistem pemahaman dokumen yang komprehensif memerlukan pendekatan \emph{multi-level} yang mengintegrasikan berbagai metrik. Tingkat karakter menggunakan \mcer untuk mengukur akurasi pengenalan teks individual dan memastikan setiap karakter dapat dibaca dengan benar. Tingkat \emph{field} memanfaatkan \accuracy, \precision, \recall, dan F1-\emph{score} untuk evaluasi ekstraksi \emph{field} spesifik dalam dokumen terstruktur. Tingkat struktur menggunakan \ted untuk mengevaluasi pemahaman struktur dokumen keseluruhan dan hubungan antar elemen. Tingkat sistem mengkombinasikan semua metrik untuk evaluasi kinerja sistem secara holistik.
+% Evaluasi sistem pemahaman dokumen yang komprehensif memerlukan pendekatan \emph{multi-level} yang mengintegrasikan berbagai metrik. Tingkat karakter menggunakan \mcer untuk mengukur akurasi pengenalan teks individual dan memastikan setiap karakter dapat dibaca dengan benar. Tingkat \emph{field} memanfaatkan \accuracy, \precision, \recall, dan F1-\emph{score} untuk evaluasi ekstraksi \emph{field} spesifik dalam dokumen terstruktur. Tingkat struktur menggunakan \ted untuk mengevaluasi pemahaman struktur dokumen keseluruhan dan hubungan antar elemen. Tingkat sistem mengkombinasikan semua metrik untuk evaluasi kinerja sistem secara holistik.
 
-Interpretasi dan \emph{trade-off} antar metrik memberikan perspektif berbeda tentang kinerja sistem. \accuracy memberikan gambaran umum kinerja tetapi dapat menyesatkan pada data tidak seimbang, sehingga perlu dikombinasikan dengan metrik lain. \precision menjadi penting ketika biaya \emph{false positive} tinggi dalam aplikasi yang memerlukan presisi tinggi. \recall kritikal ketika biaya \emph{false negative} tinggi dalam sistem yang memerlukan deteksi lengkap. F1-\emph{score} memberikan keseimbangan antara \precision dan \recall untuk evaluasi menyeluruh. \ted mengukur pemahaman struktur dokumen yang kompleks dan hubungan hierarkis antar elemen, sementara \mcer memberikan ukuran granular akurasi pengenalan teks pada level karakter.
+% Interpretasi dan \emph{trade-off} antar metrik memberikan perspektif berbeda tentang kinerja sistem. \accuracy memberikan gambaran umum kinerja tetapi dapat menyesatkan pada data tidak seimbang, sehingga perlu dikombinasikan dengan metrik lain. \precision menjadi penting ketika biaya \emph{false positive} tinggi dalam aplikasi yang memerlukan presisi tinggi. \recall kritikal ketika biaya \emph{false negative} tinggi dalam sistem yang memerlukan deteksi lengkap. F1-\emph{score} memberikan keseimbangan antara \precision dan \recall untuk evaluasi menyeluruh. \ted mengukur pemahaman struktur dokumen yang kompleks dan hubungan hierarkis antar elemen, sementara \mcer memberikan ukuran granular akurasi pengenalan teks pada level karakter.
 
-Penggunaan metrik evaluasi yang komprehensif memastikan bahwa sistem pemahaman dokumen tidak hanya akurat dalam mengenali teks, tetapi juga mampu memahami struktur dokumen dan mengekstrak informasi relevan dengan presisi tinggi yang diperlukan untuk berbagai aplikasi \parencite{bille2005tree}.
+% Penggunaan metrik evaluasi yang komprehensif memastikan bahwa sistem pemahaman dokumen tidak hanya akurat dalam mengenali teks, tetapi juga mampu memahami struktur dokumen dan mengekstrak informasi relevan dengan presisi tinggi yang diperlukan untuk berbagai aplikasi \parencite{bille2005tree}.
