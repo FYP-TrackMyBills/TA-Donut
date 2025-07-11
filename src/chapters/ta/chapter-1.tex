@@ -11,23 +11,29 @@ Transaksi pembayaran merupakan bagian penting dari aktivitas ekonomi, baik dalam
 
 Pada April 2024, Bank Indonesia melaporkan jumlah pengguna \qris{} mencapai angka 48,12 juta dan jumlah \emph{merchant} yang menggunakan mencapai 31,61 juta \parencite{CNNqris2024}. Total nilai transaksi dengan menggunakan metode pembayaran \qris{} telah mencapai Rp 31,65 triliun, yaitu meningkat sebesar 149,46\% secara tahunan pada bulan Februari 2024 \parencite{Tempo2024BIQRIS}. Peningkatan ini mencerminkan adopsi yang signifikan di kalangan masyarakat, khususnya Gen Z dan milenial, yang cenderung memilih transaksi nontunai. Survei dari Jawa Pos Radar Lawu mengungkapkan bahwa 57\% dari kedua generasi ini lebih memilih transaksi nontunai, dengan \qris{} menjadi salah satu metode yang paling efektif \parencite{jawapos2024qris}.
 
-Kemudahan ini mendorong peningkatan frekuensi transaksi digital di kalangan pengguna yang mengakibatkan kenaikan pada angka volume transaksi. Namun, seiring dengan meningkatnya volume transaksi, belum terdapat sistem dengan mekanisme pencatatan transaksi. Banyak pengguna masih harus melakukan pencatatan manual untuk memantau pengeluaran mereka yang rentan terhadap kesalahan dan memakan waktu. Salah satu solusi potensial untuk masalah ini adalah penerapan teknologi berbasis \cvfull{} dan \dl{} yang dapat melakukan pemindaian dan ekstraksi data dari dokumen gambar secara akurat, seperti \ocrfull, \cnnfull, \transformer, dan lainnya.
+Studi yang dilakukan oleh Beck dan Gariis III tentang mengatur keuangan pribadi pada tahun 2019 menunjukkan bahwa Gen Z dan milenial, khususnya mahasiswa, memiliki pengetahuan akan finansial yang cukup terbatas, tetapi mereka paham akan pentingnya pengelolaan keuangan yang baik \parencite{beck2019managing}. Johan, Rowlingson, dan Appleyard melakukan studi pada tahun 2020 terhadap 521 mahasiswa Indonesia di IPB tentang hubungan pengetahuan finansial terhadap perilaku keuangan dan menemukan bahwa 84\% dari mahasiswa yang belum mendapatkan pengetahuan finansial dan 78\% dari mahasiswa yang telah mendapatkan pengetahuan finansial tidak melakukan pencatatan pengeluaran mereka \parencite{johan2021effect}. 
 
-\layoutlm{} dan \bert{} merupakan model transformer yang menggabungkan informasi visual dan tekstual untuk memahami dokumen. Namun, kedua model ini masih bergantung pada \ocr. Ketergantungan ini membuat kedua model tersebut kurang efisien. Oleh karena itu, sistem yang dapat mengonversi dan mengekstrak data dari bukti pembayaran berbasis kertas menjadi dokumen digital yang tidak bergantung pada OCR menjadi sistem yang diperlukan.
+Peristiwa serupa juga terjadi pada Gen Z di Amerika Serikat. Berdasarkan studi yang dilakukan oleh Lewis dan Perry pada tahun 2019, Sarah, seorang milenial dengan satu anak, merasa frustrasi dan kesulitan untuk mengontrol pengeluaran digital yang "hanya beberapa klik". May, seorang Gen Z dengan pemasukan dari uang saku, mengungkapkan bahwa ia tidak menyadari bahwa transaksi digital bisa tertumpuk dengan sangat cepat \parencite{lewis2019follow}. Studi tentang \emph{financial tracking} oleh Kaye dkk. pada tahun 2014 menunjukkan bahwa salah satu alasan kesulitan pencatatan pengeluaran karena sulitnya klasifikasi informasi pada bukti dan struk pembayaran yang menyebabkan pencatatan pada \emph{platform} secara manual menjadi tidak terstruktur \parencite{kaye2014money}. Walaupun Gen Z dan milenial telah mengadopsi teknologi pembayaran digital, mereka masih menghadapi tantangan dalam mengelola dan mencatat pengeluaran mereka secara efektif. Banyak pengguna masih harus melakukan pencatatan manual untuk memantau pengeluaran mereka yang rentan terhadap kesalahan dan memakan waktu.
+
+% Kemudahan ini mendorong peningkatan frekuensi transaksi digital di kalangan pengguna yang mengakibatkan kenaikan pada angka volume transaksi. Namun, seiring dengan meningkatnya volume transaksi, belum terdapat sistem dengan mekanisme pencatatan transaksi. Banyak pengguna masih harus melakukan pencatatan manual untuk memantau pengeluaran mereka yang rentan terhadap kesalahan dan memakan waktu. 
+
+Salah satu solusi potensial untuk masalah ini adalah penerapan teknologi berbasis \cvfull{} dan \dl{}. Implementasi teknologi tersebut memiliki kapabilitas untuk pemindaian dan ekstraksi data dari dokumen gambar secara akurat, seperti \ocrfull, \cnnfull, \transformer, dan lainnya. Hasil ekstraksi tersebut dapat dipetakan pada atribut terkait tanpa perlu adanya upaya manual untuk melakukan klasifikasi atribut.
+
+% \layoutlm{} dan \bert{} merupakan model \transformer{} yang menggabungkan informasi visual dan tekstual untuk memahami dokumen. Oleh karena itu, sistem yang dapat mengonversi dan mengekstrak data dari bukti pembayaran berbasis kertas menjadi dokumen digital.
 
 \section{Rumusan Masalah}
 \label{sec:rumusanmasalah}
 
-Berdasarkan latar belakang dan masalah yang dihadapi oleh individu untuk melakukan pengelolaan bukti dan struk pembayaran, dapat dirumuskan masalah yang akan diselesaikan adalah sebagai berikut.
+Berdasarkan latar belakang dan masalah yang dihadapi oleh individu untuk melakukan mencatat pengeluaran, dapat dirumuskan masalah yang akan diselesaikan adalah sebagai berikut.
 
 \begin{center}
-	"Bagaimana cara mengembangkan sistem yang dapat mengonversi dan mengektraksi data dari bukti dan struk pembayaran yang berbasis kertas dan bervariasi menjadi dokumen digital yang berfungsi untuk pencatatan transaksi?"
+	"Bagaimana sistem yang dapat mengekstraksi dan mengklasifikasikan hasi ekstraksi dari bukti pembayaran QRIS, transfer, dan struk pembayaran berbasis kertas dengan format bervariasi?"
 \end{center}
 
 \section{Tujuan}
 \label{sec:tujuan}
 
-Berdasarkan rumusan masalah yang telah didefinisikan pada \autoref{sec:rumusanmasalah}, didapatkan jawaban dari rumusan masalah dan hasil akhir yang ingin diperoleh, yaitu membangun sistem yang dapat digunakan untuk memindai, mengonversi, dan mengekstrak data dari struk dan bukti pembayaran dengan format yang berbeda-beda menjadi dokumen digital yang dapat berfungsi untuk pencatatan transaksi.
+Berdasarkan rumusan masalah yang telah didefinisikan pada \autoref{sec:rumusanmasalah}, didapatkan jawaban dari rumusan masalah dan hasil akhir yang ingin diperoleh, yaitu membangun sistem yang dapat mempermudah Gen Z dan milenial, khususnya mahasiswa dengan tantangan format bukti pembayaran QRIS, transfer, dan struk pembayaran yang bervariasi untuk melakukan pencatatan pengeluaran. Hasil akhir yang diharapkan adalah sistem yang dapat mengekstrak dan mengklasifikasikan data dari bukti pembayaran berbasis kertas dan bervariasi untuk dapat digunakan untuk mempermudah proses pencatatan transaksi keuangan.
 
 \section{Batasan Masalah}
 \label{sec:batasanmasalah}
@@ -75,7 +81,7 @@ Metodologi yang akan digunakan pada tugas akhir ini adalah \dsrmfull. Metodologi
 	\item \emph{Demonstration}~\\
 	      Tahapan \emph{demonstration} merupakan tahapan untuk mendemonstrasikan sistem yang telah dikembangkan. Pada tahap ini, peneliti akan melakukan pengujian terhadap sistem yang telah dikembangkan untuk memastikan bahwa sistem dapat berfungsi sesuai dengan spesifikasi yang telah ditentukan. Pengujian dilakukan dengan menggunakan \dataset{} asli yang telah dikumpulkan.
 	\item \emph{Evaluation}~\\
-	      Tahapan \emph{evaluation} merupakan tahapan untuk mengevaluasi sistem yang telah dikembangkan. Pada tahap ini, peneliti akan melakukan evaluasi terhadap sistem yang telah dikembangkan dengan metrik yang telah didefinisikan untuk setiap fitur yang ada pada sistem. Evaluasi akan dibagi menjadi dua jenis, yaitu evaluasi terhadap fungsionalitas sistem dan evaluasi terhadap performa model.
+	      Tahapan \emph{evaluation} merupakan tahapan untuk mengevaluasi sistem yang telah dikembangkan. Pada tahap ini, peneliti akan melakukan evaluasi terhadap sistem yang telah dikembangkan dengan metrik yang telah didefinisikan untuk setiap fitur yang ada pada sistem. Evaluasi akan dibagi menjadi dua jenis, yaitu evaluasi terhadap fungsionalitas sistem dan evaluasi terhadap kinerja model.
 \item \emph{Communication}~\\
 	      Tahapan \emph{communication} merupakan tahapan untuk mengkomunikasikan hasil penelitian yang telah dilakukan. Pada tahap ini, peneliti akan menyusun laporan penelitian yang akan digunakan sebagai media untuk mengkomunikasikan hasil penelitian yang telah dilakukan. Laporan penelitian akan mencakup pendahuluan, studi literatur, analisis masalah, desain solusi, evaluasi, dan kesimpulan dan saran yang perlu disampaikan dan diketahui oleh pembaca.
 \end{enumerate}
