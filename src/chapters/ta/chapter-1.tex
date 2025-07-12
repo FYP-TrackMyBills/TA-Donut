@@ -12,9 +12,9 @@ Transaksi pembayaran merupakan bagian penting dari aktivitas ekonomi, baik dalam
 
 Pada April 2024, Bank Indonesia melaporkan jumlah pengguna \qris{} mencapai angka 48,12 juta dan jumlah \emph{merchant} yang menggunakan mencapai 31,61 juta \parencite{CNNqris2024}. Total nilai transaksi dengan menggunakan metode pembayaran \qris{} telah mencapai Rp 31,65 triliun, yaitu meningkat sebesar 149,46\% secara tahunan pada bulan Februari 2024 \parencite{Tempo2024BIQRIS}. Peningkatan ini mencerminkan adopsi yang signifikan di kalangan masyarakat, khususnya Gen Z, yang cenderung memilih transaksi nontunai. Survei dari Jawa Pos Radar Lawu mengungkapkan bahwa 57\% dari kedua generasi ini lebih memilih transaksi nontunai, dengan \qris{} menjadi salah satu metode yang paling efektif \parencite{jawapos2024qris}.
 
-Studi yang dilakukan oleh \cite{beck2019managing} tentang mengatur keuangan pribadi pada tahun 2019 menunjukkan bahwa Gen Z memiliki pengetahuan akan finansial yang cukup terbatas, tetapi mereka paham akan pentingnya pengelolaan keuangan yang baik \parencite{beck2019managing}. \cite{johan2021effect} melakukan studi pada tahun 2020 terhadap 521 mahasiswa Indonesia di IPB tentang hubungan pengetahuan finansial terhadap perilaku keuangan dan menemukan bahwa 84\% dari mahasiswa yang belum mendapatkan pengetahuan finansial dan 78\% dari mahasiswa yang telah mendapatkan pengetahuan finansial tidak melakukan pencatatan pengeluaran mereka \parencite{johan2021effect}. 
+Studi yang dilakukan oleh \cite{beck2019managing} tentang mengatur keuangan pribadi menunjukkan bahwa Gen Z memiliki pengetahuan akan finansial yang cukup terbatas, tetapi mereka paham akan pentingnya pengelolaan keuangan yang baik. \cite{johan2021effect} melakukan studi terhadap 521 mahasiswa Indonesia di IPB tentang hubungan pengetahuan finansial terhadap perilaku keuangan. Studi tersebut mengungkapkan bahwa 84\% dari mahasiswa yang belum mendapatkan pengetahuan finansial tidak melakukan pencatatan pengeluaran mereka. Hal yang serupa juga terjadi walaupun pengetahuan finansial telah diajarkan. Sebanyak 78\% dari mahasiswa yang telah mendapatkan pengetahuan finansial masih belum melakukan pencatatan pengeluaran. 
 
-Peristiwa serupa juga terjadi pada Gen Z di Amerika Serikat. Berdasarkan studi yang dilakukan \cite{lewis2019follow}, Sarah, dengan satu anak, merasa frustrasi dan kesulitan untuk mengontrol pengeluaran digital yang "hanya beberapa klik". May, seorang Gen Z dengan pemasukan dari uang saku, mengungkapkan bahwa ia tidak menyadari bahwa transaksi digital bisa tertumpuk dengan sangat cepat \parencite{lewis2019follow}. Studi tentang \emph{financial tracking} oleh Kaye dkk. pada tahun 2014 menunjukkan bahwa salah satu alasan kesulitan pencatatan pengeluaran karena sulitnya klasifikasi informasi pada bukti dan struk pembayaran yang menyebabkan pencatatan pada \emph{platform} secara manual menjadi tidak terstruktur \parencite{kaye2014money}. Walaupun Gen Z telah mengadopsi teknologi pembayaran digital, mereka masih menghadapi tantangan dalam mengelola dan mencatat pengeluaran mereka secara efektif. Banyak pengguna masih harus melakukan pencatatan manual untuk memantau pengeluaran mereka yang rentan terhadap kesalahan dan memakan waktu.
+Peristiwa serupa juga terjadi pada Gen Z di Amerika Serikat. Berdasarkan studi yang dilakukan \cite{lewis2019follow}, salah satu responden merasa frustrasi dan kesulitan untuk mengontrol pengeluaran digital yang "hanya beberapa klik" dalam wawancara terstrukturnya. Responden lainnya, dengan pemasukan dari uang saku, mengungkapkan bahwa ia tidak menyadari bahwa transaksi digital bisa tertumpuk dengan sangat cepat \parencite{lewis2019follow}. Studi tentang \emph{financial tracking} oleh \cite{kaye2014money} menunjukkan bahwa salah satu alasan kesulitan pencatatan pengeluaran karena sulitnya klasifikasi informasi pada bukti dan struk pembayaran yang menyebabkan pencatatan pada \emph{platform} secara manual menjadi tidak terstruktur. Walaupun Gen Z telah mengadopsi teknologi pembayaran digital, mereka masih merasa malas untuk mengelola dan mencatat pengeluaran mereka secara efektif. Banyak pengguna masih harus melakukan pencatatan manual untuk memantau pengeluaran mereka yang rentan terhadap kesalahan dan memakan waktu.
 
 % Kemudahan ini mendorong peningkatan frekuensi transaksi digital di kalangan pengguna yang mengakibatkan kenaikan pada angka volume transaksi. Namun, seiring dengan meningkatnya volume transaksi, belum terdapat sistem dengan mekanisme pencatatan transaksi. Banyak pengguna masih harus melakukan pencatatan manual untuk memantau pengeluaran mereka yang rentan terhadap kesalahan dan memakan waktu. 
 
@@ -28,23 +28,24 @@ Salah satu solusi potensial untuk masalah ini adalah penerapan teknologi berbasi
 Berdasarkan latar belakang dan masalah yang dihadapi oleh individu untuk melakukan mencatat pengeluaran, dapat dirumuskan masalah yang akan diselesaikan adalah sebagai berikut.
 
 \begin{center}
-	"Bagaimana sistem yang dapat mengekstraksi dan mengklasifikasikan hasi ekstraksi dari bukti pembayaran QRIS, transfer, dan struk pembayaran berbasis kertas dengan format bervariasi?"
+	% "Bagaimana sistem yang dapat mengekstraksi dan mengklasifikasikan hasi ekstraksi dari bukti pembayaran QRIS, transfer, dan struk pembayaran berbasis kertas dengan format bervariasi?"
+	"Bagaimana sistem yang dapat mempermudah Gen Z untuk melakukan pencatatan transaksi? Transaksi berupa pembayaran dari aplikasi dan cetak (QRIS, transfer, dan struk pembayaran)"
 \end{center}
 
 \section{Tujuan}
 \label{sec:tujuan}
 
-Berdasarkan rumusan masalah yang telah didefinisikan pada \autoref{sec:rumusan-masalah}, didapatkan jawaban dari rumusan masalah dan hasil akhir yang ingin diperoleh, yaitu membangun sistem yang dapat mempermudah Gen Z dengan tantangan format bukti pembayaran QRIS, transfer, dan struk pembayaran yang bervariasi untuk melakukan pencatatan pengeluaran. Hasil akhir yang diharapkan adalah sistem yang dapat mengekstrak dan mengklasifikasikan data dari bukti pembayaran berbasis kertas dan bervariasi untuk dapat digunakan untuk mempermudah proses pencatatan transaksi keuangan.
+Berdasarkan rumusan masalah yang telah didefinisikan pada \autoref{sec:rumusan-masalah}, didapatkan jawaban dari rumusan masalah dan hasil akhir yang ingin diperoleh, yaitu sistem yang dapat mengekstrak dan memetakan data dari bukti pembayaran QRIS, transfer, dan struk pembayaran cetak berbasis kertas dan bervariasi untuk mempermudah pencatatan transaksi.
 
 \section{Batasan Masalah}
 \label{sec:batasan-masalah}
 
 Dalam pemenuhan solusi untuk menjawab masalah yang ada, terdapat berbagai jenis batasan yang perlu dipertimbangkan. Batasan-batasan tersebut ditentukan berdasarkan jangka waktu yang tersedia dan lingkup masalah yang akan diselesaikan. Berikut adalah batasan selama pengerjaan tugas akhir ini:
 \begin{enumerate}
-	\item Sistem hanya dapat memproses dokumen keuangan, seperti bukti pembayaran QRIS, transfer, dan struk yang dicetak dan tidak ditulis
+	\item Sistem hanya dapat memproses dokumen keuangan, seperti bukti pembayaran QRIS, transfer, serta struk yang dicetak dan tidak ditulis
 	\item Dokumen keuangan yang diterima hanya dalam format gambar digital dengan format JPG, JPEG, atau PNG dengan kualitas gambar yang jelas dan tidak blur.
 	\item  Pengembangan sistem dibatasi untuk memproses dokumen dari bank-bank digital ternama, yaitu SeaBank dan Neobank, bank konvensional ternama, yaitu BCA, dan aplikasi pembayaran digital populer, yaitu \gopay{}.
-	\item  Proses ekstraksi data dari struk pembayaran dibatasi pada informasi esensial transaksi yaitu:
+	\item Data yang diekstrak dari bukti pembayaran QRIS dan transfer dibatasi pada informasi penting transaksi yaitu:
 	      \begin{enumerate}
 		      \item Nominal pembayaran
 		      \item ID transaksi
@@ -53,10 +54,17 @@ Dalam pemenuhan solusi untuk menjawab masalah yang ada, terdapat berbagai jenis 
 		      \item Tanggal dan waktu transaksi
 		      \item Tipe transaksi
 	      \end{enumerate}
+	\item Data yang diekstrak dari struk pembayaran dibatasi pada informasi penting transaksi yaitu:
+	      \begin{enumerate}
+		      \item Nominal pembayaran
+		      \item Barang-barang transaksi
+		      \item Jumlah tiap barang 
+		      \item Harga tiap barang
+	      \end{enumerate}
 	\item Sistem dikembangkan untuk memproses satu dokumen bukti pembayaran dalam satu waktu.
-	\item Sistem dirancang untuk beroperasi dalam \emph{platform mobile} Android dan tidak mencakup pengembangan untuk \emph{platform desktop} atau iOS.
+	\item Sistem dirancang untuk beroperasi dalam \emph{platform mobile} Android, tidak mencakup pengembangan untuk \emph{platform desktop} dan iOS.
 	\item Implementasi tidak mencakup integrasi dengan sistem akuntansi atau sistem pencatatan keuangan pihak ketiga.
-	\item Pengembangan antarmuka pengguna dibatasi pada fitur-fitur dasar yang diperlukan untuk mengunggah gambar, memroses, dan menampilkan hasil ekstraksi data.
+	\item Pengembangan antarmuka pengguna dibatasi pada fitur-fitur dasar yang diperlukan untuk mengunggah gambar, memproses, dan menampilkan hasil ekstraksi data.
 	\item Pengembangan sistem tidak mencakup fitur keamanan tingkat lanjut, seperti enkripsi data atau otentikasi pengguna.
 	\item Sistem tidak akan menggunakan \emph{on-device inference} untuk model \dl{} yang digunakan, sehingga memerlukan koneksi internet untuk melakukan ekstraksi data.
 	\item Pengembangan sistem tidak mencakup fitur untuk mengelola atau menyimpan data pengguna pada server, sehingga data hanya akan disimpan secara lokal.
