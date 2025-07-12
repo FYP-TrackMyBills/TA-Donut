@@ -1,19 +1,36 @@
 \section{Analisis Kebutuhan}
 \label{sec:analisis-kebutuhan}
 
-Subbab ini akan menjelaskan mengenai analisis kebutuhan sistem yang akan dikembangkan. Penulis akan mengidentifikasi masalah yang ada pada sistem saat ini, kemudian menentukan kebutuhan fungsional dan non-fungsional. Analisis kebutuhan tersebut akan digunakan untuk menentukan alternatif solusi yang akan diimplementasikan pada \autoref{subsec:alternatif-solusi}.
+Subbab ini akan menjelaskan mengenai analisis kebutuhan sistem yang akan dikembangkan. Masalah yang ada pada sistem saat ini akan diidentifikasikan untuk kemudian menjadi pertimbangan penentuan kebutuhan fungsional dan non-fungsional sistem. Analisis kebutuhan tersebut akan digunakan untuk menentukan alternatif solusi yang akan diimplementasikan pada \autoref{subsec:alternatif-solusi}.
 
 \subsection{Identifikasi Masalah Pengguna}
 \label{subsec:identifikasi-masalah-pengguna}
-Pengguna sistem ini adalah Gen Z dan milenial yang memiliki kebiasaan berbelanja dengan cepat dan efisien menggunakan QRIS dan metode metode pembayaran elektronik. Namun, mereka seringkali mengalami kesulitan dalam mengelola dan menyimpan struk dan bukti pembayaran yang mereka miliki. Masalah utama yang dihadapi pengguna adalah tidak adanya sistem yang dapat langsung melakukan ekstraksi data dari struk dan bukti pembayaran yang telah diterima secara langsung. Masalah-masalah yang akan dihadapi pengguna adalah:
-\begin{enumerate}
-    \item Pengguna harus menyimpan struk dan bukti pembayaran secara manual yang memakan waktu dan rentan terhadap kerusakan fisik.
-    \item Pengguna harus memasukkan data dari struk dan bukti pembayaran ke dalam sistem atau aplikasi keuangan mereka secara manual untuk melakukan pencatatan pengeluaran mereka.
-\end{enumerate}
+\autoref{sec:latar-belakang} tentang latar belakang telah menjelaskan bahwa banyak pengguna, yang terdiri dari kalangan Gen Z, memiliki kesulitan untuk memenuhi seluruh proses pada \autoref{fig:current-state}. \autoref{tab:masalah-pengguna} menunjukkan masalah yang dihadapi pengguna dalam proses pencatatan pengeluaran mereka.
+
+\begin{table}[h!]
+\caption{Identifikasi Masalah Pengguna}
+\label{tab:masalah-pengguna}
+\begin{tabularx}{\linewidth}{|l|X|}
+\hline
+\textbf{Kode} & \textbf{Deskripsi Masalah} \\
+\hline
+P-01 & Pengguna merasa kesulitan untuk menyadari seberapa besar total pengeluaran mereka yang dapat terakumulasi dengan cepat dari transaksi mereka. \\
+\hline
+P-02 & Pengguna merasa kesulitan untuk mencatat pengeluaran secara manual dari berbagai bukti transaksi. Proses ini memakan waktu, rentan terhadap kesalahan input, dan seringkali tidak dilakukan secara konsisten. \\
+\hline
+P-03 & Pengguna merasa kesulitan untuk mengklasifikasikan dan mengelompokkan informasi dari bukti pembayaran yang tidak terstruktur, sehingga pengguna kesulitan untuk memasukkan data ke dalam \emph{platform} keuangan. \\
+\hline
+\end{tabularx}
+\end{table}
+% \begin{enumerate}
+%     \item Pengguna merasa kesulitan untuk menyadari seberapa besar total pengeluaran mereka yang dapat terakumulasi dengan cepat dari transaksi mereka.
+%     \item Pengguna merasa kesulitan untuk mencatat pengeluaran secara manual dari berbagai bukti transaksi. Proses ini memakan waktu, rentan terhadap kesalahan input, dan seringkali tidak dilakukan secara konsisten.
+%     \item Pengguna merasa kesulitan untuk mengklasifikasikan dan mengelompokkan informasi dari bukti pembayaran yang tidak terstruktur, sehingga pengguna kesulitan untuk memasukkan data ke dalam \emph{platform} keuangan.
+% \end{enumerate}
 
 \subsection{Kebutuhan Fungsional}
 \label{subsec:kebutuhan-fungsional}
-Berdasarkan identifikasi masalah pengguna pada \autoref{subsec:identifikasi-masalah-pengguna}, kebutuhan fungsional akan diidentifikasikan dan harus dipenuhi oleh sistem yang akan dikembangkan. Kebutuhan fungsional adalah kebutuhan yang berisi pernyataan mengenai 
+Berdasarkan identifikasi masalah pengguna pada \autoref{subsec:identifikasi-masalah-pengguna} dan \autoref{sec:latar-belakang}, kebutuhan fungsional akan diidentifikasikan dan harus dipenuhi oleh sistem yang akan dikembangkan. Kebutuhan fungsional adalah kebutuhan yang berisi pernyataan mengenai 
 penjelasan layanan-layanan yang akan disediakan oleh sistem. Kebutuhan fungsional sistem ini akan disajikan dalam bentuk tabel pada \autoref{tab:kebutuhan-fungsional}.
 
 \begin{table}[h!]
@@ -23,26 +40,22 @@ penjelasan layanan-layanan yang akan disediakan oleh sistem. Kebutuhan fungsiona
 \hline
 \textbf{Kode} & \textbf{Kebutuhan Fungsional} \\
 \hline
-FR-01 & Sistem harus dapat menerima masukan berupa gambar struk \linebreak pembayaran dari pengguna \\
+FR-01 & Sistem harus dapat menerima masukan berupa gambar bukti transaksi, yaitu struk fisik cetakan dan tangkapan layar bukti pembayaran digital, yaitu QRIS dan transfer. \\
 \hline
-FR-02 & Sistem harus dapat menerima masukan berupa gambar bukti\linebreak pembayaran QRIS dan Transfer dari pengguna \\
+FR-02 & Sistem harus dapat memotong area relevan transaksi berdasarkan \newline keinginan pengguna dari gambar yang diunggah. \\
 \hline
-FR-03 & Sistem hanya dapat memproses satu dokumen dalam satu waktu \\
+FR-03 & Sistem harus dapat mengekstrak dan mengklasifikasikan informasi \newline kunci, yaitu total pembayaran dan tipe transaksi dan target dari QRIS dan transfer dan total pembayaran dari struk pembayaran. \\
 \hline
-FR-04 & Sistem dapat melakukan pemotongan gambar struk yang diterima \\
+FR-04 & Sistem harus menampilkan hasil ekstraksi kepada pengguna dan menyediakan fungsi mengoreksi data jika terdapat ketidakakuratan. \\
 \hline
-FR-05 & Sistem dapat mengekstrak data dari dokumen struk dan bukti \linebreak pembayaran yang diterima \\
-\hline
-FR-06 & Sistem dapat menampilkan hasil ekstraksi data kepada pengguna\linebreak melalui antarmuka pengguna \\
-\hline
-FR-07 & Sistem dapat melakukan perubahan hasil ekstraksi data yang\linebreak ditampilkan \\
+FR-05 & Sistem harus dapat menyimpan data transaksi yang telah diverifikasi dan menampilkannya dalam riwayat pengeluaran yang terstruktur. \\
 \hline
 \end{tabularx}
 \end{table}
 
 \subsection{Kebutuhan Non-Fungsional}
 \label{subsec:kebutuhan-non-fungsional}
-Kebutuhan non-fungsional adalah kebutuhan yang berisi pernyataan mengenai kualitas sistem yang akan dikembangkan. Berdasarkan identifikasi masalah pada \autoref{subsec:identifikasi-masalah-pengguna}, kebutuhan non-fungsional dari sistem yang akan dikembangkan akan diidentifikasikan. Kebutuhan non-fungsional sistem ini akan disajikan dalam bentuk tabel pada \autoref{tab:kebutuhan-non-fungsional}.
+Kebutuhan non-fungsional adalah kebutuhan yang berisi pernyataan mengenai kualitas sistem yang akan dikembangkan. Berdasarkan identifikasi masalah pada \autoref{subsec:identifikasi-masalah-pengguna} dan \autoref{sec:latar-belakang}, kebutuhan non-fungsional dari sistem yang akan dikembangkan akan diidentifikasikan. Kebutuhan non-fungsional sistem ini akan disajikan dalam bentuk tabel pada \autoref{tab:kebutuhan-non-fungsional}.
 
 \begin{table}[h!]
 \caption{Kebutuhan Non-Fungsional Sistem}
@@ -51,25 +64,17 @@ Kebutuhan non-fungsional adalah kebutuhan yang berisi pernyataan mengenai kualit
 \hline
 \textbf{Kode} & \textbf{Kategori} & \textbf{Kebutuhan Non-fungsional} \\
 \hline
-NF-01 & Usability & Antarmuka pengguna (UI) dibatasi pada fitur-fitur \linebreak dasar untuk mengunggah gambar, memproses, dan \linebreak menampilkan hasil ekstraksi data. \\
+NF-01 & \emph{Usability} & Antarmuka pengguna (UI) harus minimalis dan intuitif, memungkinkan pengguna mengubah gambar bukti bayar menjadi data transaksi dalam beberapa langkah sederhana (unggah, tinjau, simpan) untuk mengatasi keengganan mencatat secara manual. \\
 \hline
-NF-02 & \emph{Compatibility} & Sistem hanya dapat beroperasi pada sistem operasi \linebreak Android \\
+NF-02 & \emph{Compatibility} & Sistem hanya dapat beroperasi pada sistem operasi \linebreak Android dan tidak mencakup pengembangan pada \emph{desktop/laptop} dan iOS \\
 \hline
-NF-03 & \emph{Compatibility} & Sistem tidak mencakup pengembangan pada \emph{platform} desktop/laptop dan iOS \\
+NF-03 & \emph{Compatibility} & Sistem mengharapkan masukan gambar dengan \linebreak kualitas yang jelas dan tidak blur \\
 \hline
-NF-04 & \emph{Compatibility} & Sistem mengharapkan masukan gambar dengan \linebreak kualitas yang jelas dan tidak blur \\
+NF-04 & \emph{Compatibility} & Sistem dapat menerima dokumen bukti pembayaran QRIS dan transfer dari BCA, Seabank, Neobank, dan Gopay \\
 \hline
-NF-05 & \emph{Compatibility} & Sistem dapat menerima dokumen bukti pembayaran QRIS dan transfer dari BCA, Seabank, Neobank, dan Gopay \\
-% \hline
-% NF-06 & \emph{Supportability} & Sistem dapat mengekstrak data dari dokumen struk \linebreak dengan \emph{on-device inference}. \\
+NF-05 & \emph{Supportability} & Dokumen bukti QRIS dan transfer akan diproses pada \emph{server} \\
 \hline
-NF-06 & \emph{Supportability} & Dokumen bukti QRIS dan transfer akan diproses pada \emph{server-side} \\
-\hline
-NF-07 & \emph{Supportability} & Implementasi sistem tidak mencakup integrasi  pihak ketiga \\
-\hline
-NF-08 & \emph{Performance} & Sistem dirancang tanpa ketergantungan pada \ocr. \\
-\hline
-NF-09 & \emph{Performance} & Evaluasi kinerja model akan menggunakan metrik \accuracy, \precision, \recall, \fscore, dan \mcer \\
+NF-06 & \emph{Supportability} & Implementasi sistem tidak mencakup integrasi  pihak ketiga \\
 \hline
 \end{tabularx}
 \end{table}

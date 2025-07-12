@@ -5,7 +5,7 @@ Evaluasi kinerja sistem \ml{} memerlukan metrik yang komprehensif dan sesuai den
 
 \subsubsection{Metrik Klasifikasi Standar}
 
-\accuracyfl{} mengukur proporsi prediksi yang benar baik positif maupun negatif di seluruh \emph{instance} dalam \dataset. Formula \accuracy{} didefinisikan sebagai perbandingan antara jumlah prediksi benar dengan total prediksi yang dibuat. Dalam konteks klasifikasi biner, \accuracy{} dihitung menggunakan matriks yang terdiri dari \emph{True Positive} (TP), \emph{True Negative} (TN), \emph{False Positive} (FP), dan \emph{False Negative} (FN). Persamaan \eqref{eq:accuracy} menunjukkan perhitungan \accuracy \parencite{jayaswal2020evalmetrics}. 
+\accuracyfl{} mengukur proporsi prediksi yang benar baik positif maupun negatif di seluruh \emph{instance} dalam \dataset. Formula \accuracy{} didefinisikan sebagai perbandingan antara jumlah prediksi benar dengan total prediksi yang dibuat. Dalam konteks klasifikasi biner, \accuracy{} dihitung menggunakan matriks yang terdiri dari \emph{True Positive} (TP), \emph{True Negative} (TN), \emph{False Positive} (FP), dan \emph{False Negative} (FN). Persamaan \eqref{eq:accuracy} menunjukkan perhitungan \accuracy{} \parencite{jayaswal2020evalmetrics}. 
 
 \begin{equation}
     \label{eq:accuracy}
@@ -19,14 +19,14 @@ Evaluasi kinerja sistem \ml{} memerlukan metrik yang komprehensif dan sesuai den
 \text{Precision} = \frac{TP}{TP + FP}
 \end{equation}
 
-\recallfl{} mengukur proporsi \emph{instance} positif aktual yang berhasil diidentifikasi dengan benar oleh model. Metrik ini kritikal ketika biaya \emph{false negative} tinggi dalam sistem yang memerlukan deteksi lengkap. Persamaan \eqref{eq:recall} menunjukkan rumus yang dapat digunakan untuk menghitung \recall \parencite{jayaswal2020evalmetrics}.\recallfl{} tinggi berarti model menangkap sebagian besar \emph{instance} positif, meminimalkan kemungkinan melewatkan data penting yang harus dideteksi.
+\recallfl{} mengukur proporsi \emph{instance} positif aktual yang berhasil diidentifikasi dengan benar oleh model. Metrik ini kritikal ketika biaya \emph{false negative} tinggi dalam sistem yang memerlukan deteksi lengkap. Persamaan \eqref{eq:recall} menunjukkan rumus yang dapat digunakan untuk menghitung \recall{} \parencite{jayaswal2020evalmetrics}.\recallfl{} tinggi berarti model menangkap sebagian besar \emph{instance} positif, meminimalkan kemungkinan melewatkan data penting yang harus dideteksi.
 
 \begin{equation}
     \label{eq:recall}
 \text{Recall} = \frac{TP}{TP + FN}
 \end{equation}
 
-\fscore{} adalah rata-rata harmonik dari \precision{} dan \recall{}. \fscore{} memberikan ukuran seimbang yang mempertimbangkan kedua metrik secara setara. Persamaan \eqref{eq:fscore} menunjukkan rumus yang dapat digunakan untuk menghitung \fscore \parencite{jayaswal2020evalmetrics}. \fscore{} tinggi menunjukkan bahwa model tidak hanya akurat dalam prediksi positif tetapi juga menangkap sebagian besar \emph{instance} positif yang relevan. \fscore{} memerlukan \precision{} dan \recall{} tinggi untuk mencapai skor tinggi. \fscore{} akan menjadi nol jika salah satu dari \precision atau \recall adalah nol.
+\fscore{} adalah rata-rata harmonik dari \precision{} dan \recall{}. \fscore{} memberikan ukuran seimbang yang mempertimbangkan kedua metrik secara setara. Persamaan \eqref{eq:fscore} menunjukkan rumus yang dapat digunakan untuk menghitung \fscore{} \parencite{jayaswal2020evalmetrics}. \fscore{} tinggi menunjukkan bahwa model tidak hanya akurat dalam prediksi positif tetapi juga menangkap sebagian besar \emph{instance} positif yang relevan. \fscore{} memerlukan \precision{} dan \recall{} tinggi untuk mencapai skor tinggi. \fscore{} akan menjadi nol jika salah satu dari \precision{} atau \recall{} adalah nol.
 
 \begin{equation}
     \label{eq:fscore}
@@ -37,7 +37,7 @@ Evaluasi kinerja sistem \ml{} memerlukan metrik yang komprehensif dan sesuai den
 
 \subsubsection{\mcer{} (\emph{Mean Character Error Rate})}
 
-\mcer{} adalah rata-rata \emph{Character Error Rate} di beberapa dokumen atau segmen teks, memberikan ukuran komprehensif akurasi deteksi teks \parencite{holley2009ocr}. Metrik ini sangat relevan untuk sistem pengenalan teks yang bergantung pada akurasi pengenalan karakter. Persamaan \eqref{eq:mcer} menunjukkan rumus yang digunakan untuk menghitung \mcer dengan $\text{CER}_i$ adalah \emph{Character Error Rate} untuk dokumen $i$. Metrik ini mengukur kesalahan pengenalan karakter pada tingkat granular, memberikan wawasan tentang akurasi pengenalan teks pada level karakter.
+\mcer{} adalah rata-rata \emph{Character Error Rate} (CER) di beberapa dokumen atau segmen teks yang memberikan ukuran komprehensif akurasi deteksi teks \parencite{holley2009ocr}. Metrik ini sangat relevan untuk sistem pengenalan teks yang bergantung pada akurasi pengenalan karakter. Persamaan \eqref{eq:mcer} menunjukkan rumus yang digunakan untuk menghitung \mcer dengan $\text{CER}_i$ adalah \emph{Character Error Rate} untuk dokumen $i$. Metrik ini mengukur kesalahan pengenalan karakter pada tingkat granular dan memberikan informasi tentang akurasi pengenalan teks pada level karakter.
 
 \begin{equation}
     \label{eq:mcer}
@@ -60,3 +60,6 @@ Persamaan \eqref{eq:cer} menunjukkan cara perhitungan CER dengan parameter yang 
 % Interpretasi dan \emph{trade-off} antar metrik memberikan perspektif berbeda tentang kinerja sistem. \accuracy memberikan gambaran umum kinerja tetapi dapat menyesatkan pada data tidak seimbang, sehingga perlu dikombinasikan dengan metrik lain. \precision menjadi penting ketika biaya \emph{false positive} tinggi dalam aplikasi yang memerlukan presisi tinggi. \recall kritikal ketika biaya \emph{false negative} tinggi dalam sistem yang memerlukan deteksi lengkap. F1-\emph{score} memberikan keseimbangan antara \precision dan \recall untuk evaluasi menyeluruh. \ted mengukur pemahaman struktur dokumen yang kompleks dan hubungan hierarkis antar elemen, sementara \mcer memberikan ukuran granular akurasi pengenalan teks pada level karakter.
 
 % Penggunaan metrik evaluasi yang komprehensif memastikan bahwa sistem pemahaman dokumen tidak hanya akurat dalam mengenali teks, tetapi juga mampu memahami struktur dokumen dan mengekstrak informasi relevan dengan presisi tinggi yang diperlukan untuk berbagai aplikasi \parencite{bille2005tree}.
+
+\subsubsection{\emph{System Usability Scale} (SUS)}
+\label{subsubsec:sus}

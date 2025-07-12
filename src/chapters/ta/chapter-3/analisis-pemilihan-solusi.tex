@@ -9,7 +9,7 @@ Setiap alternatif solusi yang akan dijelaskan pada subbab ini merupakan alternat
 
 \subsubsection{Alternatif Solusi yang Memerlukan OCR}
 \label{subsubsec:alternatif-solusi-memerlukan-ocr}
-Alternatif solusi yang memerlukan \ocr{} adalah alternatif solusi yang memerlukan proses ekstraksi teks dari gambar dokumen terlebih dahulu sebelum melakukan ekstraksi data. Proses ekstraksi teks ini biasanya dilakukan dengan menggunakan model \ocr{} yang telah dilatih sebelumnya. Beberapa alternatif solusi yang memerlukan \ocr{} antara lain:
+Alternatif solusi yang memerlukan \ocr{} adalah alternatif solusi yang memerlukan proses ekstraksi teks dari gambar dokumen dengan menggunakan \ocr{} sebelum melakukan ekstraksi data. Proses ekstraksi teks ini biasanya dilakukan dengan menggunakan model \ocr{} yang telah dilatih sebelumnya. Beberapa alternatif solusi yang memerlukan \ocr{} antara lain:
 \begin{enumerate}
     \item \layoutlm ~\\ Model ini adalah salah satu pelopor dalam menggabungkan informasi teks, tata letak, dan visual dari sebuah dokumen. Berbeda dengan model bahasa seperti \bert{} yang hanya memahami teks, \layoutlm{} memperkaya representasi token teks dengan menyertakan \textit{embedding} posisi 2D (koordinat x,y dari \emph{bounding box}) dan \textit{embedding} visual. Dengan demikian, model ini dapat memahami konteks yang berasal dari struktur dokumen. \layoutlm{} menjadi model yang sangat efektif untuk tugas ekstraksi informasi dari dokumen semi-terstruktur seperti formulir dan faktur \parencite{xu2020layoutlm}. 
     \item \bert{} ~\\
@@ -18,7 +18,7 @@ Alternatif solusi yang memerlukan \ocr{} adalah alternatif solusi yang memerluka
 
 \subsubsection{Alternatif Solusi yang Tidak Memerlukan OCR}
 \label{subsubsec:alternatif-solusi-tidak-memerlukan-ocr}
-Alternatif solusi yang tidak memerlukan \ocr{} adalah alternatif solusi yang dapat langsung mengekstrak data dari gambar dokumen tanpa perlu melakukan ekstraksi teks terlebih dahulu. Beberapa alternatif solusi yang tidak memerlukan \ocr{} antara lain:
+Alternatif solusi yang tidak memerlukan \ocr{} adalah tidak memerlukan implementasi fungsi \ocr{} dan akan mengurangi \emph{pipeline} proses konversi dokumen. Beberapa alternatif solusi yang tidak memerlukan \ocr{} adalah:
 
 \begin{enumerate}
     \item \donut{} ~\\ Model ini memperkenalkan pendekatan yang revolusioner karena tidak memerlukan modul \ocr{} yang terpisah. Secara teknis, Donut menggunakan arsitektur \textit{encoder-decoder} berbasis \transformer. \textit{Encoder} (biasanya \swin) memproses gambar dokumen secara langsung sebagai piksel, lalu \textit{decoder} (seperti \bart) menerjemahkan representasi visual tersebut langsung menjadi keluaran terstruktur (misalnya, format \json) sesuai dengan instruksi yang diberikan. Kemampuannya untuk belajar dari gambar ke teks secara \textit{end-to-end} menjadikannya sangat fleksibel dan kuat untuk berbagai jenis dokumen tanpa bergantung pada kualitas hasil \ocr{} \parencite{kim2021donut}.
@@ -28,7 +28,7 @@ Alternatif solusi yang tidak memerlukan \ocr{} adalah alternatif solusi yang dap
     \item \crnn ~\\ 
     \crnn{} adalah arsitektur \dl{} yang menjadi standar de facto untuk pengenalan teks atau \ocr{} dan merupakan gabungan dari \cnn{} dan \rnn. \cnn{} berfungsi sebagai ekstraktor fitur visual yang kuat dari gambar teks. Fitur-fitur ini kemudian diolah sebagai sebuah urutan (sekuens) oleh \rnn, biasanya jenis LSTM, yang dapat memprediksi urutan karakter. Kombinasi ini sangat efektif untuk mengenali baris teks dengan berbagai gaya dan variasi \parencite{shi2016end}.
 
-    \item \yolo ~\\ \yolo{} adalah standar model yang digunakan dalam deteksi objek \textit{real-time}. Dalam konteks dokumen, \yolo{} tidak digunakan untuk membaca teks, melainkan untuk mendeteksi lokasi (\emph{bounding box}) dari elemen-elemen visual secara cepat, seperti tabel, gambar, logo, atau blok tanda tangan. \yolo{} cenderung kurang akurat untuk objek kecil atau tumpang tindih karena mekanismenya yang hanya memiliki satu kali proses \parencite{diwan2023object}. 
+    \item \yolo ~\\ \yolo{} adalah standar model yang digunakan dalam deteksi objek \textit{real-time}. Dalam konteks dokumen, \yolo{} tidak digunakan untuk membaca teks, melainkan untuk mendeteksi lokasi (\emph{bounding box}) dari elemen-elemen visual secara cepat, seperti tabel, gambar, logo, atau blok tanda tangan. \yolo{} cenderung kurang akurat untuk objek kecil atau tumpang tindih karena mekanismenya yang hanya satu kali proses \parencite{diwan2023object}. 
     
     \item \rcnn{} ~\\ \rcnn{} dan keluarganya (Fast R-CNN, Faster R-CNN) adalah arsitektur deteksi objek dua tahap (\textit{two-stage detector}). Tahap pertama adalah menghasilkan "proposal wilayah" (\textit{region proposals}), yaitu area-area potensial di mana objek mungkin berada. Tahap kedua adalah mengklasifikasikan setiap proposal ini menggunakan \cnn. Pendekatan dua tahap ini membuat \rcnn{} secara umum lebih akurat daripada \yolo, terutama untuk deteksi objek yang kompleks, namun dengan kecepatan yang lebih lambat. Dalam analisis dokumen, \rcnn{} digunakan untuk lokalisasi elemen visual yang memerlukan presisi tinggi \parencite{xie2021oriented}.
 \end{enumerate}
@@ -39,11 +39,10 @@ Alternatif solusi yang tidak memerlukan \ocr{} adalah alternatif solusi yang dap
 Subbab ini akan menjelaskan mengenai analisis yang digunakan untuk menentukan solusi yang akan digunakan pada sistem yang akan dikembangkan. Penulis akan menganalisis berbagai alternatif solusi yang telah diidentifikasi pada \autoref{subsec:alternatif-solusi} berdasarkan kriteria yang telah ditentukan sesuai dengan kebutuhan sistem. Hasil analisis akan digunakan untuk menentukan solusi yang paling sesuai untuk perancangan dan pengembangan sistem pada \autoref{chapter:desain-implementasi}.
 
 Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan yang digunakan dari masing-masing alternatif solusi dari subbab sebelumnya. Kelebihan dan kekurangan setiap alternatif solusi akan disajikan dalam bentuk tabel pada \autoref{tab:model-comparison}. Tabel ini akan memberikan gambaran yang jelas mengenai kelebihan dan kekurangan dari masing-masing alternatif solusi sesuai dengan kebutuhan sistem.
-\pagebreak
 
 % --- TABEL PERTAMA ---
 \begin{table}[h!]
-\caption{Perbandingan Kelebihan dan Kekurangan Model}
+\caption{Perbandingan kelebihan dan kekurangan model}
 \label{tab:model-comparison}
 % Mengatur agar list tidak memakan banyak ruang vertikal
 \setlist[enumerate]{itemsep=0mm, topsep=1mm, nosep}
@@ -68,7 +67,21 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
     \item Kurang optimal untuk dokumen dengan kualitas rendah
 \end{enumerate}
 \\ \hline
-\pagebreak
+\end{tabularx}
+\end{table}
+
+\newpage
+
+% --- TABEL KEDUA ---
+\begin{table}[h!]
+\ContinuedFloat % Perintah ini mencegah nomor tabel bertambah
+\caption{Perbandingan kelebihan dan kekurangan model (lanjutan)}
+% Mengatur agar list tidak memakan banyak ruang vertikal
+\setlist[enumerate]{itemsep=0mm, topsep=1mm, nosep}
+\begin{tabularx}{\linewidth}{|p{2cm}|X|X|}
+\hline
+\textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
+\hline
 
 % --- LayoutLM Model ---
 \textbf{LayoutLM} &
@@ -112,20 +125,6 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
     \item Metode yang tergolong konvensional
 \end{enumerate}
 \\ \hline
-\end{tabularx}
-\end{table}
-
-
-% --- TABEL KEDUA (LANJUTAN) ---
-\begin{table}[h!]
-\ContinuedFloat % Perintah ini mencegah nomor tabel bertambah
-\caption{Perbandingan Kelebihan dan Kekurangan Model (lanjutan)}
-% Mengatur agar list tidak memakan banyak ruang vertikal
-\setlist[enumerate]{itemsep=0mm, topsep=1mm, nosep}
-\begin{tabularx}{\linewidth}{|p{2cm}|X|X|}
-\hline
-\textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
-\hline
 
 % --- CRNN ---
 \textbf{CRNN} &
@@ -139,7 +138,6 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
     \item Hanya berfokus pada teks
 \end{enumerate}
 \\ \hline
-
 % --- YOLO ---
 \textbf{YOLO} &
 \begin{enumerate}
@@ -152,6 +150,21 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
     \item Tidak dirancang untuk dokumen dengan berbagai elemen teks
 \end{enumerate}
 \\ \hline
+\end{tabularx}
+\end{table}
+
+\newpage
+
+% --- TABEL KETIGA ---
+\begin{table}[h!]
+\ContinuedFloat % Perintah ini mencegah nomor tabel bertambah
+\caption{Perbandingan kelebihan dan kekurangan model (lanjutan)}
+% Mengatur agar list tidak memakan banyak ruang vertikal
+\setlist[enumerate]{itemsep=0mm, topsep=1mm, nosep}
+\begin{tabularx}{\linewidth}{|p{2cm}|X|X|}
+\hline
+\textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
+\hline
 
 % --- R-CNN ---
 \textbf{R-CNN} &
@@ -169,6 +182,4 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
 \end{tabularx}
 \end{table}
 
-\pagebreak
-
-Berdasarkan analisis pada \autoref{tab:model-comparison}, \donut{} dipilih sebagai solusi yang akan digunakan pada sistem yang akan dikembangkan. Hal ini dikarenakan \donut{} memiliki kelebihan yang signifikan dibandingkan dengan alternatif solusi lainnya, yaitu tidak memerlukan ketergantungan pada \ocr{} dan dapat melakukan ekstraksi data secara langsung dari gambar dokumen. Selain itu, \donut{} juga merupakan model yang telah terbukti efektif dalam tugas ekstraksi informasi dari dokumen semi-terstruktur seperti formulir dan faktur. Meskipun \donut{} memerlukan data pelatihan dalam jumlah besar dan kebutuhan komputasi yang tinggi, model \donut{} yang dilatih untuk kasus ini akan digunakan untuk mengatasi masalah ini.
+Berdasarkan analisis pada \autoref{tab:model-comparison}, \donut{} dipilih sebagai solusi yang akan digunakan pada sistem yang akan dibangun. \donut{} memiliki kelebihan yang signifikan dibandingkan dengan alternatif solusi lainnya, yaitu tidak memerlukan ketergantungan pada \ocr{} dan telah terbukti baik untuk mengekstrak data dari gambar dokumen semi-terstruktur seperti formulir, faktor, dan kartu identitas. Selain itu, \donut{} juga merupakan model \sota{} yang telah digunakan pada berbagai penelitian terdahulu. Meskipun \donut{} memerlukan data pelatihan dalam jumlah besar dan kebutuhan komputasi yang tinggi, model \donut{} yang dilatih untuk kasus ini akan digunakan untuk mengatasi masalah ini.

@@ -8,8 +8,7 @@ Penelitian ini memiliki tujuan untuk membandingkan performa dari model \donut{} 
 melakukan komparasi menggunakan sejumlah data yang terdiri dari data-data yang tidak terstuktur (\textit{unstructured data}), seperti struk, \textit{invoice}, dan catatan tulis tangan.
 
 \subsubsection{Analisis dan Metode}
-\layoutlm{} adalah model yang mengombinasikan deteksi objek, pengenalan teks, dan analisis \textit{layout}. \layoutlm{} memiliki dependensi terhadap teknologi \ocr{} untuk melakukan ekstraksi teks dari dokumen berbentuk gambar. \donut{} adalah sebuah model \transformer{} untuk melakukan 
-pemahaman dokumen yang telah bersifat \sotafull{} dan tidak memerlukan integrasi \ocr.
+\layoutlm{} adalah model yang mengombinasikan deteksi objek, pengenalan teks, dan analisis \textit{layout}. \layoutlm{} memiliki dependensi terhadap teknologi \ocr{} untuk melakukan ekstraksi teks dari dokumen berbentuk gambar. \donut{} adalah sebuah model \transformer{} untuk melakukan pemahaman dokumen yang telah bersifat \sotafull{} dan tidak memerlukan integrasi \ocr{}.
 
 Analisis komparasi kedua model ini dilakukan pada dua jenis \dataset. \datasetfl{} pertama adalah sebuah \dataset{} dengan jumlah 10.000 sampel data yang terdiri dari dokumen perusahaan dengan kompleksitas yang lebih tinggi. Dataset 
 kedua terdiri dari 50.000 sampel yang lebih terdiversifikasi. Kedua model di-\textit{fine-tuned} dengan menggunakan \textit{transfer learning} dengan \textit{pre-trained weights} dan evaluasi dilakukan dengan metrik \accuracy, \precision, dan \fscore.  
