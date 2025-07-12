@@ -1,0 +1,19 @@
+\subsection{Strategi Persiapan Dataset}
+\label{subsec:strategi-persiapan-dataset}
+
+Persiapan \dataset{} merupakan tahapan kritis dalam pengembangan sistem ekstraksi data pembayaran. Strategi persiapan \dataset{} dirancang untuk memastikan kualitas dan representativitas data yang akan digunakan untuk melatih model \donut{} yang telah disesuaikan dengan domain pembayaran Indonesia.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{images/data-preparation-flow.png}
+%     \caption{Alur kerja persiapan dataset}
+%     \label{fig:data-preparation-flow}
+% \end{figure}
+
+\autoref{fig:data-preparation-flow} menunjukkan alur kerja sistematis dalam persiapan \dataset. Proses dimulai dengan pengumpulan gambar bukti pembayaran dari berbagai sumber, termasuk aplikasi pembayaran digital (SeaBank, Neobank, BCA, \gopay) dan struk pembayaran berbasis kertas. Total \dataset{} yang dikumpulkan mencapai sekitar 300 gambar dengan distribusi yang seimbang antar jenis pembayaran.
+
+Tahap anotasi data menggunakan pendekatan semi-otomatis dengan memanfaatkan \emph{Large Language Model} untuk menghasilkan anotasi awal yang kemudian diverifikasi dan diperbaiki secara manual. Format anotasi mengikuti standar JSONL dengan struktur yang konsisten untuk setiap jenis dokumen. Setiap sampel data mencakup informasi mengenai \emph{file path}, \emph{ground truth}, dan \emph{task identifier} yang sesuai dengan jenis dokumen.
+
+Strategi pembagian \dataset{} menggunakan rasio 70:20:10 untuk data latih, validasi, dan uji. Pembagian ini dilakukan dengan mempertimbangkan distribusi jenis dokumen dan sumber data untuk memastikan representativitas setiap subset. Data latih digunakan untuk \emph{fine-tuning} model, data validasi untuk monitoring proses pelatihan dan \emph{early stopping}, sedangkan data uji digunakan untuk evaluasi akhir kinerja model.
+
+Validasi kualitas \dataset{} dilakukan melalui proses \emph{quality check} yang mencakup verifikasi format anotasi, konsistensi label, dan kualitas gambar. Sampel data yang tidak memenuhi standar kualitas akan diperbaiki atau dihapus dari \dataset{} untuk memastikan integritas data pelatihan. Pendekatan sistematis ini memastikan bahwa model akan dilatih dengan data berkualitas tinggi yang representatif terhadap variasi dokumen pembayaran yang ada di Indonesia.

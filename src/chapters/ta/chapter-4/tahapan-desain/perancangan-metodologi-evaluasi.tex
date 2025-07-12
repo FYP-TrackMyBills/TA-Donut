@@ -1,0 +1,23 @@
+\subsection{Perancangan Metodologi Evaluasi}
+\label{subsec:perancangan-metodologi-evaluasi}
+
+Perancangan metodologi evaluasi dirancang untuk memberikan penilaian komprehensif terhadap sistem ekstraksi data pembayaran, mencakup aspek teknis dan pengalaman pengguna. Metodologi ini dirancang dengan pendekatan multi-dimensional yang memisahkan evaluasi kinerja model dan evaluasi usabilitas sistem.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{images/evaluation-framework.png}
+%     \caption{Framework evaluasi sistem secara komprehensif}
+%     \label{fig:evaluation-framework}
+% \end{figure}
+
+\autoref{fig:evaluation-framework} menggambarkan struktur evaluasi yang terbagi menjadi dua cabang utama: evaluasi kinerja model dan evaluasi usabilitas sistem. Pendekatan terpisah ini memungkinkan analisis yang mendalam terhadap aspek teknis dan human-computer interaction secara independen, sambil tetap memberikan gambaran holistik tentang kualitas sistem.
+
+Evaluasi kinerja model dirancang untuk mengukur akurasi ekstraksi data dan klasifikasi dokumen menggunakan metrik standar industri. Metrik yang digunakan mencakup \accuracy{}, \precision{}, \recall{}, F1-\emph{score}, dan \mcer{} dengan ambang batas minimum yang telah ditetapkan berdasarkan standar penelitian terdahulu. \accuracy{}, \precision{}, \recall{}, dan F1-\emph{score} ditetapkan dengan ambang minimum 70\% berdasarkan standar untuk sistem pemahaman dokumen \parencite{kim2021donut, xu2020layoutlm}. \mcer{} ditetapkan dengan ambang maksimum 20\% sebagai indikator akurasi ekstraksi teks yang dapat diterima \parencite{holley2009ocr}.
+
+Implementasi evaluasi model menggunakan pendekatan \emph{unified evaluation} yang dapat menangani kedua jenis model (QRIS-TF dan CORD-v2) dalam satu framework. Sistem evaluasi dirancang dengan fleksibilitas untuk menghitung metrik yang sesuai dengan karakteristik masing-masing model, termasuk evaluasi klasifikasi untuk model QRIS-TF dan fokus ekstraksi untuk model CORD-v2.
+
+Evaluasi usabilitas menggunakan instrumen SUS \emph{score} untuk mengukur pengalaman pengguna Gen Z dalam menggunakan aplikasi mobile. Sampel evaluasi ditetapkan minimum 8 pengguna Gen Z untuk memastikan reliabilitas hasil. Ambang batas SUS ditetapkan pada skor 68 sebagai indikator usabilitas yang dapat diterima, dengan target skor 80+ untuk usabilitas yang excellent \parencite{bangor2009determining}.
+
+Desain protokol evaluasi mencakup skenario penggunaan yang realistis, di mana pengguna diminta untuk memproses berbagai jenis dokumen pembayaran dan memberikan penilaian terhadap kemudahan penggunaan sistem. Evaluasi dilakukan dalam kondisi yang mensimulasikan penggunaan sehari-hari, termasuk variasi kualitas gambar dan jenis dokumen yang beragam.
+
+Metodologi evaluasi juga dirancang untuk mengidentifikasi korelasi antara kinerja teknis dan persepsi pengguna. Analisis ini penting untuk memvalidasi bahwa peningkatan akurasi model berkontribusi terhadap peningkatan kepuasan pengguna. Pendekatan evaluasi yang comprehensive ini memastikan bahwa sistem tidak hanya unggul secara teknis, tetapi juga memberikan nilai praktis bagi pengguna dalam kehidupan sehari-hari.
