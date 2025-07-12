@@ -1,0 +1,49 @@
+\subsection{Aplikasi Mobile (TrackMyBills)}
+\label{subsec:aplikasi-mobile-trackmybills}
+
+TrackMyBills merupakan aplikasi mobile yang dikembangkan menggunakan framework Flutter untuk platform Android. Aplikasi ini dirancang sebagai \emph{frontend} yang user-friendly untuk sistem ekstraksi data pembayaran, dengan focus pada pengalaman pengguna Gen Z yang mengutamakan simplicity dan efficiency.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{images/trackmybills-app-architecture.png}
+%     \caption{Arsitektur aplikasi TrackMyBills}
+%     \label{fig:trackmybills-app-architecture}
+% \end{figure}
+
+Arsitektur aplikasi menggunakan pattern Model-View-Controller (MVC) yang memisahkan presentation layer, business logic, dan data management. Pemisahan ini memungkinkan maintainability yang baik dan facilitates future feature additions tanpa major refactoring.
+
+\emph{User Interface} dirancang dengan Material Design principles yang memberikan look and feel yang familiar bagi pengguna Android. Interface menggunakan consistent color scheme dan typography yang mencerminkan modern mobile app aesthetics yang diharapkan oleh target demographic Gen Z. Navigation menggunakan bottom navigation bar yang memberikan access mudah ke main features aplikasi.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.9\textwidth]{images/app-user-interface.png}
+%     \caption{Interface pengguna aplikasi TrackMyBills}
+%     \label{fig:app-user-interface}
+% \end{figure}
+
+Fitur utama aplikasi mencakup tiga mekanisme input yang memberikan flexibility maksimal bagi pengguna: camera capture untuk mengambil foto receipt secara langsung, gallery selection untuk memilih existing images, dan yang paling important - Android sharing integration yang memungkinkan pengguna untuk share screenshots dari aplikasi payment lain directly ke TrackMyBills.
+
+\emph{Sharing system integration} merupakan differentiator utama aplikasi ini yang specifically designed untuk Gen Z behavior patterns. Ketika pengguna melakukan payment menggunakan aplikasi seperti Gopay atau BCA Mobile, mereka dapat langsung share screenshot dari payment confirmation ke TrackMyBills untuk automatic processing. Integration ini menggunakan Android's native sharing capabilities dan registered dengan appropriate MIME types untuk image sharing.
+
+Image processing workflow dalam aplikasi mencakup automatic image optimization yang resize dan compress images untuk optimal transmission ke backend API. Aplikasi juga mengimplementasikan image cropping functionality menggunakan UCrop library yang memungkinkan pengguna untuk adjust framing jika diperlukan, particularly useful untuk paper receipts yang mungkin memerlukan cropping untuk optimal results.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{images/app-user-flow.png}
+%     \caption{Alur penggunaan aplikasi TrackMyBills}
+%     \label{fig:app-user-flow}
+% \end{figure}
+
+\emph{API communication} menggunakan HTTP client yang robust dengan automatic retry mechanism dan timeout handling. Aplikasi mengimplementasikan loading states yang informative dan error handling yang user-friendly. Progress indicators memberikan feedback yang clear kepada pengguna selama image processing, yang particularly important given bahwa backend processing dapat memakan waktu beberapa detik.
+
+\emph{Results display} menggunakan structured layout yang menampilkan extracted information dalam format yang easy to read dan edit. Setiap field yang diekstraksi dapat di-edit oleh pengguna jika diperlukan correction, giving users control over data accuracy. Confidence scores ditampilkan menggunakan visual indicators yang help users understand reliability dari extracted data.
+
+Data persistence menggunakan SQLite database untuk menyimpan transaction history secara local. Database schema dirancang untuk accommodate berbagai jenis transaction data dan support untuk future extensions. Data sync capabilities memungkinkan backup dan restore functionality yang important untuk user peace of mind.
+
+\emph{Expense tracking features} mencakup categorization otomatis berdasarkan extracted data, summary views yang menampilkan spending patterns, dan basic analytics yang help users understand spending behavior. Features ini dirancang untuk memberikan immediate value kepada pengguna beyond just data extraction functionality.
+
+Security considerations mencakup local data encryption untuk stored transactions, secure communication dengan backend menggunakan HTTPS, dan proper permission handling untuk camera dan storage access. Aplikasi juga mengimplementasikan data retention policies yang comply dengan best practices untuk privacy protection.
+
+Performance optimizations mencakup efficient image handling yang minimize memory usage, background processing untuk non-critical tasks, dan caching strategies yang improve user experience. Aplikasi dirancang untuk smooth performance bahkan pada mid-range Android devices yang commonly used oleh target demographic.
+
+% Package configuration mencakup proper Android manifest setup dengan required permissions (CAMERA, INTERNET, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE), sharing intent filters, dan appropriate target SDK configuration untuk compatibility dengan modern Android versions sambil maintaining support untuk older devices.

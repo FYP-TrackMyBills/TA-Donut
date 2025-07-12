@@ -1,0 +1,47 @@
+\subsection{Backend Service (DonutAPI)}
+\label{subsec:backend-service-donutapi}
+
+DonutAPI merupakan implementasi \emph{backend service} yang menyediakan layanan ekstraksi data pembayaran melalui RESTful API. Service ini dirancang menggunakan framework FastAPI untuk memberikan performa tinggi, dokumentasi otomatis, dan type safety yang memudahkan integration dan maintenance.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.9\textwidth]{images/donutapi-architecture.png}
+%     \caption{Arsitektur DonutAPI dengan komponen utama}
+%     \label{fig:donutapi-architecture}
+% \end{figure}
+
+Arsitektur DonutAPI menggunakan pattern layered architecture yang memisahkan concern antara API layer, business logic layer, dan model inference layer. Pemisahan ini memungkinkan maintainability yang baik dan facilitates future enhancements tanpa mempengaruhi komponen lain.
+
+API layer mengimplementasikan dua endpoint utama: \texttt{/predict/} untuk full prediction dengan detailed metadata, dan \texttt{/predict/simple} untuk simplified response yang focus pada extracted data saja. Kedua endpoint support parameter \texttt{model} yang memungkinkan client untuk specify model mana yang akan digunakan (base atau custom), memberikan flexibility dalam processing different document types.
+
+\emph{Request handling} mengimplementasikan comprehensive validation yang mencakup file format validation (JPG, JPEG, PNG, WebP, BMP), file size limits (maksimum 10MB), dan image dimension constraints (maksimum 2048x2048 pixels). Validation ini memastikan bahwa hanya input yang valid yang diproses oleh model, reducing computational waste dan improving system reliability.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{images/api-request-flow.png}
+%     \caption{Alur pemrosesan request dalam DonutAPI}
+%     \label{fig:api-request-flow}
+% \end{figure}
+
+Model inference layer mengimplementasikan \emph{singleton pattern} untuk kedua model (QRIS-TF dan CORD-v2) untuk mencegah multiple instances yang dapat menyebabkan memory issues. Model loading menggunakan lazy initialization yang hanya memuat model ketika pertama kali dibutuhkan, optimizing startup time dan memory usage.
+
+Service mengimplementasikan automatic model selection logic yang menganalisis karakteristik input image untuk menentukan model yang paling appropriate. Logic ini menggunakan simple heuristics berdasarkan image properties dan dapat with high accuracy menentukan apakah document adalah digital payment proof atau paper receipt.
+
+Error handling dan response formatting mengikuti standard industri dengan HTTP status codes yang appropriate dan error messages yang informative. Service mengimplementasikan graceful degradation di mana jika primary model gagal, system secara otomatis fallback ke alternative processing atau memberikan informative error message kepada client.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.7\textwidth]{images/api-response-format.png}
+%     \caption{Format respons API dengan metadata lengkap}
+%     \label{fig:api-response-format}
+% \end{figure}
+
+Response formatting menggunakan Pydantic schemas untuk memastikan type safety dan consistent data structure. Full response format mencakup extracted data, confidence scores, processing metadata, dan model information. Simple response format hanya mengembalikan cleaned extracted data yang siap untuk consumption oleh mobile application.
+
+Service juga mengimplementasikan health check endpoints (\texttt{/health} dan \texttt{/health/detailed}) yang memungkinkan monitoring system status dan model availability. Endpoints ini crucial untuk deployment dalam production environment dan integration dengan load balancers atau orchestration systems.
+
+Logging system menggunakan structured JSON logging dengan request tracing yang memungkinkan debugging dan monitoring yang effective. Setiap request diberikan unique ID yang dapat ditrack across all log entries, facilitating troubleshooting dan performance analysis.
+
+Security features mencakup CORS configuration untuk cross-origin requests, optional API key authentication, dan input sanitization untuk mencegah malicious uploads. File validation tidak hanya check format dan size, tetapi juga verify content integrity untuk memastikan bahwa uploaded files adalah valid images.
+
+Deployment configuration menggunakan Docker containerization yang memungkinkan consistent deployment across different environments. Container includes all dependencies dan optimized untuk both CPU dan GPU inference, dengan automatic device detection yang menggunakan GPU jika available dan fallback ke CPU processing jika diperlukan.

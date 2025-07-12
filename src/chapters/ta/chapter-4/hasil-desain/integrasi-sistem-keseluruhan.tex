@@ -1,0 +1,53 @@
+\subsection{Integrasi Sistem Keseluruhan}
+\label{subsec:integrasi-sistem-keseluruhan}
+
+Integrasi sistem keseluruhan merepresentasikan implementasi end-to-end dari semua komponen yang telah dikembangkan, menciptakan ecosystem yang cohesive untuk ekstraksi data pembayaran. Integrasi ini menggabungkan aplikasi mobile, backend service, dan model inference dalam satu workflow yang seamless.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=\textwidth]{images/complete-system-integration.png}
+%     \caption{Integrasi sistem keseluruhan dengan alur data end-to-end}
+%     \label{fig:complete-system-integration}
+% \end{figure}
+
+Alur integrasi dimulai dari user interaction pada aplikasi mobile dan berakhir dengan structured data yang siap untuk analysis atau storage. Setiap step dalam alur ini telah dioptimalkan untuk memberikan user experience yang optimal sambil maintaining data accuracy dan system reliability.
+
+\emph{Data flow} mengikuti pattern yang consistent: image capture/sharing → preprocessing → API transmission → model selection → inference → response formatting → result display → local storage. Setiap transition antar komponen mengimplementasikan proper error handling dan fallback mechanisms yang memastikan system robustness.
+
+\emph{Automatic model selection} merupakan salah satu achievement utama dari integrasi ini. System dapat secara intelligent menentukan model yang appropriate berdasarkan image characteristics tanpa requiring user input. Logic selection menganalisis visual patterns, image dimensions, dan content characteristics untuk routing ke model yang optimal.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.9\textwidth]{images/system-data-flow.png}
+%     \caption{Alur data dan komunikasi antar komponen sistem}
+%     \label{fig:system-data-flow}
+% \end{figure}
+
+\emph{Performance optimization} pada level system mencakup connection pooling untuk API communications, efficient memory management yang prevent memory leaks, dan caching strategies yang reduce redundant processing. System dirancang untuk handle concurrent requests dengan graceful degradation ketika resource constraints encountered.
+
+Quality assurance mechanisms terintegrasi pada multiple levels. Image validation pada mobile app level memastikan quality minimal sebelum transmission. API validation memverifikasi data integrity dan format compliance. Model confidence scoring memberikan quality indicators yang dapat digunakan untuk automated quality control atau user feedback.
+
+\emph{Error recovery strategies} mengimplementasikan multi-tier fallback approach. Jika primary model gagal, system automatically attempts dengan alternative model. Jika API communication fails, aplikasi mobile menyimpan request untuk retry ketika connection restored. Jika model inference menghasilkan low confidence results, system dapat prompt user untuk image retaking atau manual verification.
+
+\emph{Monitoring dan logging} terintegrasi across all components memberikan comprehensive visibility into system performance. Request tracing menggunakan unique identifiers yang dapat ditrack dari mobile app hingga model inference dan back. Performance metrics collection memungkinkan identification dari bottlenecks dan optimization opportunities.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{images/system-monitoring-dashboard.png}
+%     \caption{Dashboard monitoring sistem terintegrasi}
+%     \label{fig:system-monitoring-dashboard}
+% \end{figure}
+
+\emph{Scalability considerations} dalam integrasi mencakup stateless design yang memungkinkan horizontal scaling, efficient resource utilization yang minimize computational overhead, dan modular architecture yang facilitate addition dari new models atau features tanpa major system changes.
+
+Security implementation mencakup end-to-end encryption untuk data transmission, secure API authentication, dan proper data sanitization pada all entry points. Privacy protection ensures bahwa user data tidak retained longer than necessary dan proper anonymization untuk analytics purposes.
+
+\emph{Deployment strategy} menggunakan containerized approach dengan Docker yang memungkinkan consistent deployment across different environments. Configuration management memungkinkan easy adjustment dari system parameters tanpa code changes. Health checking dan automatic restart capabilities ensure high availability dalam production deployment.
+
+User feedback integration memungkinkan continuous improvement dari system accuracy. Feedback mechanism memungkinkan users untuk report incorrect extractions atau suggest improvements, creating feedback loop yang dapat digunakan untuk future model improvements atau system enhancements.
+
+\emph{Backward compatibility} considerations memastikan bahwa future updates tidak break existing functionality. API versioning strategy memungkinkan smooth migration ketika new features added atau existing features enhanced. Database migration scripts memastikan data integrity ketika schema changes required.
+
+System testing strategy mencakup unit testing untuk individual components, integration testing untuk component interactions, end-to-end testing untuk complete user workflows, dan performance testing untuk load handling capabilities. Automated testing pipeline memastikan bahwa system changes tidak introduce regressions atau performance degradations.
+
+Hasil integrasi adalah system yang not only technically sound tetapi juga delivers real value kepada target users. Gen Z users dapat dengan mudah digitize payment information dengan minimal friction, enabling better financial tracking dan budgeting habits yang crucial untuk financial literacy development.

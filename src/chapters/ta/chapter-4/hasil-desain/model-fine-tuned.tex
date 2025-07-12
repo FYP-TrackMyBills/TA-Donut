@@ -1,0 +1,51 @@
+\subsection{Model yang Telah Di-fine-tune}
+\label{subsec:model-fine-tuned}
+
+Hasil dari proses \emph{fine-tuning} menghasilkan dua model yang telah diadaptasi untuk domain pembayaran Indonesia, masing-masing dioptimalkan untuk menangani jenis dokumen yang berbeda. Kedua model ini merupakan hasil adaptasi dari model \donut{} dasar yang telah disesuaikan dengan karakteristik dan kebutuhan spesifik ekstraksi data pembayaran lokal.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.9\textwidth]{images/dual-model-architecture.png}
+%     \caption{Arsitektur dual-model untuk pemrosesan dokumen pembayaran}
+%     \label{fig:dual-model-architecture}
+% \end{figure}
+
+Strategi \emph{dual-model} dipilih untuk memaksimalkan akurasi ekstraksi dengan mempertimbangkan karakteristik visual dan struktural yang berbeda antara dokumen pembayaran digital dan struk berbasis kertas. Setiap model dikembangkan dengan \emph{task-specific optimization} yang memungkinkan performa optimal pada domain masing-masing.
+
+\subsubsection{Model QRIS-TF (Ekstraksi dan Klasifikasi)}
+\label{subsubsec:model-qris-tf}
+
+Model QRIS-TF merupakan hasil \emph{fine-tuning} dari model \donut{} dasar menggunakan dataset bukti pembayaran digital yang mencakup transaksi QRIS dan transfer. Model ini memiliki kemampuan dual-function untuk melakukan ekstraksi informasi sekaligus klasifikasi jenis transaksi dalam satu proses inference.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.7\textwidth]{images/qris-tf-model-output.png}
+%     \caption{Contoh output struktural model QRIS-TF}
+%     \label{fig:qris-tf-model-output}
+% \end{figure}
+
+Karakteristik utama model QRIS-TF mencakup vocabulary yang telah diperluas dengan 14 \emph{special tokens} spesifik untuk domain pembayaran digital Indonesia. Token-token ini mencakup representasi untuk nominal pembayaran (\texttt{<total\_amount>}), waktu transaksi (\texttt{<transaction\_time>}), identifikator transaksi (\texttt{<transaction\_identifier>}), jenis transaksi (\texttt{<type>}), nama target/penerima (\texttt{<target\_name>}), dan aplikasi pembayaran (\texttt{<application>}).
+
+Model menghasilkan output dalam format JSON terstruktur yang mencakup semua field yang diekstraksi beserta confidence score untuk setiap field. Kemampuan klasifikasi terintegrasi memungkinkan model untuk membedakan antara transaksi QRIS dan transfer berdasarkan pola visual dan tekstual yang dipelajari selama proses pelatihan. Akurasi klasifikasi yang tinggi tercapai melalui pembelajaran pola layout yang berbeda antara kedua jenis transaksi.
+
+Optimasi model QRIS-TF mencakup fine-tuning pada 30 epoch dengan early stopping yang menghasilkan konvergensi optimal pada epoch ke-27. Model menunjukkan performa yang konsisten pada berbagai variasi aplikasi pembayaran, termasuk format yang berbeda dari SeaBank, Neobank, BCA, dan Gopay. Robustness model terhadap variasi kualitas gambar dan orientasi dokumen menjadi salah satu keunggulan utama implementasi ini.
+
+\subsubsection{Model CORD-v2 (Ekstraksi)}
+\label{subsubsec:model-cord-v2}
+
+Model CORD-v2 merupakan adaptasi dari model \donut{} yang telah di-\emph{fine-tune} menggunakan dataset CORD untuk pemrosesan struk pembayaran berbasis kertas. Model ini difokuskan pada ekstraksi informasi tanpa komponen klasifikasi, disesuaikan dengan karakteristik visual struk yang lebih terstruktur dan konsisten.
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.7\textwidth]{images/cord-v2-model-output.png}
+%     \caption{Contoh output ekstraksi model CORD-v2}
+%     \label{fig:cord-v2-model-output}
+% \end{figure}
+
+Karakteristik model CORD-v2 mencakup kemampuan untuk mengenali dan mengekstraksi berbagai elemen dari struk pembayaran, termasuk informasi merchant, daftar item, harga individual, subtotal, pajak, dan total pembayaran. Model ini telah dioptimalkan untuk menangani variasi format struk dari berbagai jenis merchant, mulai dari retail modern hingga warung tradisional.
+
+Vocabulary model CORD-v2 mencakup representasi khusus untuk elemen-elemen struk yang umum di Indonesia, termasuk format mata uang rupiah, struktur alamat lokal, dan terminologi retail yang spesifik. Model menghasilkan output yang terstruktur dalam format yang konsisten, memudahkan parsing dan integrasi dengan sistem pencatatan keuangan.
+
+Performa model CORD-v2 menunjukkan akurasi tinggi dalam ekstraksi field-field kritis seperti total pembayaran dan informasi merchant. Model mampu menangani variasi kualitas struk, mulai dari hasil scan yang bersih hingga foto struk dengan pencahayaan yang kurang optimal. Implementasi preprocessing yang robust membantu model dalam menormalkan input sebelum proses ekstraksi.
+
+Kedua model menggunakan format output yang konsisten untuk memudahkan integrasi dengan komponen sistem lainnya. Confidence scoring yang disediakan oleh setiap model memungkinkan implementasi quality control dan user feedback mechanism untuk meningkatkan user experience secara keseluruhan.
