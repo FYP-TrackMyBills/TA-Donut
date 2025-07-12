@@ -40,6 +40,8 @@ Subbab ini akan menjelaskan mengenai analisis yang digunakan untuk menentukan so
 
 Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan yang digunakan dari masing-masing alternatif solusi dari subbab sebelumnya. Kelebihan dan kekurangan setiap alternatif solusi akan disajikan dalam bentuk tabel pada \autoref{tab:model-comparison}. Tabel ini akan memberikan gambaran yang jelas mengenai kelebihan dan kekurangan dari masing-masing alternatif solusi sesuai dengan kebutuhan sistem.
 
+Berdasarkan analisis pada \autoref{tab:model-comparison}, \donut{} dipilih sebagai solusi yang akan digunakan pada sistem yang akan dibangun. \donut{} memiliki kelebihan yang signifikan dibandingkan dengan alternatif solusi lainnya, yaitu tidak memerlukan ketergantungan pada \ocr{} dan telah terbukti baik untuk mengekstrak data dari gambar dokumen semi-terstruktur seperti formulir, faktor, dan kartu identitas. Selain itu, \donut{} juga merupakan model \sota{} yang telah digunakan pada berbagai penelitian terdahulu. Meskipun \donut{} memerlukan data pelatihan dalam jumlah besar dan kebutuhan komputasi yang tinggi, model \donut{} yang dilatih untuk kasus ini akan digunakan untuk mengatasi masalah ini.
+
 % --- TABEL PERTAMA ---
 \begin{table}[h!]
 \caption{Perbandingan kelebihan dan kekurangan model}
@@ -58,7 +60,7 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
     \item Memiliki \textit{pipeline} yang lebih sederhana
     \item Cocok untuk variasi dokumen yang beragam
     \item Merupakan SOTA untuk VDU (\textit{Visual Document Understanding})
-    \item Merupakan \textit{pre-trained model}
+    \item Ada \textit{pre-trained model} pada \dataset{} CORD-v2
 \end{enumerate}
 &
 \begin{enumerate}
@@ -67,22 +69,6 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
     \item Kurang optimal untuk dokumen dengan kualitas rendah
 \end{enumerate}
 \\ \hline
-\end{tabularx}
-\end{table}
-
-\newpage
-
-% --- TABEL KEDUA ---
-\begin{table}[h!]
-\ContinuedFloat % Perintah ini mencegah nomor tabel bertambah
-\caption{Perbandingan kelebihan dan kekurangan model (lanjutan)}
-% Mengatur agar list tidak memakan banyak ruang vertikal
-\setlist[enumerate]{itemsep=0mm, topsep=1mm, nosep}
-\begin{tabularx}{\linewidth}{|p{2cm}|X|X|}
-\hline
-\textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
-\hline
-
 % --- LayoutLM Model ---
 \textbf{LayoutLM} &
 \begin{enumerate}
@@ -125,6 +111,19 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
     \item Metode yang tergolong konvensional
 \end{enumerate}
 \\ \hline
+\end{tabularx}
+\end{table}
+
+% --- TABEL KEDUA ---
+\begin{table}[t!]
+\ContinuedFloat % Perintah ini mencegah nomor tabel bertambah
+\caption{Perbandingan kelebihan dan kekurangan model (lanjutan)}
+% Mengatur agar list tidak memakan banyak ruang vertikal
+\setlist[enumerate]{itemsep=0mm, topsep=1mm, nosep}
+\begin{tabularx}{\linewidth}{|p{2cm}|X|X|}
+\hline
+\textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
+\hline
 
 % --- CRNN ---
 \textbf{CRNN} &
@@ -138,6 +137,7 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
     \item Hanya berfokus pada teks
 \end{enumerate}
 \\ \hline
+
 % --- YOLO ---
 \textbf{YOLO} &
 \begin{enumerate}
@@ -150,22 +150,6 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
     \item Tidak dirancang untuk dokumen dengan berbagai elemen teks
 \end{enumerate}
 \\ \hline
-\end{tabularx}
-\end{table}
-
-\newpage
-
-% --- TABEL KETIGA ---
-\begin{table}[h!]
-\ContinuedFloat % Perintah ini mencegah nomor tabel bertambah
-\caption{Perbandingan kelebihan dan kekurangan model (lanjutan)}
-% Mengatur agar list tidak memakan banyak ruang vertikal
-\setlist[enumerate]{itemsep=0mm, topsep=1mm, nosep}
-\begin{tabularx}{\linewidth}{|p{2cm}|X|X|}
-\hline
-\textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
-\hline
-
 % --- R-CNN ---
 \textbf{R-CNN} &
 \begin{enumerate}
@@ -182,4 +166,15 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
 \end{tabularx}
 \end{table}
 
-Berdasarkan analisis pada \autoref{tab:model-comparison}, \donut{} dipilih sebagai solusi yang akan digunakan pada sistem yang akan dibangun. \donut{} memiliki kelebihan yang signifikan dibandingkan dengan alternatif solusi lainnya, yaitu tidak memerlukan ketergantungan pada \ocr{} dan telah terbukti baik untuk mengekstrak data dari gambar dokumen semi-terstruktur seperti formulir, faktor, dan kartu identitas. Selain itu, \donut{} juga merupakan model \sota{} yang telah digunakan pada berbagai penelitian terdahulu. Meskipun \donut{} memerlukan data pelatihan dalam jumlah besar dan kebutuhan komputasi yang tinggi, model \donut{} yang dilatih untuk kasus ini akan digunakan untuk mengatasi masalah ini.
+% % --- TABEL KETIGA ---
+% \begin{table}[h!]
+% \ContinuedFloat % Perintah ini mencegah nomor tabel bertambah
+% \caption{Perbandingan kelebihan dan kekurangan model (lanjutan)}
+% % Mengatur agar list tidak memakan banyak ruang vertikal
+% \setlist[enumerate]{itemsep=0mm, topsep=1mm, nosep}
+% \begin{tabularx}{\linewidth}{|p{2cm}|X|X|}
+% \hline
+% \textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
+% \hline
+% \end{tabularx}
+% \end{table}

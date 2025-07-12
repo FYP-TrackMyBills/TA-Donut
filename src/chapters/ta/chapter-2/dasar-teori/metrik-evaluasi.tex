@@ -63,3 +63,20 @@ Persamaan \eqref{eq:cer} menunjukkan cara perhitungan CER dengan parameter yang 
 
 \subsubsection{\emph{System Usability Scale} (SUS)}
 \label{subsubsec:sus}
+
+\emph{System Usability Scale} (SUS) adalah instrumen evaluasi usabilitas yang dikembangkan oleh Brooke pada tahun 1996 sebagai alat ukur cepat dan andal untuk mengevaluasi usabilitas sistem \parencite{brooke1996sus}. SUS terdiri dari sepuluh pertanyaan dengan skala \emph{Likert} lima poin yang dirancang untuk memberikan skor tunggal yang merepresentasikan penilaian subjektif pengguna terhadap usabilitas sistem. Instrumen ini telah menjadi salah satu metode evaluasi usabilitas yang paling banyak digunakan dalam interaksi manusia komputer karena kesederhanaan, reliabilitas, dan validitasnya \parencite{bangor2008empirical}.
+
+SUS menggunakan sepuluh pertanyaan standar yang mencakup aspek-aspek fundamental usabilitas, termasuk efektivitas, efisiensi, dan kepuasan pengguna. Lima pertanyaan dinyatakan secara positif dan lima lainnya secara negatif untuk mengurangi kemungkinan respons bias dan meningkatkan keandalan pengukuran. Setiap pertanyaan dinilai pada skala 1 hingga 5, dengan 1 menunjukkan "sangat tidak setuju" dan 5 menunjukkan "sangat setuju". Pertanyaan SUS meliputi penilaian terhadap keinginan menggunakan sistem secara teratur, kompleksitas sistem yang dirasakan, kemudahan penggunaan, kebutuhan dukungan teknis, integrasi fungsi sistem, inkonsistensi, kemudahan pembelajaran, dan kepercayaan diri pengguna dalam menggunakan sistem \parencite{brooke1996sus}.
+
+Perhitungan skor SUS mengikuti metodologi khusus untuk menghasilkan skor akhir antara 0 hingga 100. Untuk pertanyaan bernomor ganjil (pernyataan positif), skor dihitung dengan mengurangi 1 dari respons pengguna. Untuk pertanyaan bernomor genap (pernyataan negatif), skor dihitung dengan mengurangi respons pengguna dari 5. Jumlah total skor dari sepuluh pertanyaan kemudian dikalikan dengan 2,5 untuk menghasilkan skor SUS akhir. Persamaan \eqref{eq:sus-score} menunjukkan formula perhitungan skor SUS dengan $R_i$ adalah respons untuk pertanyaan $i$ \parencite{tullis2013measuring}.
+
+\begin{equation}
+    \label{eq:sus-score}
+\text{SUS Score} = \left(\sum_{i=1,3,5,7,9} (R_i - 1) + \sum_{j=2,4,6,8,10} (5 - R_j)\right) \times 2.5
+\end{equation}
+
+Interpretasi skor SUS menggunakan \emph{benchmark} yang telah ditetapkan berdasarkan penelitian ekstensif terhadap ribuan evaluasi usabilitas. Skor SUS di atas 68 dianggap diatas rata-rata, skor antara 68-80 menunjukkan usabilitas yang baik, skor 80-90 menunjukkan usabilitas yang sangat baik, dan skor di atas 90 menunjukkan usabilitas yang luar biasa. Skor di bawah 68 menunjukkan bahwa sistem memerlukan perbaikan usabilitas yang signifikan \parencite{bangor2009determining}. Penelitian oleh Sauro pada tahun 2011 menunjukkan bahwa skor SUS memiliki korelasi yang kuat dengan metrik usabilitas objektif seperti tingkat penyelesaian tugas dan efisiensi \parencite{sauro2011measuring}.
+
+Keunggulan SUS sebagai instrumen evaluasi meliputi kemudahan administrasi, waktu pengisian yang singkat (2-5 menit), skor tunggal yang mudah dipahami, dan validitas yang telah terbukti melalui berbagai domain aplikasi \parencite{lewis2018sus}. SUS juga memungkinkan perbandingan usabilitas antar sistem yang berbeda dan \emph{benchmarking} terhadap standar industri.
+
+Dalam konteks evaluasi sistem \emph{mobile} untuk ekstraksi data pembayaran, SUS menjadi instrumen yang relevan untuk mengukur sejauh mana pengguna Gen Z dapat menggunakan aplikasi dengan mudah dan efektif. Evaluasi usabilitas dengan SUS dapat mengidentifikasi apakah antarmuka aplikasi memenuhi ekspektasi pengguna dalam hal kemudahan penggunaan, efisiensi proses ekstraksi data, dan kepuasan pengguna secara keseluruhan terhadap sistem yang dikembangkan.
