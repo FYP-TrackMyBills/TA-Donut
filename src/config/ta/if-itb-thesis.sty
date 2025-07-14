@@ -57,6 +57,9 @@
 
 \usepackage{csquotes} % Untuk kutipan
 \usepackage{amsmath}
+\usepackage{tocloft}
+\newlistof{myequations}{loe}{DAFTAR PERSAMAAN}
+\newcommand{\listofequations}{\listofmyequations}
 \usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{subfig}
@@ -158,6 +161,12 @@
 {Tabel \thecontentslabel.\quad}
 {}
 {\mdseries\titlerule*[0.35em]{.}\bfseries\contentspage}
+\titlecontents{myequations}
+[0pt]
+{}
+{Persamaan \thecontentslabel.\quad}
+{}
+{\mdseries\titlerule*[0.35em]{.}\bfseries\contentspage}
 
 % Masukin Daftar Pustaka ke toc
 \let\originalprintbibliography\printbibliography
@@ -188,6 +197,7 @@
 % Counter untuk figure dan table.
 \counterwithin{figure}{chapter}
 \counterwithin{table}{chapter}
+\counterwithin{equation}{chapter}
 
 % Define blank page
 \newcommand*{\blankpage}{\afterpage{\null\newpage}}

@@ -32,6 +32,7 @@
 		      \label{eq:attention-softmax}
 		      \operatorname{Attention}(Q, K, V) = \operatorname{SoftMax}\left(\frac{QK^\mathsf{T}}{\sqrt{d_k}}\right)V
 	      \end{equation}
+		  \addcontentsline{loe}{myequations}{\protect\numberline{\theequation}Persamaan Softmax}
 
 	\item \ffnfull~\\
 	      Setelah \attention{} dihitung, informasi dari setiap elemen diproses melalui jaringan \emph{feed-forward} yang sama untuk setiap posisi dalam urutan. Jaringan ini terdiri dari dua lapisan linear dengan fungsi aktivasi ReLU pada persamaan \eqref{eq:ffn} \parencite{vaswani2017attention}:
