@@ -41,5 +41,5 @@ Setiap \emph{window} memiliki ukuran $M \times M$ (umumnya $7 \times 7$) dan den
 
 Untuk memungkinkan koneksi \emph{cross-window}, \swin{} 
 menggunakan metode \emph{Shifted Window Multi-Head Self-Attention} (SW-MSA). 
-Dalam metode ini, setiap window akan bergeser pada lapisan berikutnya dengan jarak tertentu (misalnya setengah ukuran jendela). Ini menciptakan koneksi cross window tanpa menambah banyak beban komputasi. Proses ini dapat dilihat pada \autoref{fig:Swin-shifted-window}. Window pada lapisan $l$ dan $l+1$ digeser untuk menciptakan interaksi 
-satu sama lain. Dalam proses self-attention, Swin Transformer menggunakan \textit{relative position bias} untuk menangkap hubungan spasial antar \patch{}.
+Dalam metode ini, setiap window akan bergeser pada lapisan berikutnya dengan jarak tertentu (misalnya setengah ukuran jendela). Ini menciptakan koneksi \emph{cross window} tanpa menambah banyak beban komputasi. Proses ini dapat dilihat pada \autoref{fig:Swin-shifted-window}. Window pada lapisan $l$ dan $l+1$ digeser untuk menciptakan interaksi 
+satu sama lain. Dalam proses \emph{self-attention}, Swin Transformer menggunakan \textit{relative position bias} untuk menangkap hubungan spasial antar \patch.
