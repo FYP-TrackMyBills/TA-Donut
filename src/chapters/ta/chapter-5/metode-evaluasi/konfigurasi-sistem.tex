@@ -1,35 +1,63 @@
 \subsection{Konfigurasi Sistem}
 \label{subsec:konfigurasi-sistem}
 
-Evaluasi dilakukan dengan menggunakan konfigurasi sistem yang telah ditetapkan. Konfigurasi ini mencakup perangkat keras, perangkat lunak, dan lingkungan pengujian yang digunakan untuk menjalankan sistem. 
+Evaluasi sistem dilakukan menggunakan konfigurasi yang disesuaikan dengan jenis evaluasi yang dilakukan. Evaluasi sistem dilakukan pada komponen model \ml{} dan aplikasi \emph{mobile}. Konfigurasi sistem dibagi menjadi dua lingkungan evaluasi yang berbeda sesuai dengan karakteristik masing-masing komponen.
 
-\subsu
+\subsubsection{Konfigurasi Sistem untuk Evaluasi Kinerja Model}
+\label{subsubsec:konfigurasi-sistem-evaluasi-kinerja-model}
 
-\begin{enumerate}
-    \item{
-        \textbf{Perangkat Keras:}
-        \begin{itemize}
-            \item Prosesor: Intel Core i7-10750H
-            \item RAM: 16 GB
-            \item Penyimpanan: SSD 512 GB
-            \item Layar: 15.6 inci Full HD
-        \end{itemize}
-    }
-    \item{
-        \textbf{Perangkat Lunak:}
-        \begin{itemize}
-            \item Sistem Operasi: Windows 10 Pro
-            \item Bahasa Pemrograman: Python 3.8
-            \item Framework: TensorFlow 2.4, Keras 2.4
-            \item Database: SQLite 3.32
-        \end{itemize}
-    }
-    \item{
-        \textbf{Lingkungan Pengujian:}
-        \begin{itemize}
-            \item Emulator Android: Android Studio Emulator
-            \item Perangkat Uji: Xiaomi Redmi Note 9 Pro
-            \item Jaringan: Wi-Fi 5 GHz
-        \end{itemize}
-    }
-\end{enumerate}
+Evaluasi kinerja model dilakukan menggunakan \emph{platform} Kaggle Notebook yang menyediakan akses ke GPU untuk tugas \ml. \autoref{tab:ml-config} menunjukkan konfigurasi Kaggle Notebook yang digunakan untuk evaluasi model \donut.
+
+Lingkungan Kaggle dipilih karena menyediakan GPU Tesla T4 yang cukup mumpuni untuk melakukan \emph{fine-tuning} dan evaluasi model \donut{} serta memiliki semua \emph{dependency} yang diperlukan untuk \dl.
+
+\begin{table}[h!]
+    \centering
+    \caption{Konfigurasi perangkat keras Kaggle Notebook untuk evaluasi model}
+    \label{tab:ml-config}
+    \begin{tabularx}{\textwidth}{|p{4cm}|X|}
+        \hline
+        \textbf{Komponen} & \textbf{Spesifikasi} \\
+        \hline
+        \textit{Platform} & Kaggle Notebook Environment \\
+        \hline
+        GPU      & 2x NVIDIA Tesla T4 (16GB VRAM total) \\
+        \hline
+        CPU      & Intel Xeon \\
+        \hline
+        RAM      & 30GB \\
+        \hline
+        \textit{Storage}  & 20GB \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+\subsubsection{Konfigurasi Sistem untuk Evaluasi Aplikasi Mobile}
+\label{subsubsec:konfigurasi-sistem-evaluasi-aplikasi-mobile}
+Evaluasi aplikasi \emph{mobile} dilakukan menggunakan perangkat fisik untuk memastikan pengalaman pengguna yang realistis. \autoref{tab:mobile-config} menunjukkan spesifikasi perangkat yang digunakan untuk evaluasi aplikasi \emph{mobile}. Perangkat yang digunakan untuk melakukan evaluasi pengalaman pengguna bervariasi tergantung pada ketersediaan perangkat. Namun, umumnya perangkat yang digunakan adalah perangkat Android yang umumnya dimiliki Gen Z.
+
+\begin{table}[h!]
+    \centering
+    \caption{Konfigurasi Perangkat Mobile untuk Evaluasi}
+    \label{tab:mobile-config}
+    \begin{tabularx}{\linewidth}{|p{4cm}|X|}
+        \hline
+        \textbf{Spesifikasi} & \textbf{Detail} \\
+        \hline
+        \textit{Model} & Samsung Galaxy A73 5G \\
+        \hline
+        \textit{Processor} & Qualcomm Snapdragon 778G \\
+        \hline
+        RAM & 8GB \\
+        \hline
+        \textit{Storage} & 256GB \\
+        \hline
+        \textit{Display} & 6.7" FHD+ AMOLED (1080 x 2400) \\
+        \hline
+        \textit{Camera} & 108MP \textit{main}, 12MP \textit{ultrawide} \\
+        \hline
+        \textit{Operating System} & Android 13 \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+Pemilihan Samsung Galaxy A73 sebagai perangkat evaluasi didasarkan pada kapabilitas perwakilan terhadap mid-to-high-range perangkat Android yang umum digunakan Gen Z. Spesifikasi yang cukup mumpuni memastikan bahwa evaluasi tidak terbias oleh keterbatasan perangkat, namun tetap realistis untuk penggunaan sehari-hari.

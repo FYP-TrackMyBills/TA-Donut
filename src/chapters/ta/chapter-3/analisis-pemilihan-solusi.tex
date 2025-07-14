@@ -13,7 +13,7 @@ Alternatif solusi yang memerlukan \ocr{} adalah alternatif solusi yang memerluka
 \begin{enumerate}
     \item \layoutlm ~\\ Model ini adalah salah satu pelopor dalam menggabungkan informasi teks, tata letak, dan visual dari sebuah dokumen. Berbeda dengan model bahasa seperti \bert{} yang hanya memahami teks, \layoutlm{} memperkaya representasi token teks dengan menyertakan \textit{embedding} posisi 2D (koordinat x,y dari \emph{bounding box}) dan \textit{embedding} visual. Dengan demikian, model ini dapat memahami konteks yang berasal dari struktur dokumen. \layoutlm{} menjadi model yang sangat efektif untuk tugas ekstraksi informasi dari dokumen semi-terstruktur seperti formulir dan faktur \parencite{xu2020layoutlm}. 
     \item \bert{} ~\\
-    \bert{} adalah model bahasa murni dan tidak memiliki kemampuan untuk memproses gambar atau tata letak secara inheren. Dalam alur kerja ekstraksi data dokumen, peran BERT berada di tahap \textit{downstream} setelah teks diekstraksi oleh sistem \ocr. Teks mentah dari \ocr{} kemudian dimasukkan ke \bert{} untuk tugas-tugas \nlp{} seperti Klasifikasi Teks atau \emph{Named Entity Recognition} (NER). Jadi, \bert{} tidak mengekstraksi data dari gambar, melainkan dari teks yang sudah diekstraksi \parencite{koroteev2021bert}. 
+    \bert{} adalah model bahasa murni dan tidak memiliki kemampuan untuk memproses gambar atau tata letak secara inheren. Dalam alur kerja ekstraksi data dokumen, peran BERT berada di tahap \textit{downstream} setelah teks diekstraksi oleh sistem \ocr. Teks mentah dari \ocr{} kemudian dimasukkan ke \bert{} untuk tugas-tugas \nlp{} seperti klasifikasi teks atau \emph{Named Entity Recognition} (NER). Jadi, \bert{} tidak mengekstraksi data dari gambar, melainkan dari teks yang sudah diekstraksi \parencite{koroteev2021bert}. 
 \end{enumerate}
 
 \subsubsection{Alternatif Solusi yang Tidak Memerlukan OCR}
@@ -111,6 +111,18 @@ Berdasarkan analisis pada \autoref{tab:model-comparison}, \donut{} dipilih sebag
     \item Metode yang tergolong konvensional
 \end{enumerate}
 \\ \hline
+% --- CRNN ---
+\textbf{CRNN} &
+\begin{enumerate}
+    \item Cocok untuk pengenalan teks dalam gambar
+    \item Sangat cocok untuk menangani teks dengan font dan orientasi yang bervariasi
+\end{enumerate}
+&
+\begin{enumerate}
+    \item Tidak optimal untuk menangani elemen visual dan spasial dalam gambar
+    \item Hanya berfokus pada teks
+\end{enumerate}
+\\ \hline
 \end{tabularx}
 \end{table}
 
@@ -124,19 +136,6 @@ Berdasarkan analisis pada \autoref{tab:model-comparison}, \donut{} dipilih sebag
 \hline
 \textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
 \hline
-
-% --- CRNN ---
-\textbf{CRNN} &
-\begin{enumerate}
-    \item Cocok untuk pengenalan teks dalam gambar
-    \item Sangat cocok untuk menangani teks dengan font dan orientasi yang bervariasi
-\end{enumerate}
-&
-\begin{enumerate}
-    \item Tidak optimal untuk menangani elemen visual dan spasial dalam gambar
-    \item Hanya berfokus pada teks
-\end{enumerate}
-\\ \hline
 
 % --- YOLO ---
 \textbf{YOLO} &
@@ -167,7 +166,9 @@ Berdasarkan analisis pada \autoref{tab:model-comparison}, \donut{} dipilih sebag
 \end{table}
 
 {
-\color{white}a
+    \color{white}
+    \vspace{1em}
+    adfjdsjfkladsjlfjadsklfjladsjflajdslfajdsklfjadkfjkladsjfklajfklajdklfjadklfjadkjfkjdkadjfkldsj
 }
 
 
