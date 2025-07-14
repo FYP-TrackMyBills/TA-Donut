@@ -60,6 +60,17 @@
 \usepackage{tocloft}
 \newlistof{myequations}{loe}{DAFTAR PERSAMAAN}
 \newcommand{\listofequations}{\listofmyequations}
+
+% Format all list titles to be centered and 14pt
+\renewcommand{\cfttoctitlefont}{\hfill\fontsize{14}{16.8}\selectfont\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill}
+\renewcommand{\cftloftitlefont}{\hfill\fontsize{14}{16.8}\selectfont\bfseries}
+\renewcommand{\cftafterloftitle}{\hfill}
+\renewcommand{\cftlottitlefont}{\hfill\fontsize{14}{16.8}\selectfont\bfseries}
+\renewcommand{\cftafterlottitle}{\hfill}
+\renewcommand{\cftloetitlefont}{\hfill\fontsize{14}{16.8}\selectfont\bfseries}
+\renewcommand{\cftafterloetitle}{\hfill}
+
 \usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{subfig}
