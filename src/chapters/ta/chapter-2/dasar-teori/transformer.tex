@@ -41,6 +41,7 @@
 		      \label{eq:ffn}
 		      \operatorname{FFN}(x) = \max(0, xW_1 + b_1)W_2 + b_2
 	      \end{equation}
+		  \addcontentsline{loe}{myequations}{\protect\numberline{\theequation}Fungsi Aktivasi ReLU pada \ffn}
 
 	      \decoderfl{} memiliki perbedaan signifikan dibandingkan dengan \encoder.
 	      \encoderfl{} terdiri dari beberapa lapisan yang masing-masing memiliki mekanisme \selfattention{} dan FFN. Setiap elemen dalam \sequence{} dapat saling “memperhatikan”. \decoderfl{} memiliki lapisan tambahan yang \encoder{}\--\decoder{} \attention. Lapisan ini memungkinkan \decoder{} untuk "memperhatikan" keluaran dari \encoder. \decoderfl{} memiliki mekanisme \emph{masking} untuk memastikan bahwa posisi saat ini hanya bergantung pada posisi sebelumnya.
