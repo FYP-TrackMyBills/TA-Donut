@@ -46,9 +46,16 @@
 
 \input{chapters/ta/forewords}
 
-% Temporarily override section formatting for TOC-related sections
-% \titleformat*{\section}{\centering\bfseries\Large\MakeUpperCase}
-\titlespacing*{\chapter}{0pt}{0pt}{4pt}
+% Ensure chapter formatting is properly applied for TOC/LOF/LOT
+\makeatletter
+% Reset chapter formatting to ensure 14pt centered titles
+\titleformat{\chapter}[display]
+{\fontsize{14}{16.8}\selectfont\centering\bfseries}
+{\chaptertitlename\ \thechapter}{0pt}
+{\fontsize{14}{16.8}\selectfont\bfseries\uppercase}
+% Reset chapter spacing for proper title formatting
+\titlespacing*{\chapter}{0pt}{0pt}{16pt}
+\makeatother
 
 % Setting judul toc, lot, lof, bib
 \renewcommand{\contentsname}{DAFTAR ISI}
@@ -57,15 +64,54 @@
 \renewcommand{\bibname}{DAFTAR PUSTAKA}
 
 % daftar isi, lampiran, gambar, table
-\tableofcontents
+\newpage
+% Manual override for Table of Contents title
+\makeatletter
+\begin{center}
+\fontsize{14}{16.8}\selectfont\bfseries
+DAFTAR ISI
+\end{center}
+\vspace{16pt}
+\@starttoc{toc}
+\makeatother
+
 \listofappendices
 \newpage
 
-\listoffigures
-\listoftables
-\newpage
+% Manual override for List of Figures title
+\makeatletter
+\begin{center}
+\fontsize{14}{16.8}\selectfont\bfseries
+DAFTAR GAMBAR
+\end{center}
+\vspace{16pt}
+\addcontentsline{toc}{chapter}{DAFTAR GAMBAR}
+\@starttoc{lof}
+\makeatother
 
-\listofequations
+\newpage
+% Manual override for List of Tables title
+\makeatletter
+\begin{center}
+\fontsize{14}{16.8}\selectfont\bfseries
+DAFTAR TABEL
+\end{center}
+\vspace{16pt}
+\addcontentsline{toc}{chapter}{DAFTAR TABEL}
+\@starttoc{lot}
+\makeatother
+
+\newpage
+% Manual override for List of Equations title
+\makeatletter
+\begin{center}
+\fontsize{14}{16.8}\selectfont\bfseries
+DAFTAR PERSAMAAN
+\end{center}
+\vspace{16pt}
+\addcontentsline{toc}{chapter}{DAFTAR PERSAMAAN}
+\@starttoc{loe}
+\makeatother
 
 \newpage
 
@@ -93,6 +139,12 @@
 % CRITICAL: Apply uniform section formatting - all levels at 12pt (normalsize)
 % This placement after chapter config ensures it overrides document class defaults
 \makeatletter
+% Ensure chapter formatting remains consistent for numbered chapters
+\titleformat{\chapter}[display]
+{\fontsize{14}{16.8}\selectfont\centering\bfseries}
+{\chaptertitlename\ \thechapter}{0pt}
+{\fontsize{14}{16.8}\selectfont\bfseries\uppercase}
+
 \titleformat*{\section}{\normalfont\normalsize\bfseries}
 \titleformat*{\subsection}{\normalfont\normalsize\bfseries}
 \titleformat*{\subsubsection}{\normalfont\normalsize\bfseries}
