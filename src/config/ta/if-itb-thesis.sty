@@ -196,6 +196,26 @@
 {}
 {\mdseries\titlerule*[0.35em]{.}\bfseries\contentspage}
 
+% Add proper section and subsection formatting for TOC
+\titlecontents{section}
+[20pt]
+{}
+{\thecontentslabel\quad}
+{}
+{\mdseries\titlerule*[0.35em]{.}\bfseries\contentspage}
+\titlecontents{subsection}
+[40pt]
+{}
+{\thecontentslabel\quad}
+{}
+{\mdseries\titlerule*[0.35em]{.}\bfseries\contentspage}
+\titlecontents{subsubsection}
+[60pt]
+{}
+{\thecontentslabel\quad}
+{}
+{\mdseries\titlerule*[0.35em]{.}\bfseries\contentspage}
+
 % Masukin Daftar Pustaka ke toc
 \let\originalprintbibliography\printbibliography
 \renewcommand\printbibliography{%
