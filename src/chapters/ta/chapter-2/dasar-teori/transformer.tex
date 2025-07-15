@@ -46,8 +46,6 @@
 	      \decoderfl{} memiliki perbedaan signifikan dibandingkan dengan \encoder.
 	      \encoderfl{} terdiri dari beberapa lapisan yang masing-masing memiliki mekanisme \selfattention{} dan FFN. Setiap elemen dalam \sequence{} dapat saling “memperhatikan”. \decoderfl{} memiliki lapisan tambahan yang \encoder{}\--\decoder{} \attention. Lapisan ini memungkinkan \decoder{} untuk "memperhatikan" keluaran dari \encoder. \decoderfl{} memiliki mekanisme \emph{masking} untuk memastikan bahwa posisi saat ini hanya bergantung pada posisi sebelumnya.
 
-	      \pagebreak
-
 	      \transformer{} memiliki keunggulan dibandingkan dengan metode konvensional pemrosesan sekuensial, yaitu \rnn. \transformer{} tidak bergantung
 	      pada pemrosesan berurutan. \transformer{} dapat memproses seluruh urutan secara bersamaan, membuat pelatihan jauh lebih cepat. Implementasi \transformer{} menunjukkan hasil terbaik di berbagai kasus, seperti penerjemahan bahasa,
 	      dibandingkan dengan arsitektur lainnya.
