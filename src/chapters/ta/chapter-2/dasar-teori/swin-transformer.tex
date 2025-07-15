@@ -22,7 +22,7 @@ pada seluruh gambar, \swin{} memperkenalkan \selfattention{} berbasis \emph{loca
     \label{fig:Swin-shifted-window}
 \end{figure}
 
-\pagebreak Pada \swin, terdapat empat tahap. Pada setiap tahap, resolusi fitur akan secara bertahap dikurangi saat melalui lapisan \emph{patch merging} seperti pada \autoref{fig:swin-architecture}. Contohnya pada tahap satu, resolusi gambar $\frac{H}{4} \times \frac{W}{4}$ dengan dimensi fitur awal C. Kemudian pada tahap dua, resolusi dikurangi menjadi $\frac{H}{8} \times \frac{W}{8}$ dan 
+Pada \swin, terdapat empat tahap. Pada setiap tahap, resolusi fitur akan secara bertahap dikurangi saat melalui lapisan \emph{patch merging} seperti pada \autoref{fig:swin-architecture}. Contohnya pada tahap satu, resolusi gambar $\frac{H}{4} \times \frac{W}{4}$ dengan dimensi fitur awal C. Kemudian pada tahap dua, resolusi dikurangi menjadi $\frac{H}{8} \times \frac{W}{8}$ dan 
 dimensi fitur dinaikkan menjadi 2C. Tahap ini akan berlanjut hingga pada tahap empat dengan resolusi $\frac{H}{32} \times \frac{W}{32}$ dan dimensi 8C. Dengan struktur ini, \swin{} mampu menangkap informasi pada berbagai skala, seperti fitur lokal 
 dan global, yang sangat penting dalam \emph{computer vision} seperti \emph{object detection}. 
 
