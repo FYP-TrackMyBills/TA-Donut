@@ -1,5 +1,5 @@
-\subsection{Model yang Telah Di-fine-tune}
-\label{subsec:model-fine-tuned}
+\subsection{Model yang Digunakan}
+\label{subsec:model-yang-digunakan}
 
 Hasil dari proses \emph{fine-tuning} menghasilkan dua model yang telah diadaptasi untuk domain pembayaran Indonesia, masing-masing dioptimalkan untuk menangani jenis dokumen yang berbeda. Kedua model ini merupakan hasil adaptasi dari model \donut{} dasar yang telah disesuaikan dengan karakteristik dan kebutuhan spesifik ekstraksi data pembayaran lokal.
 
@@ -12,7 +12,7 @@ Hasil dari proses \emph{fine-tuning} menghasilkan dua model yang telah diadaptas
 
 Strategi \emph{dual-model} dipilih untuk memaksimalkan akurasi ekstraksi dengan mempertimbangkan karakteristik visual dan struktural yang berbeda antara dokumen pembayaran digital dan struk berbasis kertas. Setiap model dikembangkan dengan \emph{task-specific optimization} yang memungkinkan performa optimal pada domain masing-masing.
 
-\subsubsection{Model QRIS-TF (Ekstraksi dan Klasifikasi)}
+\subsubsection{Model Donut QRIS-TF}
 \label{subsubsec:model-qris-tf}
 
 Model QRIS-TF merupakan hasil \emph{fine-tuning} dari model \donut{} dasar menggunakan dataset bukti pembayaran digital yang mencakup transaksi QRIS dan transfer. Model ini memiliki kemampuan dual-function untuk melakukan ekstraksi informasi sekaligus klasifikasi jenis transaksi dalam satu proses inference.
@@ -30,7 +30,7 @@ Model menghasilkan output dalam format JSON terstruktur yang mencakup semua fiel
 
 Optimasi model QRIS-TF mencakup fine-tuning pada 30 epoch dengan early stopping yang menghasilkan konvergensi optimal pada epoch ke-27. Model menunjukkan performa yang konsisten pada berbagai variasi aplikasi pembayaran, termasuk format yang berbeda dari SeaBank, Neobank, BCA, dan Gopay. Robustness model terhadap variasi kualitas gambar dan orientasi dokumen menjadi salah satu keunggulan utama implementasi ini.
 
-\subsubsection{Model CORD-v2 (Ekstraksi)}
+\subsubsection{Model Donut CORD-V2}
 \label{subsubsec:model-cord-v2}
 
 Model CORD-v2 merupakan adaptasi dari model \donut{} yang telah di-\emph{fine-tune} menggunakan dataset CORD untuk pemrosesan struk pembayaran berbasis kertas. Model ini difokuskan pada ekstraksi informasi tanpa komponen klasifikasi, disesuaikan dengan karakteristik visual struk yang lebih terstruktur dan konsisten.
