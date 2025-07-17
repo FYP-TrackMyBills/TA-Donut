@@ -1,4 +1,22 @@
 \subsection{Evaluasi Kinerja Model}
 \label{subsec:evaluasi-kinerja-model}
 
-Evaluasi kinerja model dilakukan dengan 
+Evaluasi kinerja model dilakukan dengan membandingkan hasil prediksi model dengan \emph{ground truth} (GT) yang telah disiapkan. Proses evaluasi ini bertujuan untuk mengukur seberapa baik model dalam mengenali dan mengekstrak informasi dari dokumen pembayaran yang telah dilatih sebelumnya. \autoref{tab:definisi-kategori-prediksi} menunjukkan definisi dari setiap kategori dari prediksi yang dihasilkan oleh model pada evaluasi yang dilakukan. 
+
+\begin{table}[h!]
+    \centering
+    \caption{Definisi kategori prediksi model}
+    \label{tab:definisi-kategori-prediksi}
+    \begin{tabularx}{\textwidth}{|p{3cm}|X|}
+        \hline
+        \textbf{Kategori} & \textbf{Definisi} \\ \hline
+        \emph{True Positive} (TP) & Seluruh atribut yang ada di \emph{Ground Truth} (GT) terprediksi dengan nilai yang benar. \\ \hline
+        \emph{False Positive} (FP) & Terdapat atribut yang ada di GT dengan nilai yang tidak kosong, tetapi tidak muncul di hasil prediksi atau muncul dengan nilai kosong. \\ \hline
+        \emph{False Negative} (FN) & Terdapat atribut yang ada di GT dengan nilai yang tidak kosong, tetapi tidak muncul di hasil prediksi atau muncul dengan nilai kosong. \\ \hline
+        \emph{True Negative} (TN) & Terdapat atribut yang tidak ada di GT dan tidak muncul di hasil prediksi. \\ \hline
+    \end{tabularx}
+\end{table}
+
+Evaluasi akan dilakukan terhadap dua jenis model yang digunakan, yaitu model \donut{} yang telah dilatih dengan \dataset{} QRIS dan transfer bank, serta model \donut{} yang telah dilatih dengan \dataset{} CORD-v2. Hasil evaluasi akan diukur dengan menggunakan metrik-metrik standar dalam evaluasi model klasifikasi, yaitu \accuracy, \precision, \recall, dan \fscore. 
+
+Selain metrik-metrik standar tersebut, terdapat juga metrik \mcer{} yang digunakan untuk mengukur berapa banyak perubahan karakter yang diperlukan dari teks prediksi menjadi teks sebenarnya dari \emph{Ground Truth}. Metrik-metrik ini akan memberikan gambaran yang jelas mengenai kinerja model dalam mengenali dan mengekstrak informasi dari dokumen pembayaran yang telah dilatih sebelumnya.

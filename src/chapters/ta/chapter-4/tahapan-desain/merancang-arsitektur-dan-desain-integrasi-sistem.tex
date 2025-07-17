@@ -1,19 +1,20 @@
 \subsection{Merancang Arsitektur dan Desain Integrasi Sistem}
-\label{subsec:analisis-kebutuhan-arsitektur}
+\label{subsec:merancang-aristektur-dan-desain-integrasi-sistem}
 
-Tahapan pertama dalam perancangan sistem adalah melakukan analisis kebutuhan dan merancang arsitektur sistem yang sesuai dengan tujuan penelitian. Berdasarkan analisis kebutuhan yang telah dilakukan pada \autoref{sec:analisis-kebutuhan}, sistem dirancang untuk memenuhi kebutuhan fungsional dan non-fungsional yang telah didefinisikan.
+Subbab ini menjelaskan mengenai struktur dan organisasi sistem yang akan dibangun dari berbagai pandangan arsitektur yang digunakan untuk menggambarkan sistem. Rancangan sistem dibuat dengan mengacu pada kebutuhan fungsional dan nonfungsional yang telah 
+dianalisis sebelumnya, untuk memastikan sistem yang dikembangkan memenuhi tujuan dan kebutuhan pengguna.
 
-Arsitektur sistem dirancang menggunakan pendekatan \textit{client-server} dengan pemisahan yang jelas antara aplikasi \textit{mobile} sebagai \textit{frontend} dan layanan \textit{backend} untuk pemrosesan model. Keputusan untuk menggunakan arsitektur terdistribusi ini didasarkan pada kompleksitas model \donut{} yang memerlukan sumber daya komputasi tinggi dan tidak dapat dijalankan secara efisien pada perangkat \textit{mobile}.
+Pendekatan yang digunakan untuk membuat desain arsitektur ini adalah 4+1 View Model. Model ini mengorganisasikan arsitektur sistem ke dalam lima pandangan yang berbeda, yaitu \emph{scenarios view}, \emph{logical view}, \emph{process view}, \emph{development view}, dan \emph{physical view}. Setiap pandangan memberikan perspektif yang berbeda terhadap sistem, sehingga dapat memberikan gambaran yang komprehensif mengenai arsitektur sistem yang akan dibangun. Pendekatan ini memungkinkan proses pengembangan sistem menjadi lebih terstruktur dan sistematis.
 
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=0.9\textwidth]{images/system-architecture.png}
-%     \caption{Arsitektur sistem ekstraksi data pembayaran}
-%     \label{fig:system-architecture}
-% \end{figure}
+\input{chapters/ta/chapter-4/tahapan-desain/architecture-views/use-case-view.tex}
 
-\autoref{fig:system-architecture} menunjukkan arsitektur sistem yang terdiri dari tiga komponen utama: aplikasi \textit{mobile}, layanan API, dan modul pemrosesan model. Aplikasi \textit{mobile} berfungsi sebagai antarmuka pengguna untuk mengambil gambar, menampilkan hasil ekstraksi, dan mengelola data transaksi. Layanan API berperan sebagai penghubung antara aplikasi \textit{mobile} dan modul pemrosesan model, menangani \textit{request} dari klien dan mengembalikan hasil dalam format yang terstruktur.
+\input{chapters/ta/chapter-4/tahapan-desain/architecture-views/logical-view.tex}
 
-Modul pemrosesan model mengimplementasikan dua model \donut{} yang berbeda: model \textit{QRIS-TF} untuk ekstraksi dan klasifikasi bukti pembayaran digital, dan model \textit{CORD-v2} untuk ekstraksi data dari struk pembayaran berbasis kertas. Pemilihan model dilakukan secara otomatis berdasarkan jenis dokumen yang diproses, memastikan setiap dokumen ditangani oleh model yang paling sesuai.
+\input{chapters/ta/chapter-4/tahapan-desain/architecture-views/process-view.tex}
 
-Arsitektur ini memberikan fleksibilitas dalam pengembangan dan pemeliharaan sistem, memungkinkan peningkatan model atau penambahan fitur baru tanpa mempengaruhi komponen lain. Selain itu, pendekatan terdistribusi memungkinkan sistem untuk menangani beban pemrosesan yang besar dan dapat diskalakan sesuai kebutuhan.
+\input{chapters/ta/chapter-4/tahapan-desain/architecture-views/development-view.tex}
+
+\input{chapters/ta/chapter-4/tahapan-desain/architecture-views/physical-view.tex}
+
+
+

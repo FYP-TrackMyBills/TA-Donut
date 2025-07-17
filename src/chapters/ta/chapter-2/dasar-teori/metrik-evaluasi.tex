@@ -41,21 +41,21 @@ Evaluasi kinerja sistem \ml{} memerlukan metrik yang komprehensif dan sesuai den
 
 \subsubsection{\mcer{} (\emph{Mean Character Error Rate})}
 
-\mcer{} adalah rata-rata \emph{Character Error Rate} (CER) di beberapa dokumen atau segmen teks yang memberikan ukuran komprehensif akurasi deteksi teks \parencite{holley2009ocr}. Metrik ini sangat relevan untuk sistem pengenalan teks yang bergantung pada akurasi pengenalan karakter. Persamaan \eqref{eq:mcer} menunjukkan rumus yang digunakan untuk menghitung \mcer dengan $\text{CER}_i$ adalah \emph{Character Error Rate} untuk dokumen $i$. Metrik ini mengukur kesalahan pengenalan karakter pada tingkat granular dan memberikan informasi tentang akurasi pengenalan teks pada level karakter.
+\mcer{} adalah rata-rata \emph{Character Error Rate} (CER) di beberapa dokumen atau segmen teks yang memberikan ukuran komprehensif akurasi deteksi teks \parencite{neudecker2021survey}. Metrik ini sangat relevan untuk sistem pengenalan teks yang bergantung pada akurasi pengenalan karakter. Persamaan \eqref{eq:mcer} menunjukkan rumus yang digunakan untuk menghitung \mcer{} dengan $\text{CER}_i$ adalah \emph{Character Error Rate} untuk dokumen $i$. Metrik ini mengukur kesalahan pengenalan karakter pada tingkat granular dan memberikan informasi tentang akurasi pengenalan teks pada level karakter.
 
 \begin{equation}
     \label{eq:mcer}
-\text{mCER} = \frac{1}{N} \times \sum_{i=1}^{N} \text{CER}_i
+\text{mCER} = \frac{\sum{S_i + D_i + I_i}}{\sum{N_i}}
 \end{equation}
 \addcontentsline{loe}{myequations}{\protect\numberline{\theequation}Persamaan \emph{Mean Character Error Rate} (mCER)}
+
+Persamaan \eqref{eq:cer} menunjukkan cara perhitungan CER dengan parameter yang meliputi $S$ yang merepresentasikan jumlah substitusi karakter, $D$ untuk jumlah \emph{deletion} atau penghapusan karakter, $I$ untuk jumlah \emph{insertion} atau penambahan karakter, dan $N$ sebagai total jumlah karakter dalam \emph{Ground Truth}.
 
 \begin{equation}
     \label{eq:cer}
 \text{CER}_i = \frac{S_i + D_i + I_i}{N_i}
 \end{equation}
 \addcontentsline{loe}{myequations}{\protect\numberline{\theequation}Persamaan \emph{Character Error Rate} (CER)}
-
-Persamaan \eqref{eq:cer} menunjukkan cara perhitungan CER dengan parameter yang meliputi $S$ yang merepresentasikan jumlah substitusi karakter, $D$ untuk jumlah \emph{deletion} atau penghapusan karakter, $I$ untuk jumlah \emph{insertion} atau penambahan karakter, dan $N$ sebagai total jumlah karakter dalam \emph{ground truth}.
 
 % \mcer{} digunakan secara luas dalam berbagai aplikasi evaluasi \ocr. \emph{Benchmark} mesin \ocr{} menggunakan \mcer{} untuk membandingkan kinerja algoritma yang berbeda dan memantau perkembangan dari waktu ke waktu. Proyek digitalisasi menggunakan metrik ini untuk menilai kualitas hasil konversi dokumen fisik ke digital.
 
