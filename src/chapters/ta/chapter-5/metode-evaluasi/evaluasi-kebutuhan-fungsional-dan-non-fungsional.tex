@@ -3,41 +3,48 @@
 Evaluasi kebutuhan fungsional dan non-fungsional dilakukan untuk memastikan bahwa sistem memenuhi kebutuhan fungsional dan kebutuhan non-fungsional yang telah ditetapkan pada \autoref{sec:analisis-kebutuhan}. Evaluasi kebutuhan fungsional dan non-fungsional dilakukan dengan menetapkan pemenuhan kebutuhan dengan skenario yang telah ditetapkan dan hasil yang diharapkan dari skenario tersebut. Kebutuhan fungsional mencakup fitur-fitur yang harus ada dalam aplikasi, sedangkan kebutuhan non-fungsional mencakup aspek-aspek seperti \emph{usability}, \emph{compatibility}, \emph{supportability}, dan \emph{performance} yang mendukung pengalaman pengguna secara keseluruhan. \autoref{tab:skenario-uji-fungsional} menunjukkan skenario uji fungsionalitas dan hasil yang diharapkan dari sistem.
 
 \begin{table}[h!]
-\caption{Skenario uji fungsionalitas}
+\caption{Skenario uji fungsionalitas (1 Skenario per \emph{Use Case})}
 \label{tab:skenario-uji-fungsional}
-\begin{tabularx}{\linewidth}{|p{1.5cm}|p{1.5cm}|p{4cm}|X|}
+\begin{tabularx}{\linewidth}{|p{1.5cm}|p{1.5cm}|p{4.5cm}|X|}
 \hline
-\textbf{Kode Kebutuhan} & \textbf{Kode Skenario} & \textbf{Skenario Pengujian} & \textbf{Hasil yang Diharapkan} \\
+\textbf{Kode Skenario} & \textbf{Kode \emph{Use Case}} & \textbf{Skenario Pengujian} & \textbf{Hasil yang Diharapkan} \\
 \hline
-FR-01 & SF-01 & Penguji memasukkan gambar bukti transaksi (struk fisik atau tangkapan layar digital). & Sistem harus dapat menerima masukan berupa gambar bukti transaksi, yaitu struk fisik cetakan dan tangkapan layar bukti pembayaran digital, yaitu QRIS dan transfer. \\
+SF-01 & UC-01 & Penguji membagikan gambar struk dari galeri foto ke aplikasi. & Aplikasi berhasil menerima dan menunjukkan gambar yang dibagikan. \\
 \hline
-FR-02 & SF-02 & Penguji memilih dan memotong area relevan pada gambar yang diunggah. & Sistem harus dapat memotong area relevan transaksi berdasarkan keinginan pengguna dari gambar yang diunggah. \\
+SF-02 & UC-02 & Penguji menekan tombol untuk mengakses kamera di dalam aplikasi, lalu mengambil foto struk. & Aplikasi berhasil mengakses kamera, mengambil gambar, dan menampilkan hasil foto. \\
 \hline
-FR-03 & SF-03 & Penguji menjalankan fungsi ekstraksi pada gambar yang sudah dipotong. & Sistem harus dapat mengekstrak dan mengklasifikasikan informasi kunci, yaitu total pembayaran dan tipe transaksi dan target dari QRIS dan transfer dan total pembayaran dari struk pembayaran. \\
+SF-03 & UC-03 & Penguji menekan tombol untuk mengunggah di dalam aplikasi, lalu memilih gambar dari galeri. & Aplikasi berhasil mengakses dan menampilkan gambar yang dipilih dari galeri. \\
 \hline
-FR-04 & SF-04 & Penguji memeriksa hasil ekstraksi dan mengoreksi data yang tidak akurat. & Sistem harus menampilkan hasil ekstraksi kepada pengguna dan menyediakan fungsi mengoreksi data jika terdapat ketidakakuratan. \\
+SF-04 & UC-04 & Setelah gambar tampil, penguji menyesuaikan area potong untuk fokus pada data transaksi. & Sistem berhasil memotong gambar sesuai area yang dipilih pengguna. \\
 \hline
-FR-05 & SF-05 & Penguji menyimpan data transaksi yang telah diverifikasi. & Sistem harus dapat menyimpan data transaksi yang telah diverifikasi dan menampilkannya dalam riwayat pengeluaran yang terstruktur. \\
+SF-05 & UC-05 & Penguji menekan tombol untuk mengonfirmasi gambar yang ingin diekstrak. & Sistem berhasil mengekstrak teks dari gambar dan mengisinya ke kolom-kolom data yang tersedia. \\
 \hline
-NF-01 & S-06 & Penguji mengevaluasi kemudahan penggunaan antarmuka dengan melakukan proses dari unggah, tinjau, hingga simpan. & Antarmuka pengguna (UI) harus minimalis dan intuitif, memungkinkan pengguna mengubah gambar bukti bayar menjadi data transaksi dalam beberapa langkah sederhana (unggah, tinjau, simpan). \\
+SF-06 & UC-06 & Penguji memilih kategori "Bills" dari daftar pilihan kategori yang tersedia. & Sistem berhasil menetapkan kategori "Bills" pada data transaksi tersebut. \\
+\hline
+SF-07 & UC-07 & Penguji mengubah angka pada kolom "Total Amount" yang diekstrak secara otomatis. & Sistem berhasil memperbarui nilai pada kolom "Total Amount" sesuai input manual dari pengguna. \\
+\hline
+SF-08 & UC-08 & Setelah semua data benar, penguji menekan tombol "Save Transaction". & Sistem menyimpan data transaksi dan menunjukkan halaman total pengeluaran. \\
+\hline
+SF-09 & UC-09 & Penguji membuka halaman pengeluaran. & Sistem menampilkan total pengeluaran dan rincian pengeluaran per kategori yang telah diperbarui dengan data yang baru saja disimpan. \\
 \hline
 \end{tabularx}
 \end{table}
 
-\begin{table}[h!]
-\ContinuedFloat
-\caption{Skenario uji fungsionalitas (lanjutan)}
-\begin{tabularx}{\linewidth}{|p{1.5cm}|p{1.5cm}|p{4cm}|X|}
-\hline
-\textbf{Kode Kebutuhan} & \textbf{Kode Skenario} & \textbf{Skenario Pengujian} & \textbf{Hasil yang Diharapkan} \\
-\hline
-NF-02 & S-07 & Penguji melakukan evaluasi \emph{System Usability Scale} (SUS) untuk menilai \emph{usability} aplikasi. & Hasil evaluasi SUS Score lebih besar dari 68. \\
-\hline
-NF-03 & S-08 & Penguji memasukkan gambar berkualitas jelas dan gambar yang \emph{blur} untuk melihat respons sistem. & Sistem tetap dapat memproses masukan gambar dengan kualitas yang jelas dan tidak blur dengan kekurangan kinerja. \\
-\hline
-NF-04 & S-09 & Penguji mencoba menjalankan aplikasi pada sistem operasi Android. & Sistem dapat beroperasi pada sistem operasi Android. \\
-\hline
-NF-05 & S-10 & Penguji menjalankan set data evaluasi untuk mengukur metrik kinerja sistem. & Hasil evaluasi \accuracy{}, \precision, \recall, dan \fscore{} lebih besar daripada 70\%, dan \mcer{} lebih kecil dari 20\%. \\
-\hline
-\end{tabularx}
-\end{table}
+% \begin{table}[h!]
+% \caption{Skenario uji kebutuhan non-fungsional}
+% \begin{tabularx}{\linewidth}{|p{1.5cm}|p{1.5cm}|p{4cm}|X|}
+% \hline
+% \textbf{Kode Kebutuhan} & \textbf{Kode Skenario} & \textbf{Skenario Pengujian} & \textbf{Hasil yang Diharapkan} \\
+% \hline
+% NF-01 & S-06 & Penguji menguji aplikasi pada perangkat Android dengan spesifikasi yang umum dimiliki Gen Z. & Aplikasi dapat berjalan dengan baik pada perangkat Android dengan spesifikasi tersebut. \\
+% \hline
+% NF-02 & S-07 & Penguji melakukan evaluasi \emph{System Usability Scale} (SUS) untuk menilai \emph{usability} aplikasi. & Hasil evaluasi SUS Score lebih besar dari 68. \\
+% \hline
+% NF-03 & S-08 & Penguji memasukkan gambar berkualitas jelas dan gambar yang \emph{blur} untuk melihat respons sistem. & Sistem tetap dapat memproses masukan gambar dengan kualitas yang jelas dan tidak blur dengan kekurangan kinerja. \\
+% \hline
+% NF-04 & S-09 & Penguji mencoba menjalankan aplikasi pada sistem operasi Android. & Sistem dapat beroperasi pada sistem operasi Android. \\
+% \hline
+% NF-05 & S-10 & Penguji menjalankan set data evaluasi untuk mengukur metrik kinerja sistem. & Hasil evaluasi \accuracy{}, \precision, \recall, dan \fscore{} lebih besar daripada 70\%, dan \mcer{} lebih kecil dari 20\%. \\
+% \hline
+% \end{tabularx}
+% \end{table}
