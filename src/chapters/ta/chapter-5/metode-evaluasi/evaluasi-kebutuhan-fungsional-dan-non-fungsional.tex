@@ -14,20 +14,19 @@ S-02 & UC-01 & Penguji mencoba membagikan \emph{file} PDF ke aplikasi. & Aplikas
 \hline
 S-03 & UC-02 & Penguji mengambil foto struk dalam kondisi pencahayaan yang baik dan fokus yang jelas. & Aplikasi berhasil menangkap gambar dengan jelas dan menampilkan pratinjau. \\
 \hline
-S-04 & UC-02 & Penguji membuka kamera dari dalam aplikasi, namun membatalkannya sebelum mengambil foto. & Aplikasi kembali ke layar sebelumnya. \\
+S-04 & UC-02 & Penguji membuka kamera dari dalam aplikasi dan membatalkannya sebelum mengambil foto. & Aplikasi kembali ke layar sebelumnya. \\
 \hline
-S-05 & UC-03 & Penguji mengunggah \emph{screenshot} bukti transfer dari galeri. & Aplikasi berhasil memuat dan menampilkan tangkapan layar tersebut. \\
+S-05 & UC-02 & Penguji membuka kamera dari dalam aplikasi dan mencoba menggunakan \emph{flash} untuk mengambil foto. & Aplikasi menyalakan \emph{flash} dan berhasil mengambil foto. \\
 \hline
-S-06 & UC-03 & Penguji mengunggah gambar dengan resolusi sangat rendah atau buram. & Aplikasi tetap berhasil menampilkan gambar, meskipun kualitasnya rendah. \\
+S-06 & UC-03 & Penguji mengunggah \emph{screenshot} bukti transfer dari galeri. & Aplikasi berhasil memuat dan menampilkan tangkapan layar tersebut. \\
 \hline
-S-07 & UC-03 & Penguji mengunggah gambar \emph{screenshot} bukti pembayaran QRIS. & Aplikasi berhasil memuat dan menampilkan tangkapan layar tersebut.\\
+S-07 & UC-03 & Penguji mengunggah gambar dengan resolusi sangat rendah atau buram. & Aplikasi tetap berhasil menampilkan gambar, meskipun kualitasnya rendah. \\
 \hline
-S-08 & UC-04 & Penguji memotong gambar untuk menyertakan seluruh area informasi yang relevan. & Sistem berhasil menyimpan area gambar yang telah dipotong dan menampilkannya untuk langkah selanjutnya. \\
+S-08 & UC-03 & Penguji mengunggah gambar \emph{screenshot} bukti pembayaran QRIS. & Aplikasi berhasil memuat dan menampilkan tangkapan layar tersebut.\\
 \hline
-S-09 & UC-04 & Penguji melanjutkan proses tanpa memotong gambar sama sekali. & Sistem menggunakan keseluruhan gambar asli untuk proses ekstraksi data. \\
+S-09 & UC-04 & Penguji memotong gambar untuk menyertakan seluruh area informasi yang relevan. & Sistem berhasil menyimpan area gambar yang telah dipotong dan menampilkannya untuk langkah selanjutnya. \\
 \hline
-S-10 & UC-05 & Penguji menjalankan ekstraksi pada gambar QRIS yang jelas dan standar. & Sistem berhasil mengekstrak informasi total pembayaran dan tanggal dengan akurat. \\
-\hline
+
 \end{tabularx}
 \end{table}
 
@@ -38,21 +37,25 @@ S-10 & UC-05 & Penguji menjalankan ekstraksi pada gambar QRIS yang jelas dan sta
 \hline
 \textbf{Kode Skenario} & \textbf{Kode \emph{Use Case}} & \textbf{Skenario Pengujian} & \textbf{Hasil yang Diharapkan} \\
 \hline
-S-11 & UC-06 & Penguji memilih kategori "Others" dari daftar pilihan. & Sistem berhasil menetapkan kategori "Others" untuk transaksi tersebut. \\
+S-10 & UC-04 & Penguji melanjutkan proses tanpa memotong gambar sama sekali. & Sistem menggunakan keseluruhan gambar asli untuk proses ekstraksi data. \\
 \hline
-S-12 & UC-06 & Penguji mengubah pilihan kategori dari "Food" menjadi "Bills" sebelum menyimpan. & Sistem berhasil memperbarui kategori menjadi "Bills". \\
+S-11 & UC-05 & Penguji menjalankan ekstraksi pada gambar QRIS yang jelas dan standar. & Sistem berhasil mengekstrak informasi total pembayaran dan tanggal dengan akurat. \\
 \hline
-S-13 & UC-07 & Penguji mengubah data "Total Amount" hasil ekstraksi karena tidak akurat. & Sistem berhasil memperbarui kolom "Total Amount" sesuai input manual pengguna. \\
+S-12 & UC-06 & Penguji memilih kategori "Others" dari daftar pilihan. & Sistem berhasil menetapkan kategori "Others" untuk transaksi tersebut. \\
 \hline
-S-14 & UC-07 & Penguji mencoba memasukkan teks (bukan angka) ke dalam kolom "Total Amount". & Sistem tidak memberikan opsi untuk memasukkan teks. \\
+S-13 & UC-06 & Penguji mengubah pilihan kategori dari "Food" menjadi "Bills" sebelum menyimpan. & Sistem berhasil memperbarui kategori menjadi "Bills". \\
 \hline
-S-15 & UC-08 & Penguji menekan tombol "Save Transaction" setelah semua data terisi dengan benar. & Sistem berhasil menyimpan data, menampilkan pesan sukses, dan mengarahkan pengguna ke halaman total pengeluaran. \\
+S-14 & UC-07 & Penguji mengubah data "Total Amount" hasil ekstraksi karena tidak akurat. & Sistem berhasil memperbarui kolom "Total Amount" sesuai input manual pengguna. \\
 \hline
-S-16 & UC-08 & Penguji mencoba menyimpan transaksi dengan kolom "Total Amount" yang masih kosong. & Sistem menampilkan pesan kesalahan yang meminta pengguna melengkapi data dan transaksi tidak disimpan. \\
+S-15 & UC-07 & Penguji mencoba memasukkan teks (bukan angka) ke dalam kolom "Total Amount". & Sistem tidak memberikan opsi untuk memasukkan teks. \\
 \hline
-S-17 & UC-09 & Penguji membuka halaman total pengeluaran setelah menyimpan transaksi baru. & Total pengeluaran dan total pada kategori yang bersangkutan berhasil diperbarui secara akurat. \\
+S-16 & UC-08 & Penguji menekan tombol "Save Transaction" setelah semua data terisi dengan benar. & Sistem berhasil menyimpan data, menampilkan pesan sukses, dan mengarahkan pengguna ke halaman total pengeluaran. \\
 \hline
-S-18 & UC-09 & Penguji mencoba untuk mengakses halaman total pengeluaran dari halaman utama. & Sistem berhasil menampilkan halaman total pengeluaran. \\
+S-17 & UC-08 & Penguji mencoba menyimpan transaksi dengan kolom "Total Amount" yang masih kosong. & Sistem menampilkan pesan kesalahan yang meminta pengguna melengkapi data dan transaksi tidak disimpan. \\
+\hline
+S-18 & UC-09 & Penguji membuka halaman total pengeluaran setelah menyimpan transaksi baru. & Total pengeluaran dan total pada kategori yang bersangkutan berhasil diperbarui secara akurat. \\
+\hline
+S-19 & UC-09 & Penguji mencoba untuk mengakses halaman total pengeluaran dari halaman utama. & Sistem berhasil menampilkan halaman total pengeluaran. \\
 \hline
 \end{tabularx}
 \end{table}
