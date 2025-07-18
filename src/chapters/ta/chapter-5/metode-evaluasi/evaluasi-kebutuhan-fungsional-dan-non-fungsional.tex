@@ -1,31 +1,58 @@
 \subsection{Metode Evaluasi Kebutuhan Fungsional dan Non-Fungsional}
 \label{subsec:evaluasi-kebutuhan-fungsional-dan-non-fungsional}
-Evaluasi kebutuhan fungsional dan non-fungsional dilakukan untuk memastikan bahwa sistem memenuhi kebutuhan fungsional dan kebutuhan non-fungsional yang telah ditetapkan pada \autoref{sec:analisis-kebutuhan}. Evaluasi kebutuhan fungsional dan non-fungsional dilakukan dengan menetapkan pemenuhan kebutuhan dengan skenario yang telah ditetapkan dan hasil yang diharapkan dari skenario tersebut. Kebutuhan fungsional mencakup fitur-fitur yang harus ada dalam aplikasi, sedangkan kebutuhan non-fungsional mencakup aspek-aspek seperti \emph{usability}, \emph{compatibility}, \emph{supportability}, dan \emph{performance} yang mendukung pengalaman pengguna secara keseluruhan. \autoref{tab:skenario-uji-fungsional} menunjukkan skenario uji fungsionalitas dan hasil yang diharapkan dari sistem.
-
+Evaluasi kebutuhan fungsional dan non-fungsional dilakukan untuk memastikan bahwa sistem memenuhi kebutuhan fungsional dan kebutuhan non-fungsional yang telah ditetapkan pada \autoref{sec:analisis-kebutuhan}. Evaluasi kebutuhan fungsional dan non-fungsional dilakukan dengan menetapkan keberhasilan pengguna menyelesaikan skenario yang telah dipersiapkan. Skenario dirancang dengan disesuaikan pada kasus uji yang telah didefinisikan pada \autoref{subsubsec:use-case-view}. Berdasarkan skenario-skenario yang telah dirancang tersebut, hasil yang diharapkan dari skenario tersebut akan ditentukan. \autoref{tab:skenario-uji-fungsional} menunjukkan skenario uji fungsionalitas yang akan digunakan untuk melakukan evaluasi sistem.
 \begin{table}[h!]
-\caption{Skenario uji fungsionalitas (1 Skenario per \emph{Use Case})}
+\caption{Skenario uji fungsionalitas}
 \label{tab:skenario-uji-fungsional}
 \begin{tabularx}{\linewidth}{|p{1.5cm}|p{1.5cm}|p{4.5cm}|X|}
 \hline
 \textbf{Kode Skenario} & \textbf{Kode \emph{Use Case}} & \textbf{Skenario Pengujian} & \textbf{Hasil yang Diharapkan} \\
 \hline
-SF-01 & UC-01 & Penguji membagikan gambar struk dari galeri foto ke aplikasi. & Aplikasi berhasil menerima dan menunjukkan gambar yang dibagikan. \\
+S-01 & UC-01 & Penguji membagikan gambar struk format PNG dari aplikasi galeri. & Aplikasi berhasil menerima dan menampilkan pratinjau gambar PNG tersebut. \\
 \hline
-SF-02 & UC-02 & Penguji menekan tombol untuk mengakses kamera di dalam aplikasi, lalu mengambil foto struk. & Aplikasi berhasil mengakses kamera, mengambil gambar, dan menampilkan hasil foto. \\
+S-02 & UC-01 & Penguji mencoba membagikan \emph{file} PDF ke aplikasi. & Aplikasi tidak akan muncul sebagai opsi aplikasi yang dapat dibagikan. \\
 \hline
-SF-03 & UC-03 & Penguji menekan tombol untuk mengunggah di dalam aplikasi, lalu memilih gambar dari galeri. & Aplikasi berhasil mengakses dan menampilkan gambar yang dipilih dari galeri. \\
+S-03 & UC-02 & Penguji mengambil foto struk dalam kondisi pencahayaan yang baik dan fokus yang jelas. & Aplikasi berhasil menangkap gambar dengan jelas dan menampilkan pratinjau. \\
 \hline
-SF-04 & UC-04 & Setelah gambar tampil, penguji menyesuaikan area potong untuk fokus pada data transaksi. & Sistem berhasil memotong gambar sesuai area yang dipilih pengguna. \\
+S-04 & UC-02 & Penguji membuka kamera dari dalam aplikasi, namun membatalkannya sebelum mengambil foto. & Aplikasi kembali ke layar sebelumnya. \\
 \hline
-SF-05 & UC-05 & Penguji menekan tombol untuk mengonfirmasi gambar yang ingin diekstrak. & Sistem berhasil mengekstrak teks dari gambar dan mengisinya ke kolom-kolom data yang tersedia. \\
+S-05 & UC-03 & Penguji mengunggah \emph{screenshot} bukti transfer dari galeri. & Aplikasi berhasil memuat dan menampilkan tangkapan layar tersebut. \\
 \hline
-SF-06 & UC-06 & Penguji memilih kategori "Bills" dari daftar pilihan kategori yang tersedia. & Sistem berhasil menetapkan kategori "Bills" pada data transaksi tersebut. \\
+S-06 & UC-03 & Penguji mengunggah gambar dengan resolusi sangat rendah atau buram. & Aplikasi tetap berhasil menampilkan gambar, meskipun kualitasnya rendah. \\
 \hline
-SF-07 & UC-07 & Penguji mengubah angka pada kolom "Total Amount" yang diekstrak secara otomatis. & Sistem berhasil memperbarui nilai pada kolom "Total Amount" sesuai input manual dari pengguna. \\
+S-07 & UC-03 & Penguji mengunggah gambar \emph{screenshot} bukti pembayaran QRIS. & Aplikasi berhasil memuat dan menampilkan tangkapan layar tersebut.\\
 \hline
-SF-08 & UC-08 & Setelah semua data benar, penguji menekan tombol "Save Transaction". & Sistem menyimpan data transaksi dan menunjukkan halaman total pengeluaran. \\
+S-08 & UC-04 & Penguji memotong gambar untuk menyertakan seluruh area informasi yang relevan. & Sistem berhasil menyimpan area gambar yang telah dipotong dan menampilkannya untuk langkah selanjutnya. \\
 \hline
-SF-09 & UC-09 & Penguji membuka halaman pengeluaran. & Sistem menampilkan total pengeluaran dan rincian pengeluaran per kategori yang telah diperbarui dengan data yang baru saja disimpan. \\
+S-09 & UC-04 & Penguji melanjutkan proses tanpa memotong gambar sama sekali. & Sistem menggunakan keseluruhan gambar asli untuk proses ekstraksi data. \\
+\hline
+S-10 & UC-05 & Penguji menjalankan ekstraksi pada gambar QRIS yang jelas dan standar. & Sistem berhasil mengekstrak informasi total pembayaran dan tanggal dengan akurat. \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h!]
+\ContinuedFloat
+\caption{Skenario uji fungsionalitas (lanjutan)}
+\begin{tabularx}{\linewidth}{|p{1.5cm}|p{1.5cm}|p{4.5cm}|X|}
+\hline
+\textbf{Kode Skenario} & \textbf{Kode \emph{Use Case}} & \textbf{Skenario Pengujian} & \textbf{Hasil yang Diharapkan} \\
+\hline
+S-11 & UC-06 & Penguji memilih kategori "Others" dari daftar pilihan. & Sistem berhasil menetapkan kategori "Others" untuk transaksi tersebut. \\
+\hline
+S-12 & UC-06 & Penguji mengubah pilihan kategori dari "Food" menjadi "Bills" sebelum menyimpan. & Sistem berhasil memperbarui kategori menjadi "Bills". \\
+\hline
+S-13 & UC-07 & Penguji mengubah data "Total Amount" hasil ekstraksi karena tidak akurat. & Sistem berhasil memperbarui kolom "Total Amount" sesuai input manual pengguna. \\
+\hline
+S-14 & UC-07 & Penguji mencoba memasukkan teks (bukan angka) ke dalam kolom "Total Amount". & Sistem tidak memberikan opsi untuk memasukkan teks. \\
+\hline
+S-15 & UC-08 & Penguji menekan tombol "Save Transaction" setelah semua data terisi dengan benar. & Sistem berhasil menyimpan data, menampilkan pesan sukses, dan mengarahkan pengguna ke halaman total pengeluaran. \\
+\hline
+S-16 & UC-08 & Penguji mencoba menyimpan transaksi dengan kolom "Total Amount" yang masih kosong. & Sistem menampilkan pesan kesalahan yang meminta pengguna melengkapi data dan transaksi tidak disimpan. \\
+\hline
+S-17 & UC-09 & Penguji membuka halaman total pengeluaran setelah menyimpan transaksi baru. & Total pengeluaran dan total pada kategori yang bersangkutan berhasil diperbarui secara akurat. \\
+\hline
+S-18 & UC-09 & Penguji mencoba untuk mengakses halaman total pengeluaran dari halaman utama. & Sistem berhasil menampilkan halaman total pengeluaran. \\
 \hline
 \end{tabularx}
 \end{table}
