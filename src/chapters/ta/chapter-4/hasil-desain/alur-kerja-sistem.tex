@@ -1,2 +1,73 @@
 \subsection{Alur Kerja Sistem}
 \label{subsec:alur-kerja-sistem}
+
+Alur kerja sistem TrackMyBills dirancang untuk mengakomodasi berbagai skenario penggunaan yang mencerminkan behavior patterns pengguna Gen Z dalam melakukan transaksi digital. Sistem mengimplementasikan lima flow utama yang memberikan flexibility maksimal dalam capture, processing, dan storage data transaksi. Setiap flow dioptimalkan untuk specific use cases sambil mempertahankan consistency dalam user experience dan data quality.
+
+Integration antara mobile application dan backend service menggunakan RESTful API dengan robust error handling dan automatic retry mechanisms. Workflow management memastikan bahwa setiap step dalam processing pipeline dapat handle various edge cases dan provide meaningful feedback kepada pengguna. System juga mengimplementasikan offline capability untuk scenarios di mana network connectivity tidak optimal.
+
+**Diagram yang disarankan**: System workflow diagram menunjukkan kelima flow utama dengan decision points, error handling paths, dan data flow antara mobile app dan backend service.
+
+\subsubsection{Flow 1: Sharing dan Ekstraksi dari Aplikasi Pembayaran}
+\label{subsubsec:flow-sharing}
+
+Flow sharing merupakan primary use case yang dirancang khusus untuk mengakomodasi habit Gen Z yang frequently menggunakan multiple payment applications. Ketika pengguna melakukan pembayaran menggunakan aplikasi seperti Gopay, BCA Mobile, atau SeaBank, mereka dapat langsung share screenshot confirmation ke TrackMyBills melalui Android's native sharing mechanism.
+
+Proses dimulai ketika pengguna tap share button pada payment confirmation screen di aplikasi pembayaran dan memilih TrackMyBills dari sharing options. Aplikasi TrackMyBills secara otomatis menerima shared image dan melakukan preprocessing untuk memverifikasi bahwa content merupakan valid payment document. Image preprocessing mencakup automatic rotation correction, quality assessment, dan format normalization sebelum dikirim ke backend service.
+
+Backend service menerima image dan melakukan automatic model selection berdasarkan image characteristics. Untuk digital payment screenshots, system secara otomatis menggunakan custom DONUT model yang telah dioptimalkan untuk payment proof extraction. Model melakukan inference dan mengekstraksi key information seperti transaction amount, timestamp, merchant name, transaction ID, dan payment application. Extracted data kemudian dikirim kembali ke mobile application dalam structured format yang ready untuk storage dan display.
+
+Mobile application menerima response dari backend dan melakukan data validation serta cleaning untuk memastikan consistency dengan local data format. User dapat review extracted information dan melakukan manual corrections jika diperlukan sebelum menyimpan transaction record ke local storage. Automatic categorization suggestions ditampilkan berdasarkan merchant name dan transaction pattern untuk memudahkan expense tracking.
+
+Workflow ini mengimplementasikan comprehensive error handling untuk scenarios seperti invalid image format, network connectivity issues, atau extraction failures. Fallback mechanisms memungkinkan user untuk manual input atau retry dengan different processing options jika automatic extraction tidak successful.
+
+\subsubsection{Flow 2: Camera Capture untuk Struk Kertas}
+\label{subsubsec:flow-camera-receipt}
+
+Flow camera capture untuk struk kertas dirancang untuk handling physical receipts yang masih common dalam retail transactions di Indonesia. User menggunakan in-app camera functionality yang dilengkapi dengan document detection guidelines dan automatic focus optimization untuk memastikan capture quality yang optimal.
+
+Camera interface menyediakan visual aids berupa grid lines dan document boundary detection yang membantu user melakukan framing yang proper untuk paper receipts. Real-time preview dengan exposure control memungkinkan user untuk adjust lighting conditions sebelum capture. Automatic flash detection menggunakan ambient light sensors untuk determine optimal flash settings tanpa overexposing text content pada receipt.
+
+Setelah photo capture, aplikasi melakukan immediate quality assessment menggunakan blur detection dan contrast analysis. Jika image quality tidak memenuhi threshold minimum, user akan diberi option untuk retake photo dengan suggestions untuk improvement. Preprocessing pada mobile app mencakup automatic cropping, perspective correction, dan contrast enhancement untuk optimizing OCR accuracy.
+
+Backend service menerima processed image dan menggunakan base DONUT model yang telah pre-trained untuk receipt processing. Model mengekstraksi comprehensive information termasuk merchant details, itemized purchases dengan quantities dan prices, subtotals, tax information, dan total amount. Complex receipt structures dengan multiple items dan promotions dapat di-handle dengan robust parsing logic.
+
+Response processing pada mobile app mengorganisasi extracted data menjadi structured transaction record dengan itemized breakdown yang dapat di-expand untuk detailed view. User dapat edit individual line items, add missing information, atau correct OCR errors sebelum finalizing transaction record. Automatic merchant categorization menggunakan business type detection berdasarkan extracted merchant information dan item categories.
+
+\subsubsection{Flow 3: Upload Screenshot atau Captured Struk}
+\label{subsubsec:flow-upload-receipt}
+
+Flow upload untuk existing images memberikan flexibility bagi user yang sudah memiliki saved photos dari receipts atau payment confirmations di device storage. User dapat access gallery picker yang terintegrasi dengan Android's file system untuk memilih images dari various sources termasuk photo gallery, downloads folder, atau cloud storage applications.
+
+File selection interface mengimplementasikan smart filtering yang automatically highlight images yang likely merupakan payment documents berdasarkan metadata analysis dan basic image content recognition. Preview functionality dengan zoom capabilities memungkinkan user untuk verify image content dan quality sebelum submitting untuk processing. Batch selection support memungkinkan processing multiple receipts dalam single session untuk efficiency.
+
+Image validation process pada mobile app mencakup format verification, file size checking, dan basic content analysis untuk ensure suitability untuk OCR processing. Images dengan poor quality atau invalid format akan di-reject dengan specific feedback tentang issues dan suggestions untuk resolution. Pre-upload optimization menggunakan intelligent compression yang preserves text readability sambil minimizing file size.
+
+Similar dengan camera capture flow, backend processing menggunakan base DONUT model untuk receipt analysis dengan comprehensive extraction capabilities. Additional preprocessing steps untuk uploaded images mencakup automatic orientation detection dan correction, noise reduction, dan adaptive thresholding untuk optimize text recognition accuracy pada various image qualities.
+
+Post-processing pada mobile app mencakup duplicate detection logic yang compare newly processed transactions dengan existing records untuk prevent double entries. User dapat choose untuk merge duplicates, keep separate records, atau replace existing entries berdasarkan accuracy comparison. Advanced editing capabilities memungkinkan detailed modification dari extracted data structure.
+
+\subsubsection{Flow 4: Camera Capture untuk QRIS dan Transfer}
+\label{subsubsec:flow-camera-digital}
+
+Flow camera capture untuk digital payment confirmations dirancang untuk scenarios di mana user memiliki payment confirmation yang displayed pada another device atau printed payment proof. Camera functionality menggunakan specialized settings yang optimized untuk screen capture dengan reduced glare dan automatic white balance adjustment untuk LCD/OLED displays.
+
+Document detection algorithm dapat recognize payment confirmation layouts dan provide automatic framing suggestions untuk optimal capture area. Screen detection capabilities menggunakan edge detection untuk automatically crop irrelevant portions seperti notification bars atau navigation elements yang tidak relevant untuk payment information. Anti-glare optimization menggunakan polarization techniques dan exposure bracketing untuk minimize reflection issues.
+
+Preprocessing pada mobile app mengimplementasikan screen content enhancement yang specifically tuned untuk digital display characteristics. This includes automatic gamma correction, contrast adjustment, dan text sharpening yang improve OCR accuracy untuk screen-captured content. Color space normalization ensures consistent processing regardless dari source display technology.
+
+Backend processing menggunakan custom DONUT model yang telah fine-tuned untuk Indonesian digital payment formats. Model dapat distinguish antara QRIS dan transfer confirmations dan extract appropriate field sets untuk masing-masing transaction type. Advanced parsing logic handle various layout formats dari different banking applications dengan robust field recognition capabilities.
+
+Response validation pada mobile app mengimplementasikan transaction type verification yang cross-check extracted information dengan expected patterns untuk QRIS versus transfer transactions. Automatic merchant name cleanup menggunakan business directory matching untuk standardize merchant representations. Currency formatting dan amount validation ensure data consistency dengan local financial conventions.
+
+\subsubsection{Flow 5: Upload Screenshot atau Captured QRIS dan Transfer}
+\label{subsubsec:flow-upload-digital}
+
+Flow upload untuk digital payment screenshots merupakan alternative untuk flow 1 yang mengakomodasi scenarios di mana sharing functionality tidak available atau user prefer manual selection process. Gallery access menggunakan enhanced filtering yang specifically identify payment-related screenshots berdasarkan filename patterns, metadata analysis, dan thumbnail content recognition.
+
+Smart categorization dalam file picker dapat automatically group images berdasarkan likely content type, memudahkan user untuk quickly locate payment confirmations among large photo collections. Preview interface dengan metadata display menunjukkan image properties, capture timestamp, dan basic content hints untuk membantu selection process. Multi-select capabilities dengan batch processing support memungkinkan efficient handling dari multiple payment confirmations.
+
+Quality assessment untuk uploaded screenshots menggunakan specialized algorithms yang understand digital payment layout characteristics. This includes text clarity verification, layout integrity checking, dan completeness assessment untuk ensure extracted information akan accurate dan complete. Automatic enhancement capabilities dapat improve low-quality screenshots dengan adaptive filtering dan contrast optimization.
+
+Backend inference menggunakan custom model dengan identical processing pipeline seperti flow 1, ensuring consistent extraction quality regardless dari input method. Advanced field validation menggunakan domain-specific rules untuk Indonesian payment systems, including format verification untuk transaction IDs, amount range checking, dan timestamp validation. Cross-platform compatibility handling memastikan accurate processing untuk screenshots dari various banking dan payment applications.
+
+Final data integration pada mobile app mengimplementasikan intelligent deduplication yang dapat recognize same transactions yang mungkin captured atau uploaded multiple times. Smart merging capabilities memungkinkan consolidation dari partial extractions menjadi complete transaction records. Comprehensive audit trail tracking memungkinkan user untuk trace data origin dan modification history untuk transparency dan accuracy verification.

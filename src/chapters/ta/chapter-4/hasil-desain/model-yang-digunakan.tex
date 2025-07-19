@@ -1,51 +1,49 @@
 \subsection{Model yang Digunakan}
 \label{subsec:model-yang-digunakan}
 
-Hasil dari proses \emph{fine-tuning} menghasilkan dua model yang telah diadaptasi untuk domain pembayaran Indonesia, masing-masing dioptimalkan untuk menangani jenis dokumen yang berbeda. Kedua model ini merupakan hasil adaptasi dari model \donut{} dasar yang telah disesuaikan dengan karakteristik dan kebutuhan spesifik ekstraksi data pembayaran lokal.
+Sistem TrackMyBills menggunakan pendekatan dual-model yang menggunakan arsitektur model \donut{} yang telah disesuaikan dengan karakteristik dokumen pembayaran Indonesia. Strategi dual-model dipilih untuk mengoptimalkan akurasi ekstraksi data dengan mempertimbangkan perbedaan signifikan antara dokumen pembayaran digital dan struk berbasis kertas dalam hal layout, struktur informasi, dan kualitas visual.
 
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=0.9\textwidth]{images/dual-model-architecture.png}
-%     \caption{Arsitektur dual-model untuk pemrosesan dokumen pembayaran}
-%     \label{fig:dual-model-architecture}
-% \end{figure}
+Kedua model yang diimplementasikan menggunakan arsitektur transformer yang menggabungkan vision encoder dan text decoder untuk memahami dokumen secara holistik. Vision encoder menggunakan Swin Transformer untuk memproses informasi visual dokumen, sementara text decoder menggunakan BART untuk menghasilkan output terstruktur dalam format JSON. Kombinasi ini memungkinkan model untuk memahami tidak hanya teks yang terbaca, tetapi juga layout dan konteks visual dokumen secara keseluruhan.
 
-Strategi \emph{dual-model} dipilih untuk memaksimalkan akurasi ekstraksi dengan mempertimbangkan karakteristik visual dan struktural yang berbeda antara dokumen pembayaran digital dan struk berbasis kertas. Setiap model dikembangkan dengan \emph{task-specific optimization} yang memungkinkan performa optimal pada domain masing-masing.
+**Diagram yang disarankan**: Arsitektur dual-model dengan visualisasi jalur inference untuk setiap jenis dokumen, menunjukkan preprocessing, vision encoding, text decoding, dan postprocessing untuk masing-masing model.
 
-\subsubsection{Model Donut QRIS-TF}
-\label{subsubsec:model-qris-tf}
+\subsubsection{Model DONUT Custom untuk Pembayaran Digital}
+\label{subsubsec:model-custom}
 
-Model QRIS-TF merupakan hasil \emph{fine-tuning} dari model \donut{} dasar menggunakan dataset bukti pembayaran digital yang mencakup transaksi QRIS dan transfer. Model ini memiliki kemampuan dual-function untuk melakukan ekstraksi informasi sekaligus klasifikasi jenis transaksi dalam satu proses inference.
+Model custom merupakan hasil fine-tuning dari model DONUT base yang telah dioptimalkan khusus untuk dokumen pembayaran digital Indonesia, termasuk QRIS dan transfer bank. Model ini dilatih menggunakan dataset yang dikumpulkan dari berbagai platform pembayaran populer di Indonesia, mencakup variasi layout dan format yang beragam.
 
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=0.7\textwidth]{images/qris-tf-model-output.png}
-%     \caption{Contoh output struktural model QRIS-TF}
-%     \label{fig:qris-tf-model-output}
-% \end{figure}
+Konfigurasi model custom menggunakan task prompt khusus \texttt{<s\_payment\_proof>} yang memberikan konteks spesifik untuk jenis dokumen yang akan diproses. Model ini memiliki vocabulary yang diperluas dengan 14 special tokens yang disesuaikan dengan domain pembayaran Indonesia:
+\begin{enumerate}
+    \item \texttt{<s\_total\_amount>} dan \texttt{</s\_total\_amount>} untuk nominal pembayaran
+    \item \texttt{<s\_transaction\_time>} dan \texttt{</s\_transaction\_time>} untuk waktu transaksi
+    \item \texttt{<s\_transaction\_identifier>} dan \texttt{</s\_transaction\_identifier>} untuk ID transaksi
+    \item \texttt{<s\_type>} dan \texttt{</s\_type>} untuk jenis transaksi (QRIS atau transfer)
+    \item \texttt{<s\_target\_name>} dan \texttt{</s\_target\_name>} untuk nama penerima
+    \item \texttt{<s\_application>} dan \texttt{</s\_application>} untuk aplikasi pembayaran
+    \item \texttt{<s\_payment\_proof>} dan \texttt{</s\_payment\_proof>} untuk markup dokumen
+\end{enumerate}
 
-Karakteristik utama model QRIS-TF mencakup vocabulary yang telah diperluas dengan 14 \emph{special tokens} spesifik untuk domain pembayaran digital Indonesia. Token-token ini mencakup representasi untuk nominal pembayaran (\texttt{<total\_amount>}), waktu transaksi (\texttt{<transaction\_time>}), identifikator transaksi (\texttt{<transaction\_identifier>}), jenis transaksi (\texttt{<type>}), nama target/penerima (\texttt{<target\_name>}), dan aplikasi pembayaran (\texttt{<application>}).
+Model dilatih dengan konfigurasi generation yang optimal menggunakan beam search dengan 4 beams, repetition penalty 1.2, dan maximum length 512 tokens. Proses fine-tuning dilakukan selama 30 epoch dengan early stopping yang secara otomatis menghentikan training pada epoch ke-27 ketika validation loss mencapai konvergensi optimal.
 
-Model menghasilkan output dalam format JSON terstruktur yang mencakup semua field yang diekstraksi beserta confidence score untuk setiap field. Kemampuan klasifikasi terintegrasi memungkinkan model untuk membedakan antara transaksi QRIS dan transfer berdasarkan pola visual dan tekstual yang dipelajari selama proses pelatihan. Akurasi klasifikasi yang tinggi tercapai melalui pembelajaran pola layout yang berbeda antara kedua jenis transaksi.
+Implementasi model custom mencakup robust text cleaning dan error handling yang dapat menangani berbagai masalah umum dalam OCR hasil, termasuk encoding issues, malformed token sequences, dan incomplete extractions. Sistem juga mengimplementasikan multiple generation attempts dengan fallback configurations untuk memastikan reliable inference bahkan pada dokumen dengan kualitas suboptimal.
 
-Optimasi model QRIS-TF mencakup fine-tuning pada 30 epoch dengan early stopping yang menghasilkan konvergensi optimal pada epoch ke-27. Model menunjukkan performa yang konsisten pada berbagai variasi aplikasi pembayaran, termasuk format yang berbeda dari SeaBank, Neobank, BCA, dan Gopay. Robustness model terhadap variasi kualitas gambar dan orientasi dokumen menjadi salah satu keunggulan utama implementasi ini.
+\subsubsection{Model DONUT Base untuk Struk Kertas}
+\label{subsubsec:model-base}
 
-\subsubsection{Model Donut CORD-V2}
-\label{subsubsec:model-cord-v2}
+Model base menggunakan DONUT pre-trained model \texttt{naver-clova-ix/donut-base-finetuned-cord-v2} yang telah dioptimalkan untuk pemrosesan receipt dan dokumen semi-terstruktur. Model ini dipilih karena sudah memiliki pemahaman yang baik terhadap struktur receipt umum dan dapat langsung digunakan untuk dokumen struk pembayaran tanpa fine-tuning tambahan.
 
-Model CORD-v2 merupakan adaptasi dari model \donut{} yang telah di-\emph{fine-tune} menggunakan dataset CORD untuk pemrosesan struk pembayaran berbasis kertas. Model ini difokuskan pada ekstraksi informasi tanpa komponen klasifikasi, disesuaikan dengan karakteristik visual struk yang lebih terstruktur dan konsisten.
+Konfigurasi model base menggunakan task prompt \texttt{<s\_cord-v2>} yang mengikuti format standar CORD dataset. Model ini mampu mengekstraksi informasi kompleks dari struk pembayaran, termasuk:
+\begin{itemize}
+    \item Informasi merchant dan alamat
+    \item Itemized list dengan nama, quantity, dan harga individual
+    \item Subtotal, pajak, dan total pembayaran
+    \item Metadata transaksi seperti tanggal dan waktu
+\end{itemize}
 
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=0.7\textwidth]{images/cord-v2-model-output.png}
-%     \caption{Contoh output ekstraksi model CORD-v2}
-%     \label{fig:cord-v2-model-output}
-% \end{figure}
+Model base mengimplementasikan preprocessing yang robust untuk optimasi ukuran gambar dengan maximum dimension 2048 pixels dan automatic resizing menggunakan Lanczos resampling untuk mempertahankan kualitas visual. Generation configuration menggunakan single beam search dengan early stopping untuk optimasi kecepatan inference sambil mempertahankan akurasi yang tinggi.
 
-Karakteristik model CORD-v2 mencakup kemampuan untuk mengenali dan mengekstraksi berbagai elemen dari struk pembayaran, termasuk informasi merchant, daftar item, harga individual, subtotal, pajak, dan total pembayaran. Model ini telah dioptimalkan untuk menangani variasi format struk dari berbagai jenis merchant, mulai dari retail modern hingga warung tradisional.
+Output model base berupa struktur JSON yang kompleks dan hierarkis, sesuai dengan format CORD dataset yang mencerminkan structure receipt yang lebih detailed dibandingkan format simplified untuk payment proof. Model ini juga menggunakan token-to-JSON converter yang robust untuk menghandle various format receipt dari different merchants.
 
-Vocabulary model CORD-v2 mencakup representasi khusus untuk elemen-elemen struk yang umum di Indonesia, termasuk format mata uang rupiah, struktur alamat lokal, dan terminologi retail yang spesifik. Model menghasilkan output yang terstruktur dalam format yang konsisten, memudahkan parsing dan integrasi dengan sistem pencatatan keuangan.
+% **Diagram yang disarankan**: Comparison matrix antara kedua model menunjukkan input types, special tokens, output structure, dan use cases masing-masing model.
 
-Performa model CORD-v2 menunjukkan akurasi tinggi dalam ekstraksi field-field kritis seperti total pembayaran dan informasi merchant. Model mampu menangani variasi kualitas struk, mulai dari hasil scan yang bersih hingga foto struk dengan pencahayaan yang kurang optimal. Implementasi preprocessing yang robust membantu model dalam menormalkan input sebelum proses ekstraksi.
-
-Kedua model menggunakan format output yang konsisten untuk memudahkan integrasi dengan komponen sistem lainnya. Confidence scoring yang disediakan oleh setiap model memungkinkan implementasi quality control dan user feedback mechanism untuk meningkatkan user experience secara keseluruhan.
+Kedua model menggunakan automatic device detection yang dapat beradaptasi dengan hardware yang tersedia, baik CPU maupun GPU inference. Implementasi singleton pattern memastikan model hanya dimuat sekali dalam memory untuk mengoptimalkan resource usage dan mengurangi latency pada request subsequent.

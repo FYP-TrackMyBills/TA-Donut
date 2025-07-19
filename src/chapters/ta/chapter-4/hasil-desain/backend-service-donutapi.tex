@@ -1,47 +1,61 @@
-\subsection{Backend Service (DonutAPI)}
+\subsection{Backend Service DonutAPI}
 \label{subsec:backend-service-donutapi}
 
-DonutAPI merupakan implementasi \emph{backend service} yang menyediakan layanan ekstraksi data pembayaran melalui RESTful API. Service ini dirancang menggunakan framework FastAPI untuk memberikan performa tinggi, dokumentasi otomatis, dan type safety yang memudahkan integration dan maintenance.
+DonutAPI merupakan implementasi REST API menggunakan framework FastAPI yang menyediakan layanan inferensi model DONUT untuk ekstraksi data dari dokumen pembayaran. Service ini dirancang dengan arsitektur modular yang memisahkan layer API, business logic, dan model inference untuk memudahkan maintenance dan pengembangan future features.
 
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=0.9\textwidth]{images/donutapi-architecture.png}
-%     \caption{Arsitektur DonutAPI dengan komponen utama}
-%     \label{fig:donutapi-architecture}
-% \end{figure}
+Arsitektur backend mengadopsi design patterns yang robust termasuk singleton pattern untuk model management, dependency injection untuk service components, dan comprehensive error handling untuk production reliability. Service mengimplementasikan automatic model loading saat startup dengan preloading mechanism yang memastikan kedua model siap digunakan sebelum menerima request dari client.
 
-Arsitektur DonutAPI menggunakan pattern layered architecture yang memisahkan concern antara API layer, business logic layer, dan model inference layer. Pemisahan ini memungkinkan maintainability yang baik dan facilitates future enhancements tanpa mempengaruhi komponen lain.
+Application lifecycle management menggunakan FastAPI's lifespan context manager yang mengatur startup dan shutdown processes secara graceful. Startup sequence meliputi model preloading, device detection, dan system health verification. Shutdown sequence memastikan proper cleanup dari model resources dan GPU memory clearing jika menggunakan CUDA acceleration.
 
-API layer mengimplementasikan dua endpoint utama: \texttt{/predict/} untuk full prediction dengan detailed metadata, dan \texttt{/predict/simple} untuk simplified response yang focus pada extracted data saja. Kedua endpoint support parameter \texttt{model} yang memungkinkan client untuk specify model mana yang akan digunakan (base atau custom), memberikan flexibility dalam processing different document types.
+**Diagram yang disarankan**: Service architecture diagram menunjukkan layer separation, request flow, dan component interactions dalam DonutAPI.
 
-\emph{Request handling} mengimplementasikan comprehensive validation yang mencakup file format validation (JPG, JPEG, PNG, WebP, BMP), file size limits (maksimum 10MB), dan image dimension constraints (maksimum 2048x2048 pixels). Validation ini memastikan bahwa hanya input yang valid yang diproses oleh model, reducing computational waste dan improving system reliability.
+\subsubsection{Endpoint \texttt{/predict/}}
+\label{subsubsec:endpoint-predict-full}
 
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=0.8\textwidth]{images/api-request-flow.png}
-%     \caption{Alur pemrosesan request dalam DonutAPI}
-%     \label{fig:api-request-flow}
-% \end{figure}
+Endpoint \texttt{/predict/} menyediakan full prediction service dengan detailed response yang mencakup metadata lengkap tentang inference process. Endpoint ini dirancang untuk use cases yang memerlukan informasi comprehensive tentang model performance dan processing details.
 
-Model inference layer mengimplementasikan \emph{singleton pattern} untuk kedua model (QRIS-TF dan CORD-v2) untuk mencegah multiple instances yang dapat menyebabkan memory issues. Model loading menggunakan lazy initialization yang hanya memuat model ketika pertama kali dibutuhkan, optimizing startup time dan memory usage.
+Request validation mengimplementasikan comprehensive checks termasuk file format validation (JPG, JPEG, PNG, WebP, BMP), file size limits maksimum 10MB, dan basic file integrity verification. Query parameter \texttt{model} bersifat required dan harus berupa \texttt{ModelType.BASE} atau \texttt{ModelType.CUSTOM} untuk menentukan model mana yang akan digunakan untuk inference.
 
-Service mengimplementasikan automatic model selection logic yang menganalisis karakteristik input image untuk menentukan model yang paling appropriate. Logic ini menggunakan simple heuristics berdasarkan image properties dan dapat with high accuracy menentukan apakah document adalah digital payment proof atau paper receipt.
+Response structure untuk endpoint ini mencakup:
+\begin{itemize}
+    \item \texttt{success}: Boolean indicator untuk status inference
+    \item \texttt{result}: Object containing extracted data dan metadata
+    \item \texttt{model\_info}: Informasi detail tentang model yang digunakan
+    \item \texttt{processing\_time\_seconds}: Waktu yang diperlukan untuk inference
+    \item \texttt{device}: Hardware device yang digunakan untuk inference (CPU/GPU)
+    \item \texttt{raw\_sequence}: Token sequence mentah sebelum postprocessing (khusus custom model)
+    \item \texttt{confidence\_score}: Skor confidence untuk kualitas ekstraksi (khusus custom model)
+\end{itemize}
 
-Error handling dan response formatting mengikuti standard industri dengan HTTP status codes yang appropriate dan error messages yang informative. Service mengimplementasikan graceful degradation di mana jika primary model gagal, system secara otomatis fallback ke alternative processing atau memberikan informative error message kepada client.
+Error handling untuk endpoint ini mengimplementasikan structured error responses dengan HTTP status codes yang appropriate dan detailed error messages untuk debugging purposes. Request tracing menggunakan unique request ID yang memudahkan correlation antara logs dan monitoring metrics.
 
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=0.7\textwidth]{images/api-response-format.png}
-%     \caption{Format respons API dengan metadata lengkap}
-%     \label{fig:api-response-format}
-% \end{figure}
+\subsubsection{Endpoint \texttt{/predict/simple}}
+\label{subsubsec:endpoint-predict-simple}
 
-Response formatting menggunakan Pydantic schemas untuk memastikan type safety dan consistent data structure. Full response format mencakup extracted data, confidence scores, processing metadata, dan model information. Simple response format hanya mengembalikan cleaned extracted data yang siap untuk consumption oleh mobile application.
+Endpoint \texttt{/predict/simple} menyediakan simplified response yang focus pada extracted data untuk mobile application consumption. Response format yang streamlined mengurangi bandwidth usage dan mempercepat parsing di sisi client application.
 
-Service juga mengimplementasikan health check endpoints (\texttt{/health} dan \texttt{/health/detailed}) yang memungkinkan monitoring system status dan model availability. Endpoints ini crucial untuk deployment dalam production environment dan integration dengan load balancers atau orchestration systems.
+Response structure untuk simple endpoint hanya mencakup essential information:
+\begin{itemize}
+    \item \texttt{success}: Boolean indicator untuk status inference
+    \item \texttt{data}: Object containing extracted data dalam raw format dan cleaned format
+    \item \texttt{error}: Error message jika inference gagal
+\end{itemize}
 
-Logging system menggunakan structured JSON logging dengan request tracing yang memungkinkan debugging dan monitoring yang effective. Setiap request diberikan unique ID yang dapat ditrack across all log entries, facilitating troubleshooting dan performance analysis.
+Data cleaning dan normalization dilakukan secara otomatis pada endpoint ini untuk memastikan client application menerima data yang ready-to-use. Proses cleaning mencakup currency formatting untuk amount fields, date parsing untuk timestamp fields, dan text normalization untuk name fields.
 
-Security features mencakup CORS configuration untuk cross-origin requests, optional API key authentication, dan input sanitization untuk mencegah malicious uploads. File validation tidak hanya check format dan size, tetapi juga verify content integrity untuk memastikan bahwa uploaded files adalah valid images.
+Custom model response pada endpoint simple mencakup automatic classification result yang menentukan apakah dokumen adalah QRIS atau transfer berdasarkan extracted type field. Base model response menyediakan structured receipt data dengan itemized information yang sudah dinormalisasi untuk mobile display.
 
-Deployment configuration menggunakan Docker containerization yang memungkinkan consistent deployment across different environments. Container includes all dependencies dan optimized untuk both CPU dan GPU inference, dengan automatic device detection yang menggunakan GPU jika available dan fallback ke CPU processing jika diperlukan.
+\subsubsection{Model Selection dan Inference Service}
+\label{subsubsec:model-selection-inference}
+
+DonutAPI mengimplementasikan automatic model selection logic yang dapat menganalisis karakteristik input image untuk menentukan model yang paling appropriate. Logic selection menggunakan simple heuristics berdasarkan image aspect ratio, file size, dan basic visual characteristics yang dapat distinguish antara digital payment screenshots dan paper receipt photos.
+
+Inference service menggunakan singleton pattern untuk kedua model instances yang memastikan memory efficiency dan menghindari multiple model loading. Model initialization menggunakan lazy loading approach yang hanya memuat model ketika pertama kali dibutuhkan, optimizing startup time dan memory usage.
+
+Error recovery mechanism mengimplementasikan graceful degradation di mana jika primary model gagal, system secara otomatis fallback ke alternative processing atau memberikan informative error message kepada client. Fallback logic untuk custom model dapat menggunakan base model jika custom weights gagal dimuat.
+
+Service juga mengimplementasikan resource monitoring yang track GPU memory usage, CPU utilization, dan inference latency untuk operational insights. Health check endpoints \texttt{/status} dan \texttt{/} menyediakan comprehensive system status termasuk model readiness, hardware information, dan performance metrics.
+
+**Diagram yang disarankan**: API request/response flow diagram menunjukkan validation, model selection, inference, dan response formatting untuk kedua endpoints.
+
+Deployment configuration menggunakan Docker containerization dengan multi-stage builds yang mengoptimalkan image size dan security. Container includes automatic device detection untuk CPU dan GPU environments dengan graceful fallback jika CUDA tidak tersedia. Production deployment menggunakan Uvicorn ASGI server dengan process management yang robust untuk high availability scenarios.
