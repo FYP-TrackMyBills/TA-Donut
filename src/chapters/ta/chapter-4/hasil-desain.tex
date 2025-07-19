@@ -1,21 +1,14 @@
 \section{Hasil Desain}
 \label{sec:hasil-desain}
 
-Hasil desain merupakan implementasi konkret dari tahapan desain yang telah dirancang pada \autoref{sec:tahapan-desain}. Bagian ini menyajikan artefak-artefak yang dihasilkan dari proses pengembangan sistem, mencakup implementasi script pelatihan, model yang telah di-\emph{fine-tune}, framework evaluasi, layanan \emph{backend}, aplikasi \emph{mobile}, dan integrasi sistem secara keseluruhan.
+Hasil desain adalah subbab yang menjelaskan mengenai artefak yang dihasilkan oleh sistem. Subbab ini sejalan dengan tahap \emph{Design and Development} pada metodologi \dsrm{} yang digunakan sebagai metodologi dalam tugas akhir ini. Artefak sistem yang dijelaskan pada subbab ini merupakan implementasi dari tahapan desain yang telah dirancang pada \autoref{sec:tahapan-desain}. 
 
-Setiap artefak dikembangkan dengan mempertimbangkan kebutuhan fungsional dan non-fungsional yang telah didefinisikan, serta disesuaikan dengan ekspektasi pengguna Gen Z terhadap sistem mobile yang modern dan efisien. Implementasi menggunakan teknologi terkini dan best practices dalam pengembangan aplikasi mobile dan sistem berbasis \emph{machine learning}.
-
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=\textwidth]{images/system-artifacts-overview.png}
-%     \caption{Overview artefak sistem yang dihasilkan}
-%     \label{fig:system-artifacts-overview}
-% \end{figure}
-
-Hasil desain menunjukkan implementasi sistem yang lengkap dan siap untuk deployment, dengan setiap komponen telah melalui proses testing dan validasi. Integrasi antar komponen dirancang untuk memberikan pengalaman pengguna yang seamless sambil mempertahankan akurasi dan reliabilitas sistem.
+Sistem ini memiliki tiga artefak utama yang saling terintegrasi untuk memberikan solusi \emph{end-to-end} dalam pengembangan sistem pencatatan pengeluaran berbasis \emph{mobile} yang lebih terotomasi. Artefak-artefak tersebut meliputi model \donut{} yang telah disesuaikan untuk domain pembayaran Indonesia, layanan \emph{backend} (DonutAPI) yang menyediakan inferensi model melalui REST API, dan aplikasi \emph{mobile} TrackMyBills yang menjadi antarmuka pengguna.
 
 \input{chapters/ta/chapter-4/hasil-desain/model-yang-digunakan.tex}
 
 \input{chapters/ta/chapter-4/hasil-desain/backend-service-donutapi.tex}
 
 \input{chapters/ta/chapter-4/hasil-desain/aplikasi-mobile-trackmybills.tex}
+
+\input{chapters/ta/chapter-4/hasil-desain/alur-kerja-sistem.tex}
