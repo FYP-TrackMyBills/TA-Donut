@@ -3,7 +3,9 @@
 
 Alur kerja sistem TrackMyBills dirancang untuk mengakomodasi berbagai skenario penggunaan yang mencerminkan behavior patterns pengguna Gen Z dalam melakukan transaksi digital. Sistem mengimplementasikan lima flow utama yang memberikan flexibility maksimal dalam capture, processing, dan storage data transaksi. Setiap flow dioptimalkan untuk specific use cases sambil mempertahankan consistency dalam user experience dan data quality.
 
-Integration antara mobile application dan backend service menggunakan RESTful API dengan robust error handling dan automatic retry mechanisms. Workflow management memastikan bahwa setiap step dalam processing pipeline dapat handle various edge cases dan provide meaningful feedback kepada pengguna. System juga mengimplementasikan offline capability untuk scenarios di mana network connectivity tidak optimal.
+Workflow implementation mengikuti arsitektur komponen yang terdiri dari empat subsystem utama: Pengelolaan Masukan Gambar (10 components), Ekstraksi Data (5 components), Pemetaan Data (2 components), dan Pengelolaan Data Pengeluaran (2 components). Setiap subsystem memiliki tanggung jawab yang jelas dalam processing pipeline dengan well-defined interfaces untuk component interaction.
+
+Integration antara mobile application dan backend service menggunakan RESTful API dengan robust error handling dan automatic retry mechanisms. Workflow management memastikan bahwa setiap step dalam processing pipeline dapat handle various edge cases dan provide meaningful feedback kepada pengguna. Data flow mengikuti transformasi: tipe dokumen → gambar → PIL Image Object → pytorch tensor → JSON → int/string, sesuai dengan interface contracts yang didefinisikan dalam component architecture.
 
 **Diagram yang disarankan**: System workflow diagram menunjukkan kelima flow utama dengan decision points, error handling paths, dan data flow antara mobile app dan backend service.
 

@@ -48,7 +48,9 @@ Custom model response pada endpoint simple mencakup automatic classification res
 \subsubsection{Model Selection dan Inference Service}
 \label{subsubsec:model-selection-inference}
 
-DonutAPI mengimplementasikan automatic model selection logic yang dapat menganalisis karakteristik input image untuk menentukan model yang paling appropriate. Logic selection menggunakan simple heuristics berdasarkan image aspect ratio, file size, dan basic visual characteristics yang dapat distinguish antara digital payment screenshots dan paper receipt photos.
+DonutAPI mengimplementasikan model selection logic berdasarkan query parameter 'model' yang menentukan apakah menggunakan Internal Model (QRIS-TF) atau Deployed Model (CORD-v2) berdasarkan document type yang akan diproses. Model selection ditentukan oleh receipt type yang dispecify dalam endpoint query parameters, memberikan control yang explicit kepada client application untuk memilih model yang sesuai dengan jenis dokumen.
+
+Deployment architecture menggunakan three-tier approach dengan Android client, Docker container hosting FastAPI service dengan Internal Model, dan external HuggingFace service untuk Deployed Model. Arsitektur ini memungkinkan scalability dan maintainability yang optimal dengan separation between local inference dan cloud-based model serving.
 
 Inference service menggunakan singleton pattern untuk kedua model instances yang memastikan memory efficiency dan menghindari multiple model loading. Model initialization menggunakan lazy loading approach yang hanya memuat model ketika pertama kali dibutuhkan, optimizing startup time dan memory usage.
 

@@ -1,18 +1,16 @@
 \subsection{Aplikasi Mobile TrackMyBills}
 \label{subsec:aplikasi-mobile-trackmybills}
 
-TrackMyBills merupakan aplikasi mobile berbasis Flutter yang dirancang khusus untuk target pengguna Gen Z Indonesia dengan focus pada user experience yang intuitive dan modern. Aplikasi ini berfungsi sebagai frontend interface untuk sistem ekstraksi data pembayaran dengan mengintegrasikan camera functionality, file management, dan API communication dalam satu platform yang cohesive.
+TrackMyBills merupakan aplikasi \emph{mobile} berbasis Flutter. Aplikasi ini berfungsi sebagai antarmuka pengguna untuk sistem ekstraksi data pembayaran dengan integrasi fungsi kamera, akses galeri, \emph{sharing intent}, dan pemanggilan API. TrackMyBills dibangun dengan menggunakan pola \emph{Model-View-Controller} (MVC) yang memisahkan antarmuka, model yang digunakan, dan logika fitur. Flutter memiliki \emph{built-in state management} melalui \emph{widget}-nya, yaitu StatefulWidget untuk memudahkan pengelolaan \emph{state} dari sistem. 
 
-Arsitektur aplikasi menggunakan Model-View-Controller (MVC) pattern yang memisahkan business logic dari presentation layer untuk maintainability yang optimal. State management menggunakan provider pattern untuk reactive UI updates dan efficient data flow across different screens. Navigation mengimplementasikan bottom navigation bar dengan consistent design language yang familiar bagi pengguna Android modern.
+% Design system aplikasi mengadopsi Material Design 3 principles dengan color scheme yang vibrant dan typography yang readable untuk mencerminkan aesthetic preferences Gen Z. Interface menggunakan card-based layouts dengan rounded corners dan subtle shadows yang memberikan modern appearance sambil maintaining functional clarity untuk financial data display.
 
-Design system aplikasi mengadopsi Material Design 3 principles dengan color scheme yang vibrant dan typography yang readable untuk mencerminkan aesthetic preferences Gen Z. Interface menggunakan card-based layouts dengan rounded corners dan subtle shadows yang memberikan modern appearance sambil maintaining functional clarity untuk financial data display.
+% **Diagram yang disarankan**: App architecture diagram menunjukkan MVC pattern implementation, state management flow, dan component interactions dalam aplikasi mobile.
 
-**Diagram yang disarankan**: App architecture diagram menunjukkan MVC pattern implementation, state management flow, dan component interactions dalam aplikasi mobile.
+\subsubsection{Metode Masukan Gambar}
+\label{subsubsec:metode-masukan-gambar}
 
-\subsubsection{Input Methods dan User Interaction}
-\label{subsubsec:input-methods}
-
-Aplikasi mengimplementasikan tiga metode input yang memberikan maximum flexibility bagi pengguna dalam melakukan capture dan upload dokumen pembayaran:
+TrackMyBills menyediakan tiga metode untuk menerima masukan gambar, yaitu melalui kamera, galeri, dan \emph{sharing intent}. 
 
 Camera capture menggunakan native Android camera API dengan custom UI overlay yang memberikan guidance visual untuk optimal document framing. Feature ini mengimplementasikan automatic focus dan flash control dengan preview functionality yang memungkinkan pengguna untuk review foto sebelum processing. Camera interface juga menyediakan grid lines dan document detection hints untuk membantu pengguna mengambil foto dengan kualitas optimal.
 
@@ -29,12 +27,14 @@ Image cropping functionality menggunakan UCrop library yang menyediakan intuitiv
 
 API communication menggunakan HTTP client dengan comprehensive retry mechanism dan exponential backoff untuk handling network issues. Request timeout configuration menggunakan adaptive values berdasarkan file size dan connection quality. Upload progress indicators menggunakan stream-based approach yang memberikan real-time feedback kepada pengguna selama transmission process.
 
-Error handling mengimplementasikan user-friendly error messages dengan actionable suggestions untuk common issues seperti network connectivity, file format, atau server errors. Offline detection memungkinkan aplikasi untuk queue requests ketika network unavailable dan automatic retry ketika connectivity restored.
+Error handling mengimplementasikan fallback mechanism yang menampilkan mock data ketika backend API tidak tersedia. Strategi ini memastikan aplikasi tetap functional bahkan dalam kondisi network connectivity yang tidak optimal, memberikan user experience yang konsisten untuk pengguna Gen Z yang mengharapkan aplikasi selalu responsive.
 
 \subsubsection{Data Management dan Storage}
 \label{subsubsec:data-management}
 
 Data persistence menggunakan SharedPreferences untuk lightweight local storage yang appropriate untuk financial transaction data. Storage architecture mengimplementasikan encrypted data containers untuk sensitive information seperti transaction amounts dan merchant names. Encryption menggunakan platform-native security features dengan automatic key management.
+
+% Transaction management mengimplementasikan tiga method utama: addTransaction() untuk menambah transaksi baru dengan automatic state notification, loadTransactions() untuk loading data dari storage dengan comprehensive error handling, dan _saveTransactions() untuk persistence dalam format JSON. Receipt type preference management menggunakan loadReceiptTypePreference() dan saveReceiptTypePreference() untuk user customization.
 
 Transaction history organization menggunakan structured data format yang enable efficient querying dan sorting berdasarkan various criteria seperti date, amount, atau transaction type. Data model support untuk both digital payment extractions dan receipt-based transactions dengan flexible schema yang dapat accommodate different data structures.
 
