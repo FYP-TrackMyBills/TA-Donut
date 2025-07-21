@@ -2,14 +2,73 @@
 \label{subsec:hasil-evaluasi-kinerja-model}
 
 Evaluasi kinerja model dilakukan untuk mengukur seberapa baik model \donut{} yang telah disesuaikan dengan domain pembayaran Indonesia dalam melakukan inferensi terhadap dokumen pengeluaran. 
-Hasil evaluasi kinerja model ini didasarkan pada metrik yang telah ditetapkan pada \autoref{sec:evaluasi-kinerja-model}. 
-
-Evaluasi kinerja model akan mengabaikan keberadaan \emph{True Negative} (TN). Jumlah informasi potensial yang dapat diekstrak dari dokumen sangat banyak dalam ekstraksi informasi dokumen, sehingga nilai dari TN akan menjadi sangat besar. Oleh karena itu, evaluasi kinerja model akan berfokus pada informasi yang tertera pada \emph{Ground Truth} (GT). Metrik yang bergantung pada TN, seperti \accuracy, tidak menunjukkan kinerja model yang berarti dalam konteks ini dibandingkan dengan metrik lainnya. Evaluasi dilakukan terhadap dua model, yaitu \emph{base model} yang merupakan model \donut{} yang disesuaikan pada \dataset{} CORD-v2 dan \emph{custom model} yang telah disesuaikan dengan \dataset{} QRIS-TF.
+Hasil evaluasi kinerja model ini didasarkan pada metrik yang telah ditetapkan pada \autoref{subsec:evaluasi-kinerja-model}. Evaluasi dilakukan terhadap dua model, yaitu \emph{base model} yang merupakan model \donut{} yang disesuaikan pada \dataset{} CORD-v2 dan \emph{custom model} yang telah disesuaikan dengan \dataset{} QRIS-TF.
 
 \subsubsection{Hasil Evaluasi \emph{Base Model}}
 \label{subsubsec:hasil-evaluasi-base-model}
-\autoref{tab:base-model-eval-table} menunjukkan pengujian kinerja model \emph{base model}. 
+\autoref{tab:base-model-eval-table} menunjukkan pengujian kinerja model \emph{base model} dan \autoref{tab:base-model-eval-detail} menunjukkan rincian evaluasi kinerja model \emph{base model} berdasarkan atribut yang diekstrak.
+
+\begin{table}[h!]
+    \centering
+    \caption{Hasil evaluasi kinerja model \emph{base model}}
+    \label{tab:base-model-eval-table}
+    \begin{tabularx}{\textwidth}{|p{3cm}|X|X|X|X|X|}
+        \hline
+        \textbf{Atribut} & \textbf{\accuracyfl} & \textbf{\precisionfl} & \textbf{\recallfl} & \textbf{\fscore} & \textbf{\mcer} \\ \hline
+        Unweighted & 0,7233 & 0,8985 & 0,7877 & 0,8394 & 0,2040 \\ \hline
+        Weighted & 0,7343 & 0,9053 & 0,7953 & 0,8468 & 0,1885 \\ \hline
+    \end{tabularx}  
+\end{table}
+
+% \begin{table}[h!]
+%     \centering
+%     \caption{Hasil evaluasi kinerja model \emph{base model}}
+%     \label{tab:base-model-eval-table}
+%     \begin{tabularx}{\textwidth}{|p{3cm}|X|X|X|X|X|}
+%         \hline
+%         \textbf{Atribut} & \textbf{\accuracyfl} & \textbf{\precisionfl} & \textbf{\recallfl} & \textbf{\fscore} & \textbf{\mcer} \\ \hline
+%         Total transaksi & 0.95 & 0.95 & 0.95 & 0.95 & 0.05 \\ \hline
+%         Nama menu & 0.90 & 0.90 & 0.90 & 0.90 & 0.10 \\ \hline
+%         Jumlah menu & 0.85 & 0.85 & 0.85 & 0.85 & 0.15 \\ \hline
+%         Harga menu & 0.80 & 0.80 & 0.80 & 0.80 & 0.20 \\ \hline
+%         Keseluruhan & 0.87 & 0.87 & 0.87 & 0.87 & 0.13 \\ \hline
+%     \end{tabularx}  
+% \end{table}
 
 \subsubsection{Hasil Evaluasi \emph{Custom Model}}
 \label{subsubsec:hasil-evaluasi-custom-model}
-\autoref{tab:custom-model-eval-table} menunjukkan pengujian kinerja model \emph{custom model}.
+\autoref{tab:custom-model-eval-table} menunjukkan hasil pengujian kinerja model \emph{custom model} dan \autoref{tab:custom-model-eval-detail} menunjukkan rincian evaluasi kinerja model \emph{custom model} berdasarkan atribut yang diekstrak. 
+
+Perbedaan antara evaluasi \emph{weighted} dan \emph{unweighted} tidak membuat perubahan hasil yang signifikan. Angka \fscore{} pada \emph{custom model} berada pada 81,5\%, angka \recall{} pada 68,78\%, dan \precision{} yang bernilai 100\% menunjukkan bahwa model tidak melakukan prediksi pada atribut yang memang tidak ada pada GT. Salah satu sebabnya adalah ketidakvalidan penggunaan TN pada evaluasi dan jumlah FP yang rendah. Hal serupa juga berlaku pada evaluasi \emph{base model} yang membuktikan bahwa model \donut{} melakukan prediksi saat model yakin bahwa atribut tersebut ada pada dokumen yang diprediksi. 
+
+Nilai \mcer{} menunjukkan seberapa banyak perubahan yang perlu dilakukan pada teks prediksi untuk mencocokkannya dengan teks sebenarnya dari \emph{Ground Truth}. \mcer{} pada \emph{custom model} berada pada angka 17,2\% yang menunjukkan angka yang baik. Nilai \mcer{} yang rendah menunjukkan bahwa model dapat menghasilkan prediksi yang cukup akurat dan tidak memerlukan banyak perubahan untuk mencocokkan dengan teks sebenarnya.
+
+\autoref{tab:custom-model-eval-detail} menunjukkan berbagai atribut yang diekstrak dari dokumen pembayaran QRIS dan transfer. Atribut total transaksi memiliki angka TP 68, FN 31, dan mCER 18,9\%. Sebagai atribut dengan bobot paling tinggi, angka tersebut menunjukkan bahwa model dapat mengenali total transaksi dengan baik, meskipun masih ada beberapa kesalahan yang perlu diperbaiki. Atribut waktu transaksi memiliki angka TP 30, FN 49, dan mCER 12,8\%, menunjukkan bahwa model masih perlu ditingkatkan dalam mengenali waktu transaksi. Atribut ID transaksi memiliki angka TP 20, FN 73, dan mCER 42,2\%, yang menunjukkan bahwa model masih kesulitan dalam mengenali ID transaksi. Atribut ID transaksi memang merupakan sebuah rangkaian karakter panjang dan sulit untuk ditemukan. Hal ini membuat model kesulitan untuk menentukan nilai dari ID transaksi tersebut dalam prediksinya. Atribut tipe transaksi dan aplikasi memiliki angka TP yang tinggi, yaitu 91, dengan FN masing-masing 8 dan mCER masing-masing 9,1\% dan 28,3\%. Atribut target transaksi memiliki angka TP 68, FN 31, dan mCER 15,84\%. Model masih kesulitan untuk memprediksi beberapa atribut dengan benar, seperti ID transaksi dan waktu transaksi, yang berupa atribut yang lebih kompleks dan tidak selalu ada pada dokumen yang dilampirkan.
+        
+\begin{table}[h!]
+    \centering
+    \caption{Hasil evaluasi kinerja model \emph{custom model}}
+    \label{tab:custom-model-eval-table}
+    \begin{tabularx}{\textwidth}{|p{3cm}|X|X|X|X|X|}
+        \hline
+        \textbf{Atribut} & \textbf{\accuracyfl} & \textbf{\precisionfl} & \textbf{\recallfl} & \textbf{\fscore} & \textbf{\mcer} \\ \hline
+        Unweighted & 0,6479 & 1,0000 & 0,6479 & 0,7863 & 0,1794 \\ \hline
+        Weighted & 0,6878 & 1,0000 & 0,6878 & 0,8150 & 0,1720 \\ \hline
+    \end{tabularx}  
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \caption{Rincian evaluasi kinerja model \emph{custom model}}
+    \label{tab:custom-model-eval-detail}
+    \begin{tabularx}{\textwidth}{|p{3cm}|X|X|X|X|X|}
+        \hline
+        \textbf{Atribut} & \textbf{Jumlah sampel} & \textbf{TP} & \textbf{FP} & \textbf{FN} & \textbf{mCER} \\ \hline
+        Total transaksi & 99 & 68 & 0 & 31 & 0,1890 \\ \hline
+        Waktu transaksi & 79 & 30 & 0 & 49 & 0,1279 \\  \hline
+        ID transaksi & 93 & 20 & 0 & 73 & 0,4223 \\ \hline
+        Tipe transaksi & 99 & 91 & 0 & 8 & 0,0909 \\ \hline
+        Aplikasi & 99 & 91 & 0 & 8 & 0,2828 \\ \hline
+        Target transaksi & 99 & 68 & 0 & 31 & 0,1584 \\ \hline
+    \end{tabularx}  
+\end{table}
