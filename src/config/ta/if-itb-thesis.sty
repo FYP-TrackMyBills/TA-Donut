@@ -271,14 +271,17 @@
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+% \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{backcolour}{rgb}{1,1,1}
+\definecolor{codeblack}{rgb}{0.1,0.1,0.1}
+\definecolor{codewhite}{rgb}{1,1,1}
 
 \lstdefinestyle{jsonstyle}{
     backgroundcolor=\color{backcolour},   
     commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
+    keywordstyle=\color{codeblack},
+    numberstyle=\tiny\color{codewhite},
+    stringstyle=\color{codeblack},
     basicstyle=\ttfamily\footnotesize,
     breakatwhitespace=false,         
     breaklines=true,                 
@@ -290,7 +293,8 @@
     showstringspaces=false,
     showtabs=false,                  
     tabsize=2,
-    language=json
+    morestring=[b]",   % Defines that strings start and end with "
+    morekeywords={true,false,null} % Defines JSON keywords
 }
 
 % Format to ignore underflow hbadness
