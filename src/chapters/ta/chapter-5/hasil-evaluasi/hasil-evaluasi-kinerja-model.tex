@@ -1,7 +1,15 @@
 \subsection{Hasil Evaluasi Kinerja Model}
 \label{subsec:hasil-evaluasi-kinerja-model}
 
-TP: seluruh atribut yang ada di GT terprediksi dengan nilai yang benar
-FP: terdapat atribut yang tidak ada di GT atau memiliki nilai kosong, tetapi muncul dengan suatu nilai di hasil prediksi
-FN: terdapat atribut yang ada di GT dengan nilai yang tidak kosong, tetapi tidak muncul di hasil prediksi atau muncul dengan nilai kosong
-TN: terdapat atribut yang tidak ada di GT dan tidak muncul di hasil prediksi
+Evaluasi kinerja model dilakukan untuk mengukur seberapa baik model \donut{} yang telah disesuaikan dengan domain pembayaran Indonesia dalam melakukan inferensi terhadap dokumen pengeluaran. 
+Hasil evaluasi kinerja model ini didasarkan pada metrik yang telah ditetapkan pada \autoref{sec:evaluasi-kinerja-model}. 
+
+Evaluasi kinerja model akan mengabaikan keberadaan \emph{True Negative} (TN). Jumlah informasi potensial yang dapat diekstrak dari dokumen sangat banyak dalam ekstraksi informasi dokumen, sehingga nilai dari TN akan menjadi sangat besar. Oleh karena itu, evaluasi kinerja model akan berfokus pada informasi yang tertera pada \emph{Ground Truth} (GT). Metrik yang bergantung pada TN, seperti \accuracy, tidak menunjukkan kinerja model yang berarti dalam konteks ini dibandingkan dengan metrik lainnya. Evaluasi dilakukan terhadap dua model, yaitu \emph{base model} yang merupakan model \donut{} yang disesuaikan pada \dataset{} CORD-v2 dan \emph{custom model} yang telah disesuaikan dengan \dataset{} QRIS-TF.
+
+\subsubsection{Hasil Evaluasi \emph{Base Model}}
+\label{subsubsec:hasil-evaluasi-base-model}
+\autoref{tab:base-model-eval-table} menunjukkan pengujian kinerja model \emph{base model}. 
+
+\subsubsection{Hasil Evaluasi \emph{Custom Model}}
+\label{subsubsec:hasil-evaluasi-custom-model}
+\autoref{tab:custom-model-eval-table} menunjukkan pengujian kinerja model \emph{custom model}.

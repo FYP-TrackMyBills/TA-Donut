@@ -20,3 +20,35 @@ Evaluasi kinerja model dilakukan dengan membandingkan hasil prediksi model denga
 Evaluasi akan dilakukan terhadap dua jenis model yang digunakan, yaitu model \donut{} yang telah dilatih dengan \dataset{} QRIS dan transfer bank, serta model \donut{} yang telah dilatih dengan \dataset{} CORD-v2. Hasil evaluasi akan diukur dengan menggunakan metrik-metrik standar dalam evaluasi model klasifikasi, yaitu \accuracy, \precision, \recall, dan \fscore. 
 
 Selain metrik-metrik standar tersebut, terdapat juga metrik \mcer{} yang digunakan untuk mengukur berapa banyak perubahan karakter yang diperlukan dari teks prediksi menjadi teks sebenarnya dari \emph{Ground Truth}. Metrik-metrik ini akan memberikan gambaran yang jelas mengenai kinerja model dalam mengenali dan mengekstrak informasi dari dokumen pembayaran yang telah dilatih sebelumnya.
+
+Setiap model yang dievaluasi memiliki ketentuan bobot untuk setiap atribut yang diekstrak. Hal ini dilakukan untuk memberikan bobot yang sesuai pada setiap atribut berdasarkan pentingnya informasi tersebut dalam konteks dokumen pembayaran. \autoref{tab:base-model-field-weights} menunjukkan ketentuan bobot untuk setiap atribut yang diekstrak pada model \emph{base model} dan \autoref{tab:custom-model-field-weights} menunjukkan ketentuan bobot untuk setiap atribut yang diekstrak pada model \emph{custom model}.
+
+\begin{table}[h!]
+    \centering
+    \caption{Ketentuan bobot atribut yang diekstrak \emph{base model}}
+    \label{tab:base-model-field-weights}
+    \begin{tabularx}{\textwidth}{|X|X|}
+        \hline
+        \textbf{Atribut} & \textbf{Bobot} \\ \hline
+        Total transaksi & 2.0 \\ \hline
+        Nama menu & 1.0 \\ \hline
+        Jumlah menu & 1.0 \\ \hline
+        Harga menu & 1.0 \\ \hline 
+    \end{tabularx}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \caption{Ketentuan bobot atribut yang diekstrak \emph{custom model}}
+    \label{tab:custom-model-field-weights}
+    \begin{tabularx}{\textwidth}{|X|X|}
+        \hline
+        \textbf{Atribut} & \textbf{Bobot} \\ \hline
+        Total transaksi & 3.0 \\ \hline
+        Target transaksi & 2.0 \\ \hline
+        Tipe transaksi & 2.0 \\ \hline
+        Aplikasi & 1.0 \\ \hline
+        Waktu transaksi & 1.0 \\ \hline
+        ID transaksi & 1.0 \\ \hline
+    \end{tabularx}
+\end{table}
