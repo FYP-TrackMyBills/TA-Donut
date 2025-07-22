@@ -1,58 +1,24 @@
 \subsection{Aplikasi Mobile TrackMyBills}
 \label{subsec:aplikasi-mobile-trackmybills}
 
-TrackMyBills merupakan aplikasi \emph{mobile} berbasis Flutter. Aplikasi ini berfungsi sebagai antarmuka pengguna untuk sistem ekstraksi data pembayaran dengan integrasi fungsi kamera, akses galeri, \emph{sharing intent}, dan pemanggilan API. TrackMyBills dibangun dengan menggunakan pola \emph{Model-View-Controller} (MVC) yang memisahkan antarmuka, model yang digunakan, dan logika fitur. Flutter memiliki \emph{built-in state management} melalui \emph{widget}-nya, yaitu StatefulWidget untuk memudahkan pengelolaan \emph{state} dari sistem. 
-
-% Design system aplikasi mengadopsi Material Design 3 principles dengan color scheme yang vibrant dan typography yang readable untuk mencerminkan aesthetic preferences Gen Z. Interface menggunakan card-based layouts dengan rounded corners dan subtle shadows yang memberikan modern appearance sambil maintaining functional clarity untuk financial data display.
-
-% **Diagram yang disarankan**: App architecture diagram menunjukkan MVC pattern implementation, state management flow, dan component interactions dalam aplikasi mobile.
+TrackMyBills merupakan aplikasi \emph{mobile} berbasis Flutter. Aplikasi ini berfungsi sebagai antarmuka pengguna untuk sistem ekstraksi data pembayaran dengan integrasi fungsi kamera, akses galeri, \emph{sharing intent}, dan pemanggilan API. TrackMyBills dibangun dengan menggunakan pola \emph{Model-View-Controller} (MVC) yang memisahkan antarmuka, model yang digunakan, dan logika fitur.
 
 \subsubsection{Metode Masukan Gambar}
 \label{subsubsec:metode-masukan-gambar}
 
-TrackMyBills menyediakan tiga metode untuk menerima masukan gambar, yaitu melalui kamera, galeri, dan \emph{sharing intent}. 
+TrackMyBills menyediakan tiga metode untuk menerima masukan gambar, yaitu melalui kamera, galeri, dan \emph{sharing intent}. TrackMyBills menggunakan \emph{package} \texttt{camera} untuk mengakses kamera perangkat, memungkinkan pengguna untuk mengambil foto bukti pembayaran secara langsung. Untuk bisa menggunakan fitur ini, pengguna harus memberikan izin akses kamera pada aplikasi. Selain menggunakan kamera, TrackMyBills juga menyediakan opsi untuk memilih gambar dari galeri perangkat. Pengguna dapat memilih gambar yang telah disimpan sebelumnya di galeri mereka. Fitur ini diimplementasikan dengan menggunakan \emph{package} \texttt{image\_picker} untuk memilih gambar dari galeri. Fitur ini memerlukan izin akses penyimpanan. TrackMyBills juga mendukung \emph{sharing intent} yang memungkinkan pengguna untuk langsung membagikan tangkapan layar atau gambar bukti pembayaran dari aplikasi lain ke TrackMyBills. Fitur ini memanfaatkan \emph{intent} Android untuk menerima gambar yang dibagikan oleh aplikasi lain. Fitur ini menggunakan \emph{package} \texttt{receive\_sharing\_intent} untuk menangani gambar yang dibagikan.
 
-Camera capture menggunakan native Android camera API dengan custom UI overlay yang memberikan guidance visual untuk optimal document framing. Feature ini mengimplementasikan automatic focus dan flash control dengan preview functionality yang memungkinkan pengguna untuk review foto sebelum processing. Camera interface juga menyediakan grid lines dan document detection hints untuk membantu pengguna mengambil foto dengan kualitas optimal.
+\subsubsection{Pemrosesan Gambar dan API \emph{Communication}}
+\label{subsubsec:pemrosesan-gambar}
 
-Gallery selection mengintegrasikan dengan Android's native file picker untuk memilih existing images dari device storage. Feature ini support multiple file formats yang compatible dengan backend service dan mengimplementasikan automatic file validation sebelum upload. Image preview dengan zoom functionality memungkinkan pengguna untuk verify quality dan content sebelum submitting untuk processing.
+Pemrosesan gambar dilakukan dengan menggunakan \emph{package} \texttt{crop\_your\_image} yang menyediakan antarmuka pengguna untuk memotong gambar sebelum diunggah. Pengguna dapat memilih area yang relevan dari gambar bukti pembayaran untuk memastikan bahwa hanya informasi penting yang dikirim ke layanan \emph{backend}. 
 
-Android sharing integration merupakan unique feature yang specifically designed untuk Gen Z behavior patterns. Aplikasi register sebagai sharing target untuk image MIME types, memungkinkan pengguna untuk directly share screenshots dari payment apps seperti Gopay, BCA Mobile, atau SeaBank ke TrackMyBills. Integration ini menggunakan Intent filters dan custom sharing UI yang seamlessly handle incoming shared content.
+Setelah gambar dipotong, TrackMyBills mengirimkan gambar tersebut ke layanan \emph{backend} menggunakan \emph{package} \texttt{http}. TrackMyBills melakukan \emph{request} HTTP POST ke \emph{endpoint} URL API layanan \emph{backend}. Gambar yang diunggah akan dikirim dalam format \emph{multipart/form-data} yang memungkinkan pengiriman \emph{file} bersama dengan data lainnya. Pemanggilan API mengimplementasikan mekanisme \emph{retry} untuk menangani kegagalan jaringan dengan \emph{package} \texttt{retry}. Jika terjadi kegagalan, TrackMyBills akan mencoba mengirim ulang permintaan hingga tiga kali sebelum akhirnya memunculkan \emph{dummy data} saat upaya gagal. Respons yang diterima dari layanan \emph{backend} berupa data terstruktur dalam format JSON yang berisi informasi yang diekstrak dari gambar bukti pembayaran.
 
-\subsubsection{Image Processing dan API Communication}
-\label{subsubsec:image-processing-api}
+\subsubsection{Manajemen Data dan Penyimpanan}
+\label{subsubsec:manajemen-data-dan-penyimpanan}
 
-Image processing workflow mengimplementasikan automatic optimization untuk efficient transmission ke backend API. Pre-upload processing mencakup image compression menggunakan adaptive quality settings yang balance antara file size dan visual quality. Compression algorithm mempertimbangkan original image dimensions dan content complexity untuk determine optimal compression ratio.
+TrackMyBills akan memetakan seluruh data yang diterima dari layanan \emph{backend} ke dalam model transaksi tergantung pada jenis bukti pembayaran terkait yang diunggah. Data yang sudah dipetakan ditampilkan kepada pengguna untuk dikonfirmasi. Pengguna memiliki kebebasan untuk mengubah data tersebut jika terdapat kesalahan atau ketidakakuratan. Pengguna dapat menekan tombol "Save Transaction" untuk mengonfirmasi dan menyimpan data transaksi yang telah dipetakan. Data transaksi yang telah tersimpan akan ditampilkan pada halaman pengeluaran dan diklasifikasikan berdasarkan kategori yang telah dipilih oleh pengguna. TrackMyBills menyediakan fitur untuk menampilkan total pengeluaran pengguna dan total pengeluaran per kategori, sehingga pengguna dapat dengan mudah melacak dan mengelola pengeluaran mereka.
 
-Image cropping functionality menggunakan UCrop library yang menyediakan intuitive cropping interface dengan predefined aspect ratios untuk different document types. Cropping feature particularly useful untuk paper receipts yang mungkin memerlukan framing adjustment untuk optimal OCR results. Real-time preview dengan zoom dan pan capabilities memudahkan precision cropping untuk various document sizes.
+TrackMyBills menyimpan data pengeluaran pengguna secara lokal menggunakan \emph{package} \texttt{shared\_preferences}. Data yang disimpan mencakup seluruh informasi terkait dalam bentuk JSON. Penyimpanan ini memungkinkan pengguna untuk mengakses data mereka secara luring tanpa perlu terhubung ke internet dan mengimplementasikan \emph{data persistence} secara lokal tanpa perlu khawatir kehilangan data. SharedPreference menyimpan data secara lokal dalam gawai pengguna dan pada lokasi yang hanya dapat diakses oleh aplikasi terkait. Hal ini memastikan bahwa data pengguna tetap aman dan tidak dapat diakses oleh aplikasi lain.
 
-API communication menggunakan HTTP client dengan comprehensive retry mechanism dan exponential backoff untuk handling network issues. Request timeout configuration menggunakan adaptive values berdasarkan file size dan connection quality. Upload progress indicators menggunakan stream-based approach yang memberikan real-time feedback kepada pengguna selama transmission process.
-
-Error handling mengimplementasikan fallback mechanism yang menampilkan mock data ketika backend API tidak tersedia. Strategi ini memastikan aplikasi tetap functional bahkan dalam kondisi network connectivity yang tidak optimal, memberikan user experience yang konsisten untuk pengguna Gen Z yang mengharapkan aplikasi selalu responsive.
-
-\subsubsection{Data Management dan Storage}
-\label{subsubsec:data-management}
-
-Data persistence menggunakan SharedPreferences untuk lightweight local storage yang appropriate untuk financial transaction data. Storage architecture mengimplementasikan encrypted data containers untuk sensitive information seperti transaction amounts dan merchant names. Encryption menggunakan platform-native security features dengan automatic key management.
-
-% Transaction management mengimplementasikan tiga method utama: addTransaction() untuk menambah transaksi baru dengan automatic state notification, loadTransactions() untuk loading data dari storage dengan comprehensive error handling, dan _saveTransactions() untuk persistence dalam format JSON. Receipt type preference management menggunakan loadReceiptTypePreference() dan saveReceiptTypePreference() untuk user customization.
-
-Transaction history organization menggunakan structured data format yang enable efficient querying dan sorting berdasarkan various criteria seperti date, amount, atau transaction type. Data model support untuk both digital payment extractions dan receipt-based transactions dengan flexible schema yang dapat accommodate different data structures.
-
-Automatic categorization menggunakan rule-based logic yang analyze extracted merchant names dan transaction patterns untuk suggest appropriate expense categories. Category suggestions dapat di-customize oleh pengguna dan learning mechanism dapat improve suggestion accuracy over time berdasarkan user preferences.
-
-Local data backup dan restore functionality memungkinkan pengguna untuk export transaction history dalam standard formats seperti CSV atau JSON. Import capabilities mendukung data migration dari other expense tracking applications atau manual transaction logs.
-
-\subsubsection{User Interface dan Experience Features}
-\label{subsubsec:ui-ux-features}
-
-Results display mengimplementasikan structured card layouts yang menampilkan extracted information dalam easily scannable format. Editable fields memungkinkan pengguna untuk correction atau addition information yang mungkin not captured perfectly oleh OCR process. Confidence indicators menggunakan visual cues seperti color coding atau icon badges untuk help users understand extraction reliability.
-
-Expense tracking dashboard menyediakan overview dari spending patterns dengan basic analytics yang relevant untuk Gen Z financial awareness. Charts dan visualizations menggunakan simple bar charts dan pie charts yang easy to understand tanpa overwhelming complexity. Spending summaries available dalam different time periods seperti weekly, monthly, atau custom date ranges.
-
-Search dan filter functionality memungkinkan quick access ke specific transactions berdasarkan various criteria. Search implementation menggunakan fuzzy matching untuk handle typos atau partial merchant names. Filter options mencakup date ranges, amount ranges, transaction types, dan custom categories.
-
-Settings dan preferences screen menyediakan customization options untuk notification preferences, default categories, currency formatting, dan data retention policies. User profile management minimal sesuai dengan local-first approach yang tidak memerlukan user accounts atau cloud synchronization.
-
-**Diagram yang disarankan**: User journey flowchart menunjukkan different paths dari image capture hingga transaction storage, termasuk error handling dan retry mechanisms.
-
-Performance optimizations mencakup efficient image handling dengan automatic memory management, background processing untuk non-critical tasks, dan caching strategies untuk frequently accessed data. Aplikasi dioptimalkan untuk smooth performance pada mid-range Android devices yang commonly used oleh target demographic dengan memory footprint yang minimal dan battery usage yang efficient.

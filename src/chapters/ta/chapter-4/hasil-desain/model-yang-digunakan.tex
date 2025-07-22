@@ -23,9 +23,18 @@ Konfigurasi model custom menggunakan \emph{task prompt} khusus \texttt{<s\_payme
     \item \texttt{<s\_payment\_proof>} dan \texttt{</s\_payment\_proof>} sebagai \emph{task prompt} khusus tugas ekstraksi dokumen QRIS dan transfer.
 \end{enumerate}
 
-Model dilatih dengan konfigurasi generation yang optimal menggunakan beam search dengan 4 beams, repetition penalty 1.2, dan maximum length 512 tokens. Proses fine-tuning dilakukan selama 30 epoch dengan early stopping yang secara otomatis menghentikan training pada epoch ke-27 ketika validation loss mencapai konvergensi optimal.
+Model dilatih dengan menambahkan 14 token spesial ke dalam \emph{vocabulary model} untuk memastikan bahwa model dapat mengenali dan menghasilkan keluaran yang sesuai. Pelatihan dilakukan dengan parameter berikut:
+\begin{enumerate}
+\item \emph{Learning rate}: 3e-5
+\item \emph{Batch size}: 1
+\item \emph{Epoch}: 30
+\item \emph{Gradient accumulation steps}: 8
+\item \emph{Weight decay}: 0,01
+\end{enumerate}
 
-Implementasi model custom mencakup robust text cleaning dan error handling yang dapat menangani berbagai masalah umum dalam OCR hasil, termasuk encoding issues, malformed token sequences, dan incomplete extractions. Sistem juga mengimplementasikan multiple generation attempts dengan fallback configurations untuk memastikan reliable inference bahkan pada dokumen dengan kualitas suboptimal.
+Selama pelatihan, \emph{weight} dari setiap token spesial diatur untuk mengadaptasikan model untuk mengenali atribut relevan yang sesuai dengan tugas ekstraksi model. Selama pelatihan, model akan mencoba untuk memprediksi atribut dari masukan gambar yang diberikan dan mengkalkulasikan perbedaan antara prediksi dan \emph{ground truth} yang telah ditentukan. Hasil kalkulasi akan digunakan untuk mengubah \emph{weight} dari token spesial yang digunakan. Proses ini dilakukan berulang kali selama 30 \emph{epoch}. Pelatihan baru akan dihentikan saat \emph{validation loss} tidak berubah atau mengalami perubahan yang sangat sedikit selama 3 \emph{epoch} berturut-turut.
+
+\emph{Training Loss}, \emph{loss} yang dikalkulasikan terhadap data pelatihan, berubah dari 3,7252 menjadi 0,0769 dan \emph{Validation Loss}, \emph{loss} yang dikalkulasikan terhadap data validasi, berubah dari 5,563 menjadi 0,5836. Kedua variabel ini perlu dikontrol untuk memastikan bahwa model tidak mengalami \emph{overfitting} pada data pelatihan. Jika \emph{Training Loss} terus berkurang dan \emph{Validation Loss} malah terus bertambah selama pelatihan, hal tersebut menjadi indikasi kuat terjadinya \emph{overfitting}. Hasil pelatihan menunjukkan bahwa model dapat belajar dengan baik dari data yang diberikan dan dapat menghasilkan keluaran yang sesuai dengan atribut yang diharapkan.
 
 \subsubsection{Model DONUT CORD-v2}
 \label{subsubsec:model-base}

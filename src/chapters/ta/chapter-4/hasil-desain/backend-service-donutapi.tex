@@ -1,63 +1,91 @@
-\subsection{Backend Service DonutAPI}
+\subsection{\emph{Backend Service} DonutAPI}
 \label{subsec:backend-service-donutapi}
 
-DonutAPI merupakan implementasi REST API menggunakan framework FastAPI yang menyediakan layanan inferensi model DONUT untuk ekstraksi data dari dokumen pembayaran. Service ini dirancang dengan arsitektur modular yang memisahkan layer API, business logic, dan model inference untuk memudahkan maintenance dan pengembangan future features.
+DonutAPI merupakan implementasi REST API menggunakan framework FastAPI yang menyediakan layanan inferensi model DONUT untuk ekstraksi data dari dokumen pembayaran. Layanan ini  mengimplementasikan \emph{model preloading} saat \emph{startup} untuk memastikan kedua model siap digunakan sebelum menerima \emph{request} dari aplikasi klien. Model yang telah di-\emph{preload} akan dipetakan ke \emph{device} yang tersedia, baik CPU maupun GPU, untuk memastikan efisiensi dalam proses inferensi. Layanan ini dijalankan dalam Docker \emph{container} secara lokal yang memungkinkan isolasi lingkungan dan kemudahan dalam pengelolaan dependensi. Agar layanan ini dapat diakses oleh aplikasi klien, diperlukan \emph{endpoint} yang memungkinkan pengguna untuk mengunggah gambar bukti pembayaran dan menerima hasil ekstraksi data dalam format JSON. 
 
-Arsitektur backend mengadopsi design patterns yang robust termasuk singleton pattern untuk model management, dependency injection untuk service components, dan comprehensive error handling untuk production reliability. Service mengimplementasikan automatic model loading saat startup dengan preloading mechanism yang memastikan kedua model siap digunakan sebelum menerima request dari client.
+% \subsubsection{Endpoint \texttt{/predict/}}
+% \label{subsubsec:endpoint-predict-full}
 
-Application lifecycle management menggunakan FastAPI's lifespan context manager yang mengatur startup dan shutdown processes secara graceful. Startup sequence meliputi model preloading, device detection, dan system health verification. Shutdown sequence memastikan proper cleanup dari model resources dan GPU memory clearing jika menggunakan CUDA acceleration.
+% Endpoint \texttt{/predict/} menyediakan full prediction service dengan detailed response yang mencakup metadata lengkap tentang inference process. Endpoint ini dirancang untuk use cases yang memerlukan informasi comprehensive tentang model performance dan processing details.
 
-**Diagram yang disarankan**: Service architecture diagram menunjukkan layer separation, request flow, dan component interactions dalam DonutAPI.
+% Request validation mengimplementasikan comprehensive checks termasuk file format validation (JPG, JPEG, PNG, WebP, BMP), file size limits maksimum 10MB, dan basic file integrity verification. Query parameter \texttt{model} bersifat required dan harus berupa \texttt{ModelType.BASE} atau \texttt{ModelType.CUSTOM} untuk menentukan model mana yang akan digunakan untuk inference.
 
-\subsubsection{Endpoint \texttt{/predict/}}
-\label{subsubsec:endpoint-predict-full}
+% Response structure untuk endpoint ini mencakup:
+% \begin{itemize}
+%     \item \texttt{success}: Boolean indicator untuk status inference
+%     \item \texttt{result}: Object containing extracted data dan metadata
+%     \item \texttt{model\_info}: Informasi detail tentang model yang digunakan
+%     \item \texttt{processing\_time\_seconds}: Waktu yang diperlukan untuk inference
+%     \item \texttt{device}: Hardware device yang digunakan untuk inference (CPU/GPU)
+%     \item \texttt{raw\_sequence}: Token sequence mentah sebelum postprocessing (khusus custom model)
+%     \item \texttt{confidence\_score}: Skor confidence untuk kualitas ekstraksi (khusus custom model)
+% \end{itemize}
 
-Endpoint \texttt{/predict/} menyediakan full prediction service dengan detailed response yang mencakup metadata lengkap tentang inference process. Endpoint ini dirancang untuk use cases yang memerlukan informasi comprehensive tentang model performance dan processing details.
+% Error handling untuk endpoint ini mengimplementasikan structured error responses dengan HTTP status codes yang appropriate dan detailed error messages untuk debugging purposes. Request tracing menggunakan unique request ID yang memudahkan correlation antara logs dan monitoring metrics.
 
-Request validation mengimplementasikan comprehensive checks termasuk file format validation (JPG, JPEG, PNG, WebP, BMP), file size limits maksimum 10MB, dan basic file integrity verification. Query parameter \texttt{model} bersifat required dan harus berupa \texttt{ModelType.BASE} atau \texttt{ModelType.CUSTOM} untuk menentukan model mana yang akan digunakan untuk inference.
+\subsubsection{\emph{Endpoint}}
+\label{subsubsec:endpoint}
 
-Response structure untuk endpoint ini mencakup:
-\begin{itemize}
-    \item \texttt{success}: Boolean indicator untuk status inference
-    \item \texttt{result}: Object containing extracted data dan metadata
-    \item \texttt{model\_info}: Informasi detail tentang model yang digunakan
-    \item \texttt{processing\_time\_seconds}: Waktu yang diperlukan untuk inference
-    \item \texttt{device}: Hardware device yang digunakan untuk inference (CPU/GPU)
-    \item \texttt{raw\_sequence}: Token sequence mentah sebelum postprocessing (khusus custom model)
-    \item \texttt{confidence\_score}: Skor confidence untuk kualitas ekstraksi (khusus custom model)
-\end{itemize}
+\emph{Endpoint} utama sistem adalah \texttt{POST /predict/simple?model=<model\_type>}. \emph{Endpoint} ini menerima masukan berupa gambar bukti pembayaran yang diunggah oleh pengguna dan \emph{query parameter} \texttt{model} yang menentukan jenis model yang akan digunakan untuk inferensi. Jenis model yang tersedia adalah \texttt{base} untuk model \donut{} CORD-v2 dan \texttt{custom} untuk model \donut{} QRIS dan transfer.
 
-Error handling untuk endpoint ini mengimplementasikan structured error responses dengan HTTP status codes yang appropriate dan detailed error messages untuk debugging purposes. Request tracing menggunakan unique request ID yang memudahkan correlation antara logs dan monitoring metrics.
+\emph{Endpoint} ini menyediakan respons yang berfokus pada data yang terekstrak untuk bisa dikonsumsi oleh aplikasi klien. Format respons dari \emph{endpoint} ini hanya mencakup data yang relevan dan tidak menyertakan informasi tambahan yang membuat respons lebih ringan dan tidak mengekspos informasi yang tidak diperlukan. Format respons dari \emph{endpoint} ini adalah sebagai berikut:
+\begin{enumerate}
+    \item \texttt{success}: Indikator \emph{boolean} untuk status \emph{inference}.
+    \item \texttt{data}: Objek dalam format JSON yang mengandung data yang sudah diekstrak dalam dua format, yaitu mentah dan bersih. Informasi yang tercantum pada objek \texttt{data} bergantung pada jenis model yang digunakan.
+    \item \texttt{error}: Pesan kesalahan jika terjadi kesalahan selama proses \emph{inference}.
+\end{enumerate}
 
-\subsubsection{Endpoint \texttt{/predict/simple}}
-\label{subsubsec:endpoint-predict-simple}
+\emph{Endpoint} ini juga mengimplementasikan validasi. Validasi yang dilakukan terhadap masukan adalah validasi format masukan yang memastikan bahwa gambar yang diunggah sesuai dengan format yang didukung (JPG, JPEG, PNG) dan ukuran \emph{file} tidak melebihi 10MB. Jika validasi gagal, \emph{endpoint} akan mengembalikan respons dengan status kesalahan yang sesuai.
 
-Endpoint \texttt{/predict/simple} menyediakan simplified response yang focus pada extracted data untuk mobile application consumption. Response format yang streamlined mengurangi bandwidth usage dan mempercepat parsing di sisi client application.
+\subsection{\emph{Pre-processing} Masukan Gambar}
+\label{subsec:pre-processing}
+Sebelum gambar bukti pembayaran diunggah ke \emph{endpoint}, gambar tersebut perlu diproses terlebih dahulu. Proses ini meliputi beberapa langkah, yaitu:
+\begin{enumerate}
+    \item Sistem awalnya melakukan validasi terhadap tipe data dan ukuran gambar yang diunggah. Sistem juga akan memastikan gambar dapat dibuka dengan Pillow (PIL) \emph{library} untuk memastikan gambar tersebut valid.
+    \item Gambar diubah ukurannya agar sesuai dengan dimensi yang dapat diproses oleh model. Model \donut{} memiliki batasan dimensi maksimum gambar, sehingga gambar perlu diubah ukurannya agar tidak melebihi batas tersebut. Pada kasus ini, gambar diubah agar ukurannya tidak melewati 2560 piksel.
+    \item Model memerlukan dua masukan utama, yaitu gambar dan \emph{task prompt} yang sesuai dengan jenis dokumen yang akan diproses. Gambar yang telah diubah ukurannya kemudian diubah menjadi format PIL Image untuk memastikan kompatibilitas dengan model.
+    \item Data PIL Image dan \emph{task prompt} disiapkan untuk proses inferensi dengan diubah menjadi format PyTorch tensor yang dapat diproses oleh model.
+\end{enumerate}
 
-Response structure untuk simple endpoint hanya mencakup essential information:
-\begin{itemize}
-    \item \texttt{success}: Boolean indicator untuk status inference
-    \item \texttt{data}: Object containing extracted data dalam raw format dan cleaned format
-    \item \texttt{error}: Error message jika inference gagal
-\end{itemize}
+\emph{Task prompt} ini memberikan konteks spesifik untuk jenis dokumen yang akan diproses, sehingga model dapat memahami dan menghasilkan keluaran yang sesuai. \emph{Custom model} menggunakan \emph{task prompt} \texttt{<s\_payment\_proof>} untuk dokumen pembayaran QRIS dan transfer, sedangkan \emph{base model} menggunakan \emph{task prompt} \texttt{<s\_cord-v2>} untuk dokumen struk pembayaran. Keluaran akhir dari proses ini adalah gambar dan \emph{task prompt} dalam format PyTorch tensor yang siap untuk diproses oleh model \donut. Proses ini memastikan bahwa gambar yang diunggah sesuai dengan format yang didukung oleh model dan dapat diproses dengan baik.
 
-Data cleaning dan normalization dilakukan secara otomatis pada endpoint ini untuk memastikan client application menerima data yang ready-to-use. Proses cleaning mencakup currency formatting untuk amount fields, date parsing untuk timestamp fields, dan text normalization untuk name fields.
+\subsubsection{Tahap Inferensi}
+\label{subsubsec:proses-inferens}
 
-Custom model response pada endpoint simple mencakup automatic classification result yang menentukan apakah dokumen adalah QRIS atau transfer berdasarkan extracted type field. Base model response menyediakan structured receipt data dengan itemized information yang sudah dinormalisasi untuk mobile display.
+Tahap inferensi dimulai dengan memasukkan gambar dan \emph{task prompt} yang telah dikonversi menjadi format PyTorch tensor ke dalam model \donut{}. Model akan memproses gambar dan menghasilkan keluaran berupa deretan token yang merepresentasikan informasi yang diekstrak dari gambar. \autoref{fig:token-output} menunjukkan contoh keluaran token dari model \donut.
 
-\subsubsection{Model Selection dan Inference Service}
-\label{subsubsec:model-selection-inference}
+\begin{figure}[htbp]
+    \begin{lstlisting}[style=jsonstyle]
+    [57592, 57592, 57580, 35977, 19263, 57581, 57582, 51294, 52165, 53203, 46735, 32827, 37568, 35520, 12162, 57583, 57584, 43983, 13606, 41742,10948, 32827,   148, 11699, 12965, 57585, 57586, 28365, 41620, 57587, 57588, 46518, 11225, 52788, 11225, 9604, 57589, 57590, 44344, 56984, 57591, 57593, 2]
+    \end{lstlisting}
+    \caption{Contoh keluaran token dari model Donut.}
+    \label{fig:token-output}
+\end{figure}
 
-DonutAPI mengimplementasikan model selection logic berdasarkan query parameter 'model' yang menentukan apakah menggunakan Internal Model (QRIS-TF) atau Deployed Model (CORD-v2) berdasarkan document type yang akan diproses. Model selection ditentukan oleh receipt type yang dispecify dalam endpoint query parameters, memberikan control yang explicit kepada client application untuk memilih model yang sesuai dengan jenis dokumen.
+Keluaran token ini akan di-\emph{decode} menjadi \emph{sequence} yang berisi informasi yang telah diekstrak. Untuk \emph{custom model}, keluaran token ini akan mencakup atribut-atribut seperti total pembayaran, waktu transaksi, ID transaksi, jenis transaksi, nama penerima, dan aplikasi yang digunakan. \emph{Base model} akan mengeluarkan keluaran token yang mencakup daftar menu, harga, dan total pembayaran. \autoref{fig:sequence-output} menunjukkan contoh keluaran \emph{sequence} dari model \donut.
+\begin{figure}[htbp]
+    \begin{lstlisting}[style=jsonstyle]
+    <s_payment_proof><s_payment_proof><s_total_amount> 6996</s_total_amount><s_transaction_time> 2025-07T17:48:29Z</s_transaction_time><s_transaction_identifier> 25071457717589420</s_transaction_identifier><s_type> QRIS</s_type><s_target_name> AYAMAYAMAN</s_target_name><s_application> Neobank</s_application></s_payment_proof></s>
+    \end{lstlisting}
+    \caption{Contoh keluaran \emph{sequence} dari model Donut.}
+    \label{fig:sequence-output}
+\end{figure}
 
-Deployment architecture menggunakan three-tier approach dengan Android client, Docker container hosting FastAPI service dengan Internal Model, dan external HuggingFace service untuk Deployed Model. Arsitektur ini memungkinkan scalability dan maintainability yang optimal dengan separation between local inference dan cloud-based model serving.
+\subsection{\emph{Post-processing}}
+\label{subsec:post-processing}
+Dengan menggunakan keluaran \emph{sequence} yang dihasilkan oleh model \donut{}, sistem melakukan \emph{post-processing} untuk mengubah keluaran token menjadi format JSON yang lebih terstruktur. Sistem akan melakukan koversi keluaran token menjadi format JSON yang sesuai dengan atribut yang telah ditentukan. \autoref{fig:json-output} menunjukkan contoh keluaran JSON yang dihasilkan oleh model \donut{}. Sistem akan melakukan pembersihan data JSON hasil ekstraksi. Pembersihan tersebut mencakup penghapusan atribut dan nilai yang tidak diperlukan, normalisasi format tanggal, konversi nilai numerik ke dalam format yang sesuai, dan pemetaan nilai yang tidak sesuai ke dalam kategori yang telah ditentukan.
 
-Inference service menggunakan singleton pattern untuk kedua model instances yang memastikan memory efficiency dan menghindari multiple model loading. Model initialization menggunakan lazy loading approach yang hanya memuat model ketika pertama kali dibutuhkan, optimizing startup time dan memory usage.
-
-Error recovery mechanism mengimplementasikan graceful degradation di mana jika primary model gagal, system secara otomatis fallback ke alternative processing atau memberikan informative error message kepada client. Fallback logic untuk custom model dapat menggunakan base model jika custom weights gagal dimuat.
-
-Service juga mengimplementasikan resource monitoring yang track GPU memory usage, CPU utilization, dan inference latency untuk operational insights. Health check endpoints \texttt{/status} dan \texttt{/} menyediakan comprehensive system status termasuk model readiness, hardware information, dan performance metrics.
-
-**Diagram yang disarankan**: API request/response flow diagram menunjukkan validation, model selection, inference, dan response formatting untuk kedua endpoints.
-
-Deployment configuration menggunakan Docker containerization dengan multi-stage builds yang mengoptimalkan image size dan security. Container includes automatic device detection untuk CPU dan GPU environments dengan graceful fallback jika CUDA tidak tersedia. Production deployment menggunakan Uvicorn ASGI server dengan process management yang robust untuk high availability scenarios.
+\begin{figure}[htbp]
+    \begin{lstlisting}[style=jsonstyle]
+    {
+        "total_amount": "6996",
+        "transaction_time": "2025-07T17:48:29Z",
+        "transaction_identifier": "25071457717589420",
+        "type": "QRIS",
+        "target_name": "AYAMAYAMAN",
+        "application": "Neobank"
+    }
+    \end{lstlisting}
+    \caption{Contoh keluaran JSON dari model \donut.}
+    \label{fig:json-output}
+\end{figure}
