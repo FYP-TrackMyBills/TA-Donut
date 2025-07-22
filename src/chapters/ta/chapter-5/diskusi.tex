@@ -5,21 +5,23 @@ Hasil evaluasi yang telah dilakukan menunjukkan bahwa aplikasi TrackMyBills meme
 
 Hasil evaluasi pengalaman pengguna juga menunjukkan bahwa aplikasi memiliki tingkat kepuasan pengguna yang baik, dengan nilai SUS rata-rata di atas ambang batas yang dianggap dapat diterima. Hasil evaluasi kinerja model menunjukkan bahwa model yang digunakan dalam aplikasi menunjukkan kinerja yang baik dalam mengekstraksi informasi dari gambar struk. \emph{Base model} dan \emph{custom model} menunjukkan hasil yang memuaskan dengan nilai \accuracy, \precision, \recall, \fscore, dan \mcer{} yang memenuhi standar yang ditetapkan. Hal ini menunjukkan bahwa model dapat mengenali dan mengekstrak informasi penting dari gambar struk dengan akurasi yang baik. Namun, terdapat beberapa temuan yang dapat didiskusikan lebih lanjut.
 
-Model \donut{} merupakan model yang memiliki arsitektur yang cukup rumit, yaitu \texttt{VisionEncoderDecoderModel}. Model \donut{} menggunakan kerangka kerja PyTorch dan saat ini belum sepenuhnya dioptimalkan untuk inferensi langsung di perangkat \emph{mobile}. Untuk mengatasi hal ini, diperlukan upaya lebih lanjut dalam mengonversi model ke format yang lebih ringan dan efisien, seperti \onnx{} atau TensorFlow Lite, agar dapat dijalankan di perangkat dengan sumber daya terbatas.
+% Model \donut{} merupakan model yang memiliki arsitektur yang cukup rumit, yaitu \texttt{VisionEncoderDecoderModel}. Model \donut{} menggunakan kerangka kerja PyTorch dan saat ini belum sepenuhnya dioptimalkan untuk inferensi langsung di perangkat \emph{mobile}. Untuk mengatasi hal ini, diperlukan upaya lebih lanjut dalam mengonversi model ke format yang lebih ringan dan efisien, seperti \onnx{} atau TensorFlow Lite, agar dapat dijalankan di perangkat dengan sumber daya terbatas.
 
-Ketidaksesuaian model \donut{} untuk inferensi langsung di perangkat \emph{mobile} berasal dari beberapa faktor yang terkait dengan arsitektur dan kebutuhan sumber daya. Tantangan-tantangan utama tersebut dapat dijabarkan sebagai berikut:
+% Ketidaksesuaian model \donut{} untuk inferensi langsung di perangkat \emph{mobile} berasal dari beberapa faktor yang terkait dengan arsitektur dan kebutuhan sumber daya. Tantangan-tantangan utama tersebut dapat dijabarkan sebagai berikut:
 
-\begin{enumerate}
-    \item Arsitektur \texttt{VisionEncoderDecoderModel} \\~
-    Arsitektur ini pada dasarnya menggabungkan dua model besar yang harus bekerja secara berurutan, memberikan beban ganda pada perangkat. Arsitektur kompleks ini membuat konversi \donut{} menjadi format yang mendukung inferensi pada perangkat \emph{mobile}, yaitu ONNX, tidak berhasil. 
+% \begin{enumerate}
+%     \item Arsitektur \texttt{VisionEncoderDecoderModel} \\~
+%     Arsitektur ini pada dasarnya menggabungkan dua model besar yang harus bekerja secara berurutan, memberikan beban ganda pada perangkat. Arsitektur kompleks ini membuat konversi \donut{} menjadi format yang mendukung inferensi pada perangkat \emph{mobile}, yaitu ONNX, tidak berhasil. 
 
-    \item Ukuran dan kebutuhan komputasi model. \\~ Konsekuensi langsung dari arsitektur yang kompleks adalah ukuran \emph{file} model yang sangat besar, seringkali mencapai ratusan \emph{megabyte} (MB) bahkan lebih dari satu \emph{gigabyte} (GB). Ukuran ini tidak hanya membuat unduhan aplikasi menjadi tidak praktis bagi pengguna, tetapi juga menuntut konsumsi RAM yang tinggi. \emph{On-device inference} dapat dicapai jika model melewati proses kuantisasi yang akan mengurangi ukuran model dan akan mengorbankan kinerja model.
+%     \item Ukuran dan kebutuhan komputasi model. \\~ Konsekuensi langsung dari arsitektur yang kompleks adalah ukuran \emph{file} model yang sangat besar, seringkali mencapai ratusan \emph{megabyte} (MB) bahkan lebih dari satu \emph{gigabyte} (GB). Ukuran ini tidak hanya membuat unduhan aplikasi menjadi tidak praktis bagi pengguna, tetapi juga menuntut konsumsi RAM yang tinggi. \emph{On-device inference} dapat dicapai jika model melewati proses kuantisasi yang akan mengurangi ukuran model dan akan mengorbankan kinerja model.
 
-    \item \emph{Autoregressive Generation} sebagai inti dari model \donut
-    \\~
-    Proses generasi teks yang bersifat \emph{autoregressive} membutuhkan banyak iterasi untuk menghasilkan keluaran, yang membuatnya tidak efisien untuk perangkat dengan daya komputasi terbatas. Proses dengan banyak iterasi ini membuat model \donut{} tidak dapat dioptimalkan untuk inferensi langsung di perangkat \emph{mobile}. 
-\end{enumerate}
+%     \item \emph{Autoregressive Generation} sebagai inti dari model \donut
+%     \\~
+%     Proses generasi teks yang bersifat \emph{autoregressive} membutuhkan banyak iterasi untuk menghasilkan keluaran, yang membuatnya tidak efisien untuk perangkat dengan daya komputasi terbatas. Proses dengan banyak iterasi ini membuat model \donut{} tidak dapat dioptimalkan untuk inferensi langsung di perangkat \emph{mobile}. 
+% \end{enumerate}
 
-\emph{On-device inference} pada model \donut{} bisa dicapai dengan menyelesaikan masalah utamanya terlebih dahulu, yaitu mengoptimalkan model menjadi format ONNX dan mengubah ukuran menjadi lebih kecil dengan kuantisasi. Namun, tantangan ini masih memerlukan penelitian lebih lanjut untuk menemukan solusi yang tepat agar model dapat berjalan dengan baik di perangkat \emph{mobile}.
+% \emph{On-device inference} pada model \donut{} bisa dicapai dengan menyelesaikan masalah utamanya terlebih dahulu, yaitu mengoptimalkan model menjadi format ONNX dan mengubah ukuran menjadi lebih kecil dengan kuantisasi. Namun, tantangan ini masih memerlukan penelitian lebih lanjut untuk menemukan solusi yang tepat agar model dapat berjalan dengan baik di perangkat \emph{mobile}.
 
 Variasi dokumen yang digunakan pada sistem masih terbatas pada bukti pembayaran QRIS dan transfer dari aplikasi tertentu, yaitu BCA, Seabank, Neobank, dan Gopay. Berdasarkan hasil evaluasi, model \donut{} sudah cukup mampu untuk mengidentifikasi total transaksi yang tercantum pada dokumen pembayaran QRIS dan transfer. Namun, model masih memiliki kesulitan dalam mengidentifikasi informasi lain yang ada, sepert waktu transaksi dan ID transaksi. Hal ini menunjukkan bahwa model masih perlu dilatih lebih lanjut dengan data yang lebih beragam dan representatif untuk meningkatkan kemampuannya dalam mengenali informasi yang relevan pada dokumen pembayaran QRIS dan transfer. Dengan banyaknya variasi aplikasi pembayaran yang ada di Indonesia, perlu dilakukan pengumpulan data yang lebih luas untuk meningkatkan kinerja model \donut{}.
+
+

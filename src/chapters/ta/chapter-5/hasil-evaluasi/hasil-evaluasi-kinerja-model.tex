@@ -6,7 +6,15 @@ Hasil evaluasi kinerja model ini didasarkan pada metrik yang telah ditetapkan pa
 
 \subsubsection{Hasil Evaluasi \emph{Base Model}}
 \label{subsubsec:hasil-evaluasi-base-model}
-\autoref{tab:base-model-eval-table} menunjukkan pengujian kinerja model \emph{base model} dan \autoref{tab:base-model-eval-detail} menunjukkan rincian evaluasi kinerja model \emph{base model} berdasarkan atribut yang diekstrak.
+\autoref{tab:base-model-eval-table} menunjukkan pengujian kinerja model \emph{base model} dan \autoref{tab:base-model-eval-detail} menunjukkan rincian evaluasi kinerja model \emph{base model} berdasarkan atribut yang diekstrak. Analisis dari hasil evaluasi dapat dijabarkan sebagai berikut:
+\begin{enumerate}
+    \item Hasil evaluasi menunjukkan angka \precision{} yang cukup tinggi, yaitu 90,53\% untuk \emph{weighted} dan 89,85\% untuk \emph{unweighted}, yang menunjukkan bahwa model dapat mengenali sebagian besar atribut yang tertera pada GT.
+    \item Angka \recall{} yang diperoleh adalah 79,53\% untuk \emph{weighted} dan 78,77\% untuk \emph{unweighted}. 
+    \item Nilai \fscore{} yang diperoleh adalah 84,68\% untuk \emph{weighted} dan 83,94\% untuk \emph{unweighted}, menunjukkan keseimbangan antara \precision{} dan \recall{} yang baik.
+    \item Nilai \mcer{} yang diperoleh adalah 18,85\% untuk \emph{weighted} dan 20,40\% untuk \emph{unweighted}, menunjukkan bahwa model masih perlu melakukan beberapa perubahan pada teks prediksi untuk mencocokkannya dengan teks sebenarnya dari \emph{Ground Truth}.
+    \item Atribut total transaksi memiliki angka TP 82, FN 13, dan FP 3. Angka ini menunjukkan bahwa model dapat memprediksi total transaksi dengan baik dan sangat jarang memprediksi hasil yang tidak ada. \mcer{} 6,86\% menunjukkan tidak banyak perubahan yang perlu dilakukan terhadap hasil prediksi. 
+    \item Dari ketiga atribut menu yang diekstrak, model paling baik untuk memprediksi harga menu dengan TP 274, FN 67, dan FP 27. Angka \mcer{} 20,15\% menunjukkan bahwa model masih sering melakukan kesalahan pada teks hasil prediksi untuk mencocokkannya dengan teks sebenarnya dari GT.
+\end{enumerate}
 
 \begin{table}[h!]
     \centering
@@ -20,10 +28,24 @@ Hasil evaluasi kinerja model ini didasarkan pada metrik yang telah ditetapkan pa
     \end{tabularx}  
 \end{table}
 
+\begin{table}[h!]
+    \centering
+    \caption{Rincian evaluasi kinerja model \emph{base model}}
+    \label{tab:base-model-eval-detail}
+    \begin{tabularx}{\textwidth}{|p{3cm}|X|X|X|X|X|}
+        \hline
+        \textbf{Atribut} & \textbf{Jumlah sampel} & \textbf{TP} & \textbf{FP} & \textbf{FN} & \textbf{mCER} \\ \hline
+        Total transaksi & 98 & 82 & 3 & 13 & 0,0686 \\ \hline
+        Nama menu & 275 & 174 & 24 & 77 & 0,2941 \\ \hline
+        Harga menu & 368 & 274 & 27 & 67 & 0,2015 \\ \hline
+        Jumlah menu & 275 & 216 & 24 & 35 & 0,2927 \\ \hline
+    \end{tabularx}  
+\end{table}
+
 % \begin{table}[h!]
 %     \centering
-%     \caption{Hasil evaluasi kinerja model \emph{base model}}
-%     \label{tab:base-model-eval-table}
+%     \caption{Hasil evaluasi kinerja \emph{base model} per atribut}
+%     \label{tab:base-model-eval-detail}
 %     \begin{tabularx}{\textwidth}{|p{3cm}|X|X|X|X|X|}
 %         \hline
 %         \textbf{Atribut} & \textbf{\accuracyfl} & \textbf{\precisionfl} & \textbf{\recallfl} & \textbf{\fscore} & \textbf{\mcer} \\ \hline
@@ -31,19 +53,21 @@ Hasil evaluasi kinerja model ini didasarkan pada metrik yang telah ditetapkan pa
 %         Nama menu & 0.90 & 0.90 & 0.90 & 0.90 & 0.10 \\ \hline
 %         Jumlah menu & 0.85 & 0.85 & 0.85 & 0.85 & 0.15 \\ \hline
 %         Harga menu & 0.80 & 0.80 & 0.80 & 0.80 & 0.20 \\ \hline
-%         Keseluruhan & 0.87 & 0.87 & 0.87 & 0.87 & 0.13 \\ \hline
 %     \end{tabularx}  
 % \end{table}
 
 \subsubsection{Hasil Evaluasi \emph{Custom Model}}
 \label{subsubsec:hasil-evaluasi-custom-model}
-\autoref{tab:custom-model-eval-table} menunjukkan hasil pengujian kinerja model \emph{custom model} dan \autoref{tab:custom-model-eval-detail} menunjukkan rincian evaluasi kinerja model \emph{custom model} berdasarkan atribut yang diekstrak. 
-
-Perbedaan antara evaluasi \emph{weighted} dan \emph{unweighted} tidak membuat perubahan hasil yang signifikan. Angka \fscore{} pada \emph{custom model} berada pada 81,5\%, angka \recall{} pada 68,78\%, dan \precision{} yang bernilai 100\% menunjukkan bahwa model tidak melakukan prediksi pada atribut yang memang tidak ada pada GT. Salah satu sebabnya adalah ketidakvalidan penggunaan TN pada evaluasi dan jumlah FP yang rendah. Hal serupa juga berlaku pada evaluasi \emph{base model} yang membuktikan bahwa model \donut{} melakukan prediksi saat model yakin bahwa atribut tersebut ada pada dokumen yang diprediksi. 
-
-Nilai \mcer{} menunjukkan seberapa banyak perubahan yang perlu dilakukan pada teks prediksi untuk mencocokkannya dengan teks sebenarnya dari \emph{Ground Truth}. \mcer{} pada \emph{custom model} berada pada angka 17,2\% yang menunjukkan angka yang baik. Nilai \mcer{} yang rendah menunjukkan bahwa model dapat menghasilkan prediksi yang cukup akurat dan tidak memerlukan banyak perubahan untuk mencocokkan dengan teks sebenarnya.
-
-\autoref{tab:custom-model-eval-detail} menunjukkan berbagai atribut yang diekstrak dari dokumen pembayaran QRIS dan transfer. Atribut total transaksi memiliki angka TP 68, FN 31, dan mCER 18,9\%. Sebagai atribut dengan bobot paling tinggi, angka tersebut menunjukkan bahwa model dapat mengenali total transaksi dengan baik, meskipun masih ada beberapa kesalahan yang perlu diperbaiki. Atribut waktu transaksi memiliki angka TP 30, FN 49, dan mCER 12,8\%, menunjukkan bahwa model masih perlu ditingkatkan dalam mengenali waktu transaksi. Atribut ID transaksi memiliki angka TP 20, FN 73, dan mCER 42,2\%, yang menunjukkan bahwa model masih kesulitan dalam mengenali ID transaksi. Atribut ID transaksi memang merupakan sebuah rangkaian karakter panjang dan sulit untuk ditemukan. Hal ini membuat model kesulitan untuk menentukan nilai dari ID transaksi tersebut dalam prediksinya. Atribut tipe transaksi dan aplikasi memiliki angka TP yang tinggi, yaitu 91, dengan FN masing-masing 8 dan mCER masing-masing 9,1\% dan 28,3\%. Atribut target transaksi memiliki angka TP 68, FN 31, dan mCER 15,84\%. Model masih kesulitan untuk memprediksi beberapa atribut dengan benar, seperti ID transaksi dan waktu transaksi, yang berupa atribut yang lebih kompleks dan tidak selalu ada pada dokumen yang dilampirkan.
+\autoref{tab:custom-model-eval-table} menunjukkan hasil pengujian kinerja model \emph{custom model} dan \autoref{tab:custom-model-eval-detail} menunjukkan rincian evaluasi kinerja model \emph{custom model} berdasarkan atribut yang diekstrak. Analisis dari hasil evaluasi dapat dijabarkan sebagai berikut:
+\begin{enumerate}
+    \item Perbedaan antara evaluasi \emph{weighted} dan \emph{unweighted} tidak membuat perubahan hasil yang signifikan.
+    \item Angka \fscore{} pada \emph{custom model} berada pada 81,5\%, angka \recall{} pada 68,78\%, dan \precision{} yang bernilai 100\% menunjukkan bahwa model tidak melakukan prediksi pada atribut yang memang tidak ada pada GT. Salah satu sebabnya adalah ketidakvalidan penggunaan TN pada evaluasi dan jumlah FP yang rendah. Hal serupa juga berlaku pada evaluasi \emph{base model} yang membuktikan bahwa model \donut{} melakukan prediksi saat model yakin bahwa atribut tersebut ada pada dokumen yang diprediksi.
+    \item Nilai \mcer{} menunjukkan seberapa banyak perubahan yang perlu dilakukan pada teks prediksi untuk mencocokkannya dengan teks sebenarnya dari \emph{Ground Truth}. \mcer{} pada \emph{custom model} berada pada angka 17,2\% yang menunjukkan angka yang baik. Nilai \mcer{} yang rendah menunjukkan bahwa model dapat menghasilkan prediksi yang cukup akurat dan tidak memerlukan banyak perubahan untuk mencocokkan dengan teks sebenarnya.
+    \item Atribut total transaksi memiliki angka TP 68, FN 31, dan mCER 18,9\%. Sebagai atribut dengan bobot paling tinggi, angka tersebut menunjukkan bahwa model dapat mengenali total transaksi dengan baik, meskipun masih ada beberapa kesalahan yang perlu diperbaiki.
+    \item Atribut waktu transaksi memiliki angka TP 30, FN 49, dan mCER 12,8\%, menunjukkan bahwa model masih perlu ditingkatkan dalam mengenali waktu transaksi. Atribut ID transaksi memiliki angka TP 20, FN 73, dan mCER 42,2\%, yang menunjukkan bahwa model masih kesulitan dalam mengenali ID transaksi. Atribut ID transaksi memang merupakan sebuah rangkaian karakter panjang dan sulit untuk ditemukan. Hal ini membuat model kesulitan untuk menentukan nilai dari ID transaksi tersebut dalam prediksinya.
+    \item Atribut tipe transaksi dan aplikasi memiliki angka TP yang tinggi, yaitu 91, dengan FN masing-masing 8 dan mCER masing-masing 9,1\% dan 28,3\%. Atribut target transaksi memiliki angka TP 68, FN 31, dan mCER 15,84\%. 
+    \item Model masih kesulitan untuk memprediksi beberapa atribut dengan benar, seperti ID transaksi dan waktu transaksi, yang berupa atribut yang lebih kompleks dan tidak selalu ada pada dokumen yang dilampirkan.
+\end{enumerate}
         
 \begin{table}[h!]
     \centering

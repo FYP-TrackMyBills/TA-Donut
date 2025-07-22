@@ -2,6 +2,11 @@
 
 \section{Kesimpulan}
 \label{sec:kesimpulan}
+Tugas akhir ini bertujuan untuk mengembangkan sistem pencatatan pengeluaran berbasis \emph{mobile} yang dapat membantu pengguna, khususnya Gen Z, dalam mencatat pengeluaran mereka dengan lebih mudah dan efisien. Sistem ini menggunakan model \donut{} untuk mengekstrak informasi penting dari gambar bukti pembayaran dan menyimpannya dalam format yang terstruktur untuk kemudian dapat ditampilkan kepada pengguna. Hasil evaluasi sistem menunjukkan bahwa aplikasi TrackMyBills \textbf{berhasil} memenuhi seluruh evaluasi yang dilakukan, yaitu dari pengujian fungsionalitas, pengujian kinerja model, dan pengujian pengalaman pengguna. 
+
+Pengujian fungsionalitas \emph{berhasil} menunjukkan bahwa seluruh skenario pengujian dapat dijalankan dengan baik dan sesuai dengan yang diharapkan. Pengujian pengalaman pengguna menunjukkan bahwa aplikasi memiliki tingkat kepuasan pengguna yang baik, dengan nilai SUS di angka \textbf{71,83} rata-rata di atas ambang batas nilai SUS, yaitu pada \textbf{68}. Hal ini menunjukkan bahwa aplikasi dapat memberikan pengalaman pengguna yang baik dan memenuhi kebutuhan pengguna dalam mencatat pengeluaran mereka.
+
+Pengujian kinerja model menunjukkan bahwa kedua model yang digunakan, yaitu \donut{} yang di \emph{fine-tune} pada \dataset{} CORD-v2 (\emph{base model}) dan \donut{} yang di \emph{fine-tune} pada \dataset{} QRIS-TF (\emph{custom model}), menunjukkan hasil yang memuaskan dengan nilai \accuracy, \precision, \recall, \fscore, dan \mcer{} yang melewati standar yang telah ditetapkan. \emph{Base model} menunjukkan angka \accuracy{} \textbf{73,43\%}, \precision{} \textbf{90,53\%}, \recall{} \textbf{79,53\%}, \fscore{} \textbf{84,68\%}, dan \mcer{} \textbf{18,85\%}. \emph{Custom model} menunjukkan angka \accuracy{} \textbf{68,78\%}, \precision{} \textbf{100\%}, \recall{} \textbf{68,78\%}, \fscore{} \textbf{81,50\%}, dan \mcer{} \textbf{17,20\%}. Hal ini menunjukkan bahwa model dapat mengenali dan mengekstrak informasi penting dari gambar struk dengan hasil yang baik. 
 
 \section{Saran}
 \label{sec:saran}
