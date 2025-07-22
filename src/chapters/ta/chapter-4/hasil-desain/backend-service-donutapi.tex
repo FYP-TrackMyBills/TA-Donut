@@ -37,7 +37,7 @@ DonutAPI merupakan implementasi REST API menggunakan framework FastAPI yang meny
 
 \emph{Endpoint} ini juga mengimplementasikan validasi. Validasi yang dilakukan terhadap masukan adalah validasi format masukan yang memastikan bahwa gambar yang diunggah sesuai dengan format yang didukung (JPG, JPEG, PNG) dan ukuran \emph{file} tidak melebihi 10MB. Jika validasi gagal, \emph{endpoint} akan mengembalikan respons dengan status kesalahan yang sesuai.
 
-\subsection{\emph{Pre-processing} Masukan Gambar}
+\subsubsection{\emph{Pre-processing} Masukan Gambar}
 \label{subsec:pre-processing}
 Sebelum gambar bukti pembayaran diunggah ke \emph{endpoint}, gambar tersebut perlu diproses terlebih dahulu. Proses ini meliputi beberapa langkah, yaitu:
 \begin{enumerate}
@@ -71,7 +71,7 @@ Keluaran token ini akan di-\emph{decode} menjadi \emph{sequence} yang berisi inf
     \label{fig:sequence-output}
 \end{figure}
 
-\subsection{\emph{Post-processing}}
+\subsubsection{\emph{Post-processing}}
 \label{subsec:post-processing}
 Dengan menggunakan keluaran \emph{sequence} yang dihasilkan oleh model \donut{}, sistem melakukan \emph{post-processing} untuk mengubah keluaran token menjadi format JSON yang lebih terstruktur. Sistem akan melakukan koversi keluaran token menjadi format JSON yang sesuai dengan atribut yang telah ditentukan. \autoref{fig:json-output} menunjukkan contoh keluaran JSON yang dihasilkan oleh model \donut{}. Sistem akan melakukan pembersihan data JSON hasil ekstraksi. Pembersihan tersebut mencakup penghapusan atribut dan nilai yang tidak diperlukan, normalisasi format tanggal, konversi nilai numerik ke dalam format yang sesuai, dan pemetaan nilai yang tidak sesuai ke dalam kategori yang telah ditentukan.
 
