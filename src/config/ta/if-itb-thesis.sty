@@ -45,9 +45,12 @@
 
 % Format citation
 \usepackage[utf8]{inputenc}
-% \usepackage[style=windycity,backend=biber]{biblatex}
+\usepackage[style=windycity, backend=biber, language=bahasa]{biblatex}
 % \DeclareLanguageMapping{bahasa-cms}{bahasa-cms}
-\usepackage[authordate,backend=biber, language=bahasa]{biblatex-chicago}
+% \usepackage[authordate,backend=biber, language=bahasa]{biblatex-chicago}
+\DeclareFieldFormat
+  [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+  {title}{``#1''}
 \AtEveryBibitem{\clearfield{month}}
 \usepackage[format=hang, justification=raggedright]{caption}
 
@@ -108,6 +111,7 @@
 \usepackage{etoolbox}
 \usepackage{array}
 \usepackage[hidelinks]{hyperref}       % Package untuk link di daftar isi. Ubah jadi \usepackage[hidelinks]{hyperref} apabila ingin menghilangkan kotak merah disekitar link
+\renewcommand\UrlFont{\rmfamily\selectfont}
 \usepackage{titlesec}       % Package Format judul
 \usepackage{titletoc}       % Package Format judul di toc
 % \usepackage{tocbibind}      % Package untuk masukkan toc, lot, lof ke Daftar Isi - DISABLED for custom formatting
