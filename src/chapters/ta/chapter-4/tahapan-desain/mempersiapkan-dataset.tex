@@ -13,7 +13,7 @@ Persiapan \dataset{} merupakan tahapan kritis dalam pengembangan sistem ekstraks
 
 \datasetfl{} yang digunakan untuk melatih model \donut{} adalah \dataset{} QRIS dan transfer yang berisi gambar bukti pembayaran dari berbagai aplikasi pembayaran digital seperti SeaBank, Neobank, BCA, dan \gopay{} yang perlu dipersiapkan secara sistematis. \autoref{fig:dataset-preparation-flow} menunjukkan alur kerja sistematis dalam persiapan \dataset. Proses dimulai dengan melakukan transaksi melalui aplikasi pembayaran dan mengumpukan gambar bukti pembayaran dari berbagai sumber, yaitu aplikasi pembayaran digital (SeaBank, Neobank, BCA, dan \gopay). Total \dataset{} yang dikumpulkan adalah 350 gambar bukti pembayaran QRIS dan transfer dengan format dan jenis dokumen yang bervariasi.
 
-Gambar bukti pembayaran yang telah dikumpulkan kemudian dianotasi secara manual. Proses anotasi dilakukan secara manual untuk menandai informasi penting pada gambar dan memastikan bahwa data yang dianotasikan sesuai dengan yang tertera pada gambar bukti pembyaran. Atribut yang dianotasikan dari gambar bukti pembayaran adalah sebagai berikut:
+Gambar bukti pembayaran yang telah dikumpulkan kemudian dianotasi secara manual. Proses anotasi dilakukan secara manual untuk menandai informasi penting pada gambar dan memastikan bahwa data yang dianotasikan sesuai. Atribut yang dianotasikan adalah sebagai berikut.
 \begin{enumerate}
     \item \iden{}: Kode transaksi yang unik untuk setiap bukti pembayaran.
     \item \total{}: Jumlah pembayaran yang tercantum pada bukti pembayaran.

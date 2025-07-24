@@ -1,7 +1,7 @@
 \section{Analisis Pemilihan Solusi}
 \label{sec:analisis-pemilihan-solusi}
 
-Subbab ini akan menjelaskan mengenai desain konsep solusi yang akan digunakan pada sistem yang akan dikembangkan. Penulis akan mengeksplorasi berbagai alternatif solusi yang dapat digunakan untuk memenuhi kebutuhan sistem yang telah diidentifikasi pada \autoref{sec:analisis-kebutuhan}. Masing-masing alternatif solusi akan dianalisis berdasarkan kriteria yang telah ditentukan sesuai dengan kebutuhan sistem dan tugas akhir ini.
+Subbab ini akan menjelaskan mengenai desain konsep solusi yang akan digunakan pada sistem yang akan dikembangkan. Penulis akan mengeksplorasi berbagai alternatif solusi yang dapat digunakan untuk memenuhi kebutuhan sistem yang telah diidentifikasi pada \autoref{sec:analisis-kebutuhan}. Setiap alternatif solusi akan dianalisis berdasarkan kriteria yang telah ditentukan sesuai dengan kebutuhan sistem dan tugas akhir ini.
 
 \subsection{Alternatif Solusi}
 \label{subsec:alternatif-solusi}
@@ -18,27 +18,25 @@ Alternatif solusi yang memerlukan \ocr{} adalah alternatif solusi yang memerluka
 
 \subsubsection{Alternatif Solusi yang Tidak Memerlukan OCR}
 \label{subsubsec:alternatif-solusi-tidak-memerlukan-ocr}
-Alternatif solusi yang tidak memerlukan \ocr{} adalah tidak memerlukan implementasi fungsi \ocr{} dan akan mengurangi \emph{pipeline} proses konversi dokumen. Beberapa alternatif solusi yang tidak memerlukan \ocr{} adalah:
+Alternatif solusi yang tidak memerlukan \ocr{} adalah tidak memerlukan implementasi fungsi \ocr{} dan akan mengurangi \emph{pipeline} proses konversi dokumen. Dengan tidak ada implementasi \ocr, alternatif-alternatif solusi berikut mungkin memiliki keunggulan dalam hal efisiensi dan kecepatan. Akan tetapi, perlu adanya inovasi yang dapat menggantikan  kapabilitas \ocr{} untuk melakukan pengenalan karakter dari masukan yang diterima. Beberapa alternatif solusi yang tidak memerlukan \ocr{} adalah sebagai berikut.
 
 \begin{enumerate}
-    \item \donut{} ~\\ Model ini memperkenalkan pendekatan yang revolusioner karena tidak memerlukan modul \ocr{} yang terpisah. Secara teknis, Donut menggunakan arsitektur \textit{encoder-decoder} berbasis \transformer. \textit{Encoder} (biasanya \swin) memproses gambar dokumen secara langsung sebagai piksel, lalu \textit{decoder} (seperti \bart) menerjemahkan representasi visual tersebut langsung menjadi keluaran terstruktur (misalnya, format \json) sesuai dengan instruksi yang diberikan. Kemampuannya untuk belajar dari gambar ke teks secara \textit{end-to-end} menjadikannya sangat fleksibel dan kuat untuk berbagai jenis dokumen tanpa bergantung pada kualitas hasil \ocr{} \parencite{kim2021donut}.
+    \item \donut{} ~\\ Model ini memperkenalkan pendekatan yang revolusioner karena tidak memerlukan modul \ocr{} yang terpisah. Secara teknis, Donut menggunakan arsitektur \textit{encoder-decoder} berbasis \transformer. \textit{Encoder}, biasanya \swin, memproses gambar dokumen secara langsung sebagai piksel, lalu \textit{decoder}, seperti \bart, menerjemahkan representasi visual tersebut langsung menjadi keluaran terstruktur, misalnya format \json, sesuai dengan instruksi yang diberikan. Kemampuannya untuk belajar dari gambar ke teks secara \textit{end-to-end} menjadikannya sangat fleksibel dan kuat untuk berbagai jenis dokumen tanpa bergantung pada \emph{pipeline} tambahan dengan penggunaan \ocr{} \parencite{kim2021donut}.
 
-    \item \templatematching{} ~\\ \templatematching{} adalah salah satu metode \cv yang menggeser sebuah gambar "templat" kecil di atas gambar sumber yang lebih besar. Pada setiap posisi, sebuah metrik kemiripan (seperti korelasi silang) dihitung. Lokasi dengan skor kemiripan tertinggi dianggap sebagai posisi dari objek yang dicari. Metode ini cepat dan sederhana, namun kurang andal terhadap perubahan skala, rotasi, pencahayaan, atau deformasi pada objek \parencite{bradski2008learning}.
+    \item \templatematching{} ~\\ \templatematching{} adalah salah satu metode \cv yang menggeser sebuah gambar "templat" kecil di atas gambar sumber yang lebih besar. Pada setiap posisi, sebuah metrik kemiripan dihitung. Lokasi dengan skor kemiripan tertinggi dianggap sebagai posisi dari objek yang dicari. Metode ini cepat dan sederhana, namun kurang andal terhadap perubahan skala, rotasi, pencahayaan, atau deformasi pada objek \parencite{bradski2008learning}.
 
     \item \crnn ~\\ 
-    \crnn{} adalah arsitektur \dl{} yang menjadi standar de facto untuk pengenalan teks atau \ocr{} dan merupakan gabungan dari \cnn{} dan \rnn. \cnn{} berfungsi sebagai ekstraktor fitur visual yang kuat dari gambar teks. Fitur-fitur ini kemudian diolah sebagai sebuah urutan (sekuens) oleh \rnn, biasanya jenis LSTM, yang dapat memprediksi urutan karakter. Kombinasi ini sangat efektif untuk mengenali baris teks dengan berbagai gaya dan variasi \parencite{shi2016end}.
+    \crnn{} adalah arsitektur \dl{} yang menjadi standar de facto untuk pengenalan teks atau \ocr{} dan merupakan gabungan dari \cnn{} dan \rnn. \cnn{} berfungsi sebagai ekstraktor fitur visual yang kuat dari gambar teks. Fitur-fitur ini kemudian diolah sebagai sebuah urutan oleh \rnn, biasanya jenis LSTM, yang dapat memprediksi urutan karakter. Kombinasi ini sangat efektif untuk mengenali baris teks dengan berbagai gaya dan variasi \parencite{shi2016end}.
 
-    \item \yolo ~\\ \yolo{} adalah standar model yang digunakan dalam deteksi objek \textit{real-time}. Dalam konteks dokumen, \yolo{} tidak digunakan untuk membaca teks, melainkan untuk mendeteksi lokasi (\emph{bounding box}) dari elemen-elemen visual secara cepat, seperti tabel, gambar, logo, atau blok tanda tangan. \yolo{} cenderung kurang akurat untuk objek kecil atau tumpang tindih karena mekanismenya yang hanya satu kali proses \parencite{diwan2023object}. 
+    \item \yolo ~\\ \yolo{} adalah standar model yang digunakan dalam deteksi objek \textit{real-time}. Dalam konteks dokumen, \yolo{} tidak digunakan untuk membaca teks, melainkan untuk mendeteksi lokasi (\emph{bounding box}) dari elemen-elemen visual secara cepat, seperti tabel, gambar, logo, atau blok tanda tangan. \yolo{} cenderung kurang akurat untuk objek kecil atau tumpang tindih karena mekanismenya yang tidak melakukan pemrosesan berulang dibandingkan dengan alternatif lainny \parencite{diwan2023object}. 
     
-    \item \rcnn{} ~\\ \rcnn{} dan keluarganya (Fast R-CNN, Faster R-CNN) adalah arsitektur deteksi objek dua tahap (\textit{two-stage detector}). Tahap pertama adalah menghasilkan "proposal wilayah" (\textit{region proposals}), yaitu area-area potensial di mana objek mungkin berada. Tahap kedua adalah mengklasifikasikan setiap proposal ini menggunakan \cnn. Pendekatan dua tahap ini membuat \rcnn{} secara umum lebih akurat daripada \yolo, terutama untuk deteksi objek yang kompleks, namun dengan kecepatan yang lebih lambat. Dalam analisis dokumen, \rcnn{} digunakan untuk lokalisasi elemen visual yang memerlukan presisi tinggi \parencite{xie2021oriented}.
+    \item \rcnn{} ~\\ \rcnn{} dan keluarganya, yaitu Fast R-CNN, Faster R-CNN, adalah arsitektur deteksi objek dua tahap (\textit{two-stage detector}). Tahap pertama adalah menghasilkan "proposal wilayah", yaitu area-area potensial di mana objek mungkin berada. Tahap kedua adalah mengklasifikasikan setiap proposal ini menggunakan \cnn. Pendekatan dua tahap ini membuat \rcnn{} secara umum lebih akurat daripada \yolo, terutama untuk deteksi objek yang kompleks, namun dengan kecepatan yang lebih lambat. Dalam analisis dokumen, \rcnn{} digunakan untuk lokalisasi elemen visual yang memerlukan presisi tinggi \parencite{xie2021oriented}.
 \end{enumerate}
 
 \subsection{Analisis Penentuan Solusi}
 \label{subsec:analisis-penentuan-solusi}
 
-Subbab ini akan menjelaskan mengenai analisis yang digunakan untuk menentukan solusi yang akan digunakan pada sistem yang akan dikembangkan. Penulis akan menganalisis berbagai alternatif solusi yang telah diidentifikasi pada \autoref{subsec:alternatif-solusi} berdasarkan kriteria yang telah ditentukan sesuai dengan kebutuhan sistem. Hasil analisis akan digunakan untuk menentukan solusi yang paling sesuai untuk perancangan dan pengembangan sistem pada \autoref{chapter:desain-implementasi}.
-
-Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan yang digunakan dari masing-masing alternatif solusi dari subbab sebelumnya. Kelebihan dan kekurangan setiap alternatif solusi akan disajikan dalam bentuk tabel pada \autoref{tab:model-comparison}. Tabel ini akan memberikan gambaran yang jelas mengenai kelebihan dan kekurangan dari masing-masing alternatif solusi sesuai dengan kebutuhan sistem.
+Subbab ini menjelaskan mengenai analisis yang digunakan untuk menentukan solusi yang digunakan pada sistem yang akan dibangun. Penulis menganalisis berbagai alternatif solusi yang telah diidentifikasi pada \autoref{subsec:alternatif-solusi} berdasarkan kriteria yang telah ditentukan sesuai dengan kebutuhan sistem. Hasil analisis digunakan untuk menentukan solusi yang paling sesuai untuk perancangan dan pengembangan sistem pada \autoref{chapter:desain-implementasi}. Penulis memulai dengan menganalisis kelebihan dan kekurangan yang digunakan dari setiap alternatif solusi dari subbab sebelumnya. Kelebihan dan kekurangan setiap alternatif solusi akan disajikan dalam bentuk tabel pada \autoref{tab:model-comparison}. 
 
 % --- TABEL PERTAMA ---
 \begin{table}[h!]
@@ -50,20 +48,16 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
 \hline
 \textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
 \hline
-
-% --- Donut Model ---
-\textbf{Donut} &
+% --- CRNN ---
+\textbf{CRNN} &
 \begin{enumerate}
-    \item Tidak memiliki ketergantungan OCR sehingga \emph{pipeline} lebih sederhana
-    \item Cocok untuk variasi dokumen yang beragam
-    \item Merupakan SOTA untuk VDU (\textit{Visual Document Understanding})
-    \item \textit{pre-trained model} (PTM) pada \dataset{} CORD-v2
+    \item Cocok untuk pengenalan teks dalam gambar dengan format bervariasi
+    \item Gabungan \cnn{} dan \rnn
 \end{enumerate}
 &
 \begin{enumerate}
-    \item Memerlukan data pelatihan dalam jumlah besar
-    \item Membutuhkan kebutuhan komputasi yang tinggi untuk pelatihan
-    \item Kurang optimal untuk dokumen dengan kualitas rendah
+    \item Tidak optimal untuk menangani elemen visual dan spasial dalam gambar
+    \item Hanya berfokus pada teks
 \end{enumerate}
 \\ \hline
 
@@ -72,7 +66,7 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
 \begin{enumerate}
     \item Cocok untuk dokumen yang lebih kompleks (tabel dan formulir)
     \item Dapat digunakan untuk dokumen terstruktur dan semi-terstruktur
-    \item Merupakan PTM
+    \item Merupakan \emph{pre-trained model} (PTM)
 \end{enumerate}
 &
 \begin{enumerate}
@@ -94,6 +88,21 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
 \hline
 \textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
 \hline
+% --- Donut Model ---
+\textbf{Donut} &
+\begin{enumerate}
+    \item Tidak memiliki ketergantungan OCR sehingga \emph{pipeline} lebih sederhana
+    \item Cocok untuk variasi dokumen yang beragam
+    \item Merupakan SOTA untuk VDU (\textit{Visual Document Understanding})
+    \item \textit{pre-trained model} (PTM) pada \dataset{} CORD-v2
+\end{enumerate}
+&
+\begin{enumerate}
+    \item Memerlukan data pelatihan dalam jumlah besar
+    \item Membutuhkan kebutuhan komputasi yang tinggi untuk pelatihan
+    \item Kurang optimal untuk dokumen dengan kualitas rendah
+\end{enumerate}
+\\ \hline
 % --- LayoutLM Model ---
 \textbf{LayoutLM} &
 \begin{enumerate}
@@ -120,17 +129,6 @@ Penulis akan melakukan analisis dengan mempertimbangkan kelebihan dan kekurangan
     \item Kurang fleksibel untuk berbagai variasi format dokumen
     \item Variasi posisi dan kualitas dokumen menjadi tantangan
     \item Metode yang tergolong konvensional
-\end{enumerate}
-\\ \hline
-% --- CRNN ---
-\textbf{CRNN} &
-\begin{enumerate}
-    \item Cocok untuk pengenalan teks dalam gambar dengan font dan orientasi yang bervariasi
-\end{enumerate}
-&
-\begin{enumerate}
-    \item Tidak optimal untuk menangani elemen visual dan spasial dalam gambar
-    \item Hanya berfokus pada teks
 \end{enumerate}
 \\ \hline
 

@@ -4,7 +4,7 @@
 \transformer{} adalah suatu jenis arsitektur jarigan yang baru dalam \dl{} yang digunakan untuk mentransformasi sebuah deretan data menjadi sesuatu dengan karakteristik, seperti panjang atau format, yang berbeda. Transformer tidak menggunakan lapisan rekursif (\rnn) atau konvolusi (\cnn).  Transformer menggunakan mekanisme \selfattention{} yang memungkinkannya untuk memahami hubungan antar elemen dalam sebuah deretan atau urutan
 (\sequence). Tidak seperti pada \rnn{}, mekanisme \selfattention tidak perlu memperhatikan jarak antar elemen. Hal ini membuat \transformer{} menjadi sangat efisien untuk memproses data sekuensial. \transformer{} banyak digunakan pada proses penerjemahan bahasa, rangkuman teks, dan pengenalan suara.
 
-\transformer{} terdiri atas dua komponen utama, yaitu \encoder{} dan \decoder. \encoderfl{} bertugas untuk membaca dan memproses sequence masukan, sementara \decoder{} menghasilkan \sequence{} keluaran berdasarkan informasi dari \encoder. \encoderfl{} dan \decoder{} terdiri dari beberapa lapisan yang identik, dengan masing-masing memiliki dua sub-lapisan utama, yaitu:
+\transformer{} terdiri atas dua komponen utama, yaitu \encoder{} dan \decoder. \encoderfl{} bertugas untuk membaca dan memproses sequence masukan, sementara \decoder{} menghasilkan \sequence{} keluaran berdasarkan informasi dari \encoder. \encoderfl{} dan \decoder{} terdiri dari beberapa lapisan yang identik, dengan masing-masing memiliki dua sub-lapisan utama, yaitu \emph{multi-head attention} dan \emph{feed-forward network}.
 
 \subsubsection{\mha}
 Sublapisan ini menggunakan mekanisme \selfattention{} untuk memahami hubungan antar elemen dalam sebuah \sequence{}. Misalnya, dalam sebuah kalimat, mekanisme ini dapat mengenali bahwa kata "dia" merujuk pada "ibu" meskipun terdapat kata-kata lain di antaranya. \mha{} merupakan gabungan beberapa lapisan (\layer) \emph{Scaled Dot-Product Attention} atau akan disingkat menjadi \attention. Perbandingan proses pada \mha{} dan \emph{Scaled Dot-Product Attention} dapat dilihat pada \autoref{fig:attention}
@@ -16,7 +16,7 @@ Sublapisan ini menggunakan mekanisme \selfattention{} untuk memahami hubungan an
 	\end{figure}
 
 $Q$ (\emph{Query}), $K$ (\emph{Key}), dan $V$ (\emph{Value}) adalah representasi vektor dari setiap elemen dalam sebuah \sequence. Simbol $d_k$ adalah dimensi dari vektor $K$, yang digunakan untuk menskalakan hasil perkalian \emph{dot-product} $QK^\mathsf{T}$ agar proses pelatihan tetap stabil. Fungsi Softmax kemudian mengubah skor tersebut menjadi bobot probabilistik untuk menentukan elemen mana yang paling relevan untuk diperhatikan.
-\pagebreak
+\newpage
 Perhitungan \attention{} dilakukan dengan formula seperti yang ditunjukkan pada persamaan \eqref{eq:attention-softmax} \parencite{vaswani2017attention} yang didefinisikan sebagai berikut:
 
 \begin{equation}

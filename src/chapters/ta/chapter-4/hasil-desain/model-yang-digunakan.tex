@@ -10,7 +10,7 @@ Kedua model yang diimplementasikan menggunakan arsitektur \transformer{} yang me
 \subsubsection{Model DONUT QRIS-TF}
 \label{subsubsec:donut-qris-tf}
 
-Model \donut{} QRIS-TF, disebut \textbf{\emph{custom model}} ke depannya, merupakan hasil \emph{fine-tuning} dari model \donutcord{} pada \dataset{} QRIS dan transfer. Model ini dilatih menggunakan \dataset{} yang dikumpulkan dari berbagai \emph{platform} pembayaran populer di Indonesia untuk mencakup variasi \emph{layout} dan format. Jumlah data yang digunakan untuk melakukan pelatihan adalah 257 sampel, sedangkan 56 sampel digunakan untuk melakukan validasi dan 29 sampel digunakan sebagai data uji.
+Model \donut{} QRIS-TF, disebut \textbf{\emph{custom model}} ke depannya, merupakan hasil \emph{fine-tuning} dari model \donutcord{} pada \dataset{} QRIS dan transfer. Model ini dilatih menggunakan \dataset{} yang dikumpulkan dari berbagai \emph{platform} pembayaran populer di Indonesia untuk mencakup variasi \emph{layout} dan format. Jumlah data yang digunakan untuk melakukan pelatihan adalah 257 sampel, sedangkan 56 sampel digunakan untuk melakukan validasi dan 99 sampel digunakan sebagai data uji.
 
 Konfigurasi model custom menggunakan \emph{task prompt} khusus \texttt{<s\_payment\_proof>} yang memberikan konteks spesifik untuk jenis dokumen yang akan diproses. Model ini memiliki jumlah \emph{vocabulary} yang diperluas dengan 14 token spesial baru yang disesuaikan dengan informasi yang perlu diekstrak dari bukti pembayaran QRIS dan transfer, yang terdiri dari:
 \begin{enumerate}
