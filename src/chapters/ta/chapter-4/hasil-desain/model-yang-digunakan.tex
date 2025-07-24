@@ -1,7 +1,7 @@
 \subsection{Model yang Digunakan}
 \label{subsec:model-yang-digunakan}
 
-Sistem TrackMyBills menggunakan dua jenis model yang menggunakan arsitektur model \donut{} yang telah disesuaikan dengan karakteristik dokumen pembayaran Indonesia. Dua jenis model ini digunakan karena perbedaan signifikan dari segi \emph{layout}, struktur informasi, dan visual pada dokumen bukti pembayaran QRIS dan/transfer dan struk pembayaran.
+Sistem TrackMyBills menggunakan dua jenis model yang menggunakan arsitektur model \donut{} yang telah disesuaikan dengan karakteristik dokumen pembayaran Indonesia. Dua jenis model ini digunakan karena perbedaan signifikan dari segi \emph{layout}, struktur informasi, dan visual pada dokumen bukti pembayaran QRIS dan transfer dan struk pembayaran.
 
 Kedua model yang diimplementasikan menggunakan arsitektur \transformer{} yang menggabungkan \emph{vision encoder} dan \emph{text decoder} untuk memahami dokumen secara holistik. \donut{} menggunakan \swin{} sebagai \emph{vision encoder} untuk memproses informasi visual dokumen dan \bart{} sebagai \emph{text decoder} untuk menghasilkan keluaran terstruktur dalam format JSON. Kombinasi ini memungkinkan model untuk memahami tidak hanya teks yang terbaca, tetapi juga layout dan konteks visual dokumen secara keseluruhan.
 
@@ -23,7 +23,7 @@ Konfigurasi model custom menggunakan \emph{task prompt} khusus \texttt{<s\_payme
     \item \texttt{<s\_payment\_proof>} dan \texttt{</s\_payment\_proof>} sebagai \emph{task prompt} khusus tugas ekstraksi dokumen QRIS dan transfer.
 \end{enumerate}
 
-Model dilatih dengan menambahkan 14 token spesial ke dalam \emph{vocabulary model} untuk memastikan bahwa model dapat mengenali dan menghasilkan keluaran yang sesuai. Pelatihan dilakukan dengan parameter berikut:
+Model dilatih dengan menambahkan 14 token spesial ke dalam \emph{vocabulary} model untuk memastikan bahwa model dapat mengenali dan menghasilkan keluaran yang sesuai. Pelatihan dilakukan dengan parameter berikut:
 \begin{enumerate}
 \item \emph{Learning rate}: 3e-5
 \item \emph{Batch size}: 1

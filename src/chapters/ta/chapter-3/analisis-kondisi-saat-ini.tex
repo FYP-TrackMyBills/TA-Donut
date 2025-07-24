@@ -1,16 +1,15 @@
 \section{Analisis Kondisi Saat Ini}
 \label{sec:analisis-kondisi-saat-ini}
 
-Subbab ini akan membahas tentang kondisi sistem yang ada saat ini. Penulis akan mengidentifikasi masalah yang ada sekarang dan menggambarkan kondisi sistem saat ini pada \autoref{fig:current-state}. Dengan memahami bagaimana sistem saat ini beroperasi dan mengidentifikasi keterbatasan yang ada, kebutuhan fungsional dan non-fungsional sistem akan ditentukan.
+Subbab ini membahas tentang kondisi sistem saat ini. Penulis mengidentifikasi masalah yang ada sekarang dan menggambarkan kondisi sistem saat ini pada \autoref{fig:current-state}. Dengan memahami alur kerja sistem saat ini dan mengidentifikasi keterbatasan sistem, kebutuhan fungsional dan non-fungsional sistem dapat ditentukan.
 
+\autoref{fig:current-state} menunjukkan interaksi antara pengguna, sistem pencatatan, dan aplikasi transaksi yang digunakan saat pengguna melakukan transaksi dan melakukan pencatatan transaksi tersebut. Pengguna melakukan transaksi melalui aplikasi transaksi saat membayar tagihan. Transaksi yang dilakukan dapat berupa pembayaran menggunakan QRIS atau transfer dengan artefak yang dihasilkan berupa struk pembayaran dan bukti pembayaran QRIS atau bukti transfer. Setelah artefak dihasilkan, pengguna dan aplikasi transaksi akan menyimpan artefak transaksi tersebut. Pengguna akan mencari kembali artefak transaksi tersebut saat akan melakukan pencatatan transaksi dan melakukan ekstraksi data secara manual. Aplikasi pencatatan akan menyimpan data tersebut ke dalam aplikasi pencatatan keuangan yang dimiliki.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=.925\textwidth]{images/current-state.png}
     \caption{BPMN kondisi saat ini}
     \label{fig:current-state}
 \end{figure}
-
-\autoref{fig:current-state} menunjukkan interaksi antara pengguna, sistem pencatatn, dan aplikasi transaksi yang digunakan saat pengguna melakukan transaksi dan melakukan pencatatan transaksi tersebut. Pengguna melakukan transaksi melalui aplikasi transaksi saat membayar tagihan. Transaksi yang dilakukan dapat berupa pembayaran menggunakan QRIS atau transfer dengan artefak yang dihasilkan berupa struk pembayaran dan bukti pembayaran QRIS atau bukti transfer. Setelah artefak dihasilkan, pengguna dan aplikasi transaksi akan menyimpan artefak transaksi tersebut. Pengguna akan mencari kembali artefak transaksi tersebut saat akan melakukan pencatatan transaksi dan melakukan ekstraksi data secara manual. Aplikasi pencatatan akan menyimpan data tersebut ke dalam aplikasi pencatatan keuangan yang dimiliki.
 
 \begin{figure}[htbp]
     \centering
