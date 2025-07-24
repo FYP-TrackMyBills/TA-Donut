@@ -17,7 +17,7 @@ Evaluasi kinerja model dilakukan dengan membandingkan hasil prediksi model denga
     \end{tabularx}
 \end{table}
 
-Evaluasi kinerja model akan mengabaikan keberadaan \emph{True Negative} (TN). Jumlah informasi potensial yang dapat diekstrak dari dokumen sangat banyak dalam ekstraksi informasi dokumen, sehingga nilai dari TN akan menjadi sangat besar. Oleh karena itu, evaluasi kinerja model akan berfokus pada informasi yang tertera pada \emph{Ground Truth} (GT). Metrik yang bergantung pada TN, seperti \accuracy, tidak menunjukkan kinerja model yang berarti dalam konteks ini dibandingkan dengan metrik lainnya. 
+Evaluasi kinerja model akan mengabaikan keberadaan \emph{True Negative} (TN). Jumlah informasi potensial yang dapat diekstrak dari dokumen sangat banyak dalam ekstraksi informasi dokumen sehingga nilai dari TN akan menjadi sangat besar. Oleh karena itu, evaluasi kinerja model akan berfokus pada informasi yang tertera pada \emph{Ground Truth} (GT). Metrik yang bergantung pada TN, seperti \accuracy, tidak menunjukkan kinerja model yang berarti dalam konteks ini dibandingkan dengan metrik lainnya. 
 
 Evaluasi akan dilakukan terhadap dua jenis model yang digunakan, yaitu model \donut{} yang telah dilatih dengan \dataset{} QRIS dan transfer bank, serta model \donut{} yang telah dilatih dengan \dataset{} CORD-v2. Hasil evaluasi akan diukur dengan menggunakan metrik-metrik standar dalam evaluasi model klasifikasi, yaitu \accuracy, \precision, \recall, dan \fscore. 
 

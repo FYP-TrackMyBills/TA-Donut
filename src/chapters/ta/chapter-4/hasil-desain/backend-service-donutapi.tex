@@ -42,12 +42,12 @@ DonutAPI merupakan implementasi REST API menggunakan framework FastAPI yang meny
 Sebelum gambar bukti pembayaran diunggah ke \emph{endpoint}, gambar tersebut perlu diproses terlebih dahulu. Proses ini meliputi beberapa langkah, yaitu:
 \begin{enumerate}
     \item Sistem awalnya melakukan validasi terhadap tipe data dan ukuran gambar yang diunggah. Sistem juga akan memastikan gambar dapat dibuka dengan Pillow (PIL) \emph{library} untuk memastikan gambar tersebut valid.
-    \item Gambar diubah ukurannya agar sesuai dengan dimensi yang dapat diproses oleh model. Model \donut{} memiliki batasan dimensi maksimum gambar, sehingga gambar perlu diubah ukurannya agar tidak melebihi batas tersebut. Pada kasus ini, gambar diubah agar ukurannya tidak melewati 2560 piksel.
+    \item Gambar diubah ukurannya agar sesuai dengan dimensi yang dapat diproses oleh model. Model \donut{} memiliki batasan dimensi maksimum gambar sehingga gambar perlu diubah ukurannya agar tidak melebihi batas tersebut. Pada kasus ini, gambar diubah agar ukurannya tidak melewati 2560 piksel.
     \item Model memerlukan dua masukan utama, yaitu gambar dan \emph{task prompt} yang sesuai dengan jenis dokumen yang akan diproses. Gambar yang telah diubah ukurannya kemudian diubah menjadi format PIL Image untuk memastikan kompatibilitas dengan model.
     \item Data PIL Image dan \emph{task prompt} disiapkan untuk proses inferensi dengan diubah menjadi format PyTorch tensor yang dapat diproses oleh model.
 \end{enumerate}
 
-\emph{Task prompt} ini memberikan konteks spesifik untuk jenis dokumen yang akan diproses, sehingga model dapat memahami dan menghasilkan keluaran yang sesuai. \emph{Custom model} menggunakan \emph{task prompt} \texttt{<s\_payment\_proof>} untuk dokumen pembayaran QRIS dan transfer, sedangkan \emph{base model} menggunakan \emph{task prompt} \texttt{<s\_cord-v2>} untuk dokumen struk pembayaran. Keluaran akhir dari proses ini adalah gambar dan \emph{task prompt} dalam format PyTorch tensor yang siap untuk diproses oleh model \donut. Proses ini memastikan bahwa gambar yang diunggah sesuai dengan format yang didukung oleh model dan dapat diproses dengan baik.
+\emph{Task prompt} ini memberikan konteks spesifik untuk jenis dokumen yang akan diproses sehingga model dapat memahami dan menghasilkan keluaran yang sesuai. \emph{Custom model} menggunakan \emph{task prompt} \texttt{<s\_payment\_proof>} untuk dokumen pembayaran QRIS dan transfer, sedangkan \emph{base model} menggunakan \emph{task prompt} \texttt{<s\_cord-v2>} untuk dokumen struk pembayaran. Keluaran akhir dari proses ini adalah gambar dan \emph{task prompt} dalam format PyTorch tensor yang siap untuk diproses oleh model \donut. Proses ini memastikan bahwa gambar yang diunggah sesuai dengan format yang didukung oleh model dan dapat diproses dengan baik.
 
 \subsubsection{Tahap Inferensi}
 \label{subsubsec:proses-inferens}

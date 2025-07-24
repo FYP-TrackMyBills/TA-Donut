@@ -46,6 +46,22 @@
 % Format citation
 \usepackage[utf8]{inputenc}
 \usepackage[style=windycity, backend=biber, language=bahasa]{biblatex}
+% \DeclareCiteCommand{\textciteyear}
+%   {}
+%   {\printnames{labelname}}
+%   {\multinamedelim}
+%   {\addspace\mkbibparens{\printfield{year}}}
+
+\DeclareCiteCommand{\textciteyear}
+  {}
+  {\bibhyperlink{\thefield{entrykey}}%
+     {\printnames{labelname}%
+      \addspace%
+      \mkbibparens{\printfield{year}}%
+     }%
+  }
+  {\multinamedelim}
+  {}
 % \DeclareLanguageMapping{bahasa-cms}{bahasa-cms}
 % \usepackage[authordate,backend=biber, language=bahasa]{biblatex-chicago}
 \DeclareFieldFormat

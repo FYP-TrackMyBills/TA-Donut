@@ -12,7 +12,7 @@ Pengujian kinerja model menunjukkan bahwa kedua model yang digunakan, yaitu \don
 \label{sec:saran}
 Meskipun sistem TrackMyBills telah menunjukkan kinerja yang baik dan mendapatkan umpan balik positif dari pengguna, masih ada beberapa area yang dapat ditingkatkan. Kinerja model \donut{} masih dapat ditingkatkan dengan melatih model pada data yang lebih beragam dan representatif, terutama untuk dokumen pembayaran QRIS dan transfer. 
 
-\datasetfl{} CORD-v2 yang digunakan untuk \emph{fine-tuning} model \donut{} belum dapat memberikan kebebasan kepada model untuk memahami dokumen secara holistik, sehingga model masih memerlukan \emph{cropping} pada gambar bukti pembayaran sebelum diekstrak. Penelitian selanjutnya dapat membuat \dataset{} seperti CORD-v2 tanpa menghilangkan sebagian informasi yang tidak relevan dan melatihnya pada model \donut{} untuk menghilangkan kebutuhan pemotongan gambar.
+\datasetfl{} CORD-v2 yang digunakan untuk \emph{fine-tuning} model \donut{} belum dapat memberikan kebebasan kepada model untuk memahami dokumen secara holistik sehingga model masih memerlukan \emph{cropping} pada gambar bukti pembayaran sebelum diekstrak. Penelitian selanjutnya dapat membuat \dataset{} seperti CORD-v2 tanpa menghilangkan sebagian informasi yang tidak relevan dan melatihnya pada model \donut{} untuk menghilangkan kebutuhan pemotongan gambar.
 
 TrackMyBills masih menggunakan dua model yang berbeda untuk menangani dua kasus yang berbeda, yaitu dokumen pembayaran QRIS dan transfer serta struk pembayaran. Penelitian selanjutnya dapat mencoba untuk menggunakan satu model yang dapat menangani kedua jenis dokumen tersebut dengan \emph{task prompt} yang sesuai untuk masing-masing jenis dokumen untuk mengurangi kompleksitas sistem yang dibangun.
 
