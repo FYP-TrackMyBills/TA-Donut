@@ -28,7 +28,7 @@ DonutAPI merupakan implementasi REST API menggunakan framework FastAPI yang meny
 
 \emph{Endpoint} utama sistem adalah \texttt{POST /predict/simple?model=<model\_type>}. \emph{Endpoint} ini menerima masukan berupa gambar bukti pembayaran yang diunggah oleh pengguna dan \emph{query parameter} \texttt{model} yang menentukan jenis model yang akan digunakan untuk inferensi. Jenis model yang tersedia adalah \texttt{base} untuk model \donut{} CORD-v2 dan \texttt{custom} untuk model \donut{} QRIS dan transfer.
 
-\emph{Endpoint} ini menyediakan respons yang berfokus pada data yang terekstrak untuk bisa dikonsumsi oleh aplikasi klien. Format respons dari \emph{endpoint} ini hanya mencakup data yang relevan dan tidak menyertakan informasi tambahan yang membuat respons lebih ringan dan tidak mengekspos informasi yang tidak diperlukan. Format respons dari \emph{endpoint} ini adalah sebagai berikut:
+\emph{Endpoint} ini menyediakan respons yang berfokus pada data yang terekstrak untuk bisa dikonsumsi oleh aplikasi klien. Format respons dari \emph{endpoint} ini hanya mencakup data yang relevan dan tidak menyertakan informasi tambahan yang membuat respons lebih ringan dan tidak mengekspos informasi yang tidak diperlukan. Format respons dari \emph{endpoint} ini adalah sebagai berikut.
 \begin{enumerate}
     \item \texttt{success}: Indikator \emph{boolean} untuk status \emph{inference}.
     \item \texttt{data}: Objek dalam format JSON yang mengandung data yang sudah diekstrak dalam dua format, yaitu mentah dan bersih. Informasi yang tercantum pada objek \texttt{data} bergantung pada jenis model yang digunakan.

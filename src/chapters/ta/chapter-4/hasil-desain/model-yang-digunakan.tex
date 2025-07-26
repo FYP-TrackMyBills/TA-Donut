@@ -23,7 +23,7 @@ Konfigurasi model custom menggunakan \emph{task prompt} khusus \texttt{<s\_payme
     \item \texttt{<s\_payment\_proof>} dan \texttt{</s\_payment\_proof>} sebagai \emph{task prompt} khusus tugas ekstraksi dokumen QRIS dan transfer.
 \end{enumerate}
 
-Model dilatih dengan menambahkan 14 token spesial ke dalam \emph{vocabulary} model untuk memastikan bahwa model dapat mengenali dan menghasilkan keluaran yang sesuai. Pelatihan dilakukan dengan parameter berikut:
+Model dilatih dengan menambahkan 14 token spesial ke dalam \emph{vocabulary} model untuk memastikan bahwa model dapat mengenali dan menghasilkan keluaran yang sesuai. Pelatihan dilakukan dengan parameter berikut.
 \begin{enumerate}
 \item \emph{Learning rate}: 3e-5
 \item \emph{Batch size}: 1
@@ -43,7 +43,7 @@ PTM \donut{} \texttt{naver-clova-ix/donut-base-finetuned-cord-v2} digunakan seba
 
 Konfigurasi \emph{base model} menggunakan \emph{task prompt} \texttt{<s\_cord-v2>} untuk melakukan tugas ekstraksi informasi dari struk pembayaran. Informasi yang diekstrak dari struk pembayaran beragam hingga \emph{level bounding box} tiap atribut. Informasi yang digunakan dari seluruh data ekstraksi tersebut terbatas pada:
 \begin{enumerate}
-    \item \texttt{<s\_menu>} dan \texttt{</s\_menu>} untuk daftar menu dengan atribut berikut:
+    \item \texttt{<s\_menu>} dan \texttt{</s\_menu>} untuk daftar menu dengan atribut berikut.
     \begin{enumerate}
         \item \texttt{<s\_nm>} dan \texttt{</s\_nm>} untuk nama menu
         \item \texttt{<s\_cnt>} dan \texttt{</s\_cnt>} untuk kuantitas

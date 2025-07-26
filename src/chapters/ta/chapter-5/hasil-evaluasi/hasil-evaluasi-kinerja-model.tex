@@ -6,7 +6,7 @@ Hasil evaluasi kinerja model ini didasarkan pada metrik yang telah ditetapkan pa
 
 \subsubsection{Hasil Evaluasi \emph{Base Model}}
 \label{subsubsec:hasil-evaluasi-base-model}
-\autoref{tab:base-model-eval-table} menunjukkan pengujian kinerja model \emph{base model} dan \autoref{tab:base-model-eval-detail} menunjukkan rincian evaluasi kinerja model \emph{base model} berdasarkan atribut yang diekstrak. Analisis dari hasil evaluasi dapat dijabarkan sebagai berikut:
+\autoref{tab:base-model-eval-table} menunjukkan pengujian kinerja model \emph{base model} dan \autoref{tab:base-model-eval-detail} menunjukkan rincian evaluasi kinerja model \emph{base model} berdasarkan atribut yang diekstrak. Analisis dari hasil evaluasi dapat dijabarkan sebagai berikut.
 \begin{enumerate}
     \item Hasil evaluasi menunjukkan angka \precision{} yang cukup tinggi, yaitu 90,53\% untuk \emph{weighted} dan 89,85\% untuk \emph{unweighted}. Hasil ini menyimpulkan bahwa model dapat mengenali sebagian besar atribut yang tertera pada GT.
     \item Angka \recall{} yang diperoleh adalah 79,53\% untuk \emph{weighted} dan 78,77\% untuk \emph{unweighted}. 
@@ -58,7 +58,7 @@ Hasil evaluasi kinerja model ini didasarkan pada metrik yang telah ditetapkan pa
 
 \subsubsection{Hasil Evaluasi \emph{Custom Model}}
 \label{subsubsec:hasil-evaluasi-custom-model}
-\autoref{tab:custom-model-eval-table} menunjukkan hasil pengujian kinerja model \emph{custom model} dan \autoref{tab:custom-model-eval-detail} menunjukkan rincian evaluasi kinerja model \emph{custom model} berdasarkan atribut yang diekstrak. Analisis dari hasil evaluasi dapat dijabarkan sebagai berikut:
+\autoref{tab:custom-model-eval-table} menunjukkan hasil pengujian kinerja model \emph{custom model} dan \autoref{tab:custom-model-eval-detail} menunjukkan rincian evaluasi kinerja model \emph{custom model} berdasarkan atribut yang diekstrak. Analisis dari hasil evaluasi dapat dijabarkan sebagai berikut.
 \begin{enumerate}
     \item Perbedaan antara evaluasi \emph{weighted} dan \emph{unweighted} tidak membuat perubahan hasil yang signifikan.
     \item Angka \fscore{} pada \emph{custom model} berada pada 81,5\%, angka \recall{} pada 68,78\%, dan \precision{} yang bernilai 100\% menunjukkan bahwa model tidak melakukan prediksi pada atribut yang memang tidak ada pada GT. Salah satu sebabnya adalah ketidakvalidan penggunaan TN pada evaluasi dan jumlah FP yang rendah. Hal serupa juga berlaku pada evaluasi \emph{base model} yang membuktikan bahwa model \donut{} melakukan prediksi saat model yakin bahwa atribut tersebut ada pada dokumen yang diprediksi.

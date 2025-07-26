@@ -2,8 +2,7 @@
 \label{subsec:pemrosesan-dokumen-finansial}
 
 Dokumen struk pembayaran memegang peranan penting dalam pengelolaan
-keuangan baik individu maupun institusi. Proses ekstraksi data dari dokumen-dokumen ini sering kali menghadapi tantangan yang signifikan, termasuk keanekaragaman tata letak, kualitas gambar yang bervariasi, dan kebutuhan untuk
-mengekstrak informasi dengan akurasi tinggi. Sebagai contoh, elemen-elemen penting seperti total harga, tanggal transaksi, dan nomor rekening sering kali tersebar di berbagai posisi dalam dokumen yang berbeda sehingga membuat ekstraksi data secara manual menjadi lambat dan rentan terhadap kesalahan.
+keuangan baik individu maupun institusi. Proses ekstraksi data dari dokumen-dokumen ini sering kali menghadapi tantangan yang signifikan, yaitu keanekaragaman tata letak, kualitas gambar yang bervariasi, dan kebutuhan untuk mengekstrak informasi dengan akurasi tinggi. Sebagai contoh, elemen-elemen penting seperti total harga, tanggal transaksi, dan nomor rekening sering kali tersebar di berbagai posisi dalam dokumen yang berbeda sehingga membuat ekstraksi data secara manual menjadi lambat dan rentan terhadap kesalahan.
 
 Teknologi yang umumnya dapat digunakan untuk menanggulangi masalah ini adalah \cv{}, salah satunya \ocr. Secara tradisional, \ocr{} digunakan untuk mengonversi teks dalam gambar menjadi format digital yang dapat diproses lebih lanjut. Namun, OCR memiliki
 keterbatasan, terutama dalam menangani dokumen dengan kualitas gambar rendah atau format teks yang tidak standar. Selain itu, ketergantungan pada OCR dapat meningkatkan kompleksitas dan biaya pemrosesan \parencite{kim2021donut}.
@@ -12,5 +11,4 @@ keterbatasan, terutama dalam menangani dokumen dengan kualitas gambar rendah ata
 elemen dalam dokumen sehingga \transformer{} hadir sebagai solusi yang lebih canggih \parencite{alzubaidi2021review}.
 
 Dengan mekanisme \attention-nya, \transformer{}, seperti LayoutLM dan
-Donut, mampu menangkap hubungan kontekstual antar elemen secara global. Hal ini membuat penggunaan \transformer{} dengan struktur kompleks dan informasi
-tersebar. \transformer{} memberikan pendekatan yang kuat untuk memastikan akurasi dan efisiensi dalam pemrosesan dokumen finansial.
+Donut, mampu menangkap hubungan kontekstual antar elemen secara global. Hal ini membuat penggunaan \transformer{} mampu memahami dokumen dengan struktur kompleks dan informasi tersebar. \transformer{} memberikan pendekatan yang kuat untuk memastikan akurasi dan efisiensi dalam pemrosesan dokumen finansial.
