@@ -1,11 +1,11 @@
 \subsection{Metrik Evaluasi}
 \label{subsec:metrik-evaluasi}
 
-Evaluasi kinerja sistem \ml{} memerlukan metrik yang komprehensif dan sesuai dengan domain aplikasi. Sistem pemahaman dokumen dan pengenalan teks memerlukan kombinasi metrik klasifikasi standar dan metrik khusus untuk evaluasi pemahaman dokumen. Metrik evaluasi yang digunakan dalam penelitian ini mencakup \accuracy, \precision, \recall, \fscore, \coverage, dan \mcer{} (\emph{Mean Character Error Rate}).
+Evaluasi kinerja sistem \ml{} memerlukan metrik yang komprehensif dan sesuai dengan domain model. Sistem pemahaman dokumen dan pengenalan teks memerlukan kombinasi metrik klasifikasi standar dan metrik khusus untuk evaluasi pemahaman dokumen. Metrik evaluasi yang digunakan dalam penelitian ini mencakup \accuracy, \precision, \recall, \fscore, \coverage, dan \mcer{} (\emph{Mean Character Error Rate}).
 
 \subsubsection{Metrik Klasifikasi Standar}
 
-\accuracyfl{} mengukur proporsi prediksi yang benar baik positif maupun negatif di seluruh \emph{instance} dalam \dataset. Formula \accuracy{} didefinisikan sebagai perbandingan antara jumlah prediksi benar dengan total prediksi yang dibuat. Dalam konteks klasifikasi biner, \accuracy{} dihitung menggunakan matriks yang terdiri dari \emph{True Positive} (TP), \emph{True Negative} (TN), \emph{False Positive} (FP), dan \emph{False Negative} (FN). Persamaan \eqref{eq:accuracy} menunjukkan perhitungan \accuracy{} \parencite{jayaswal2020evalmetrics}. 
+\accuracyfl{} mengukur proporsi prediksi yang benar, baik positif maupun negatif, di seluruh \emph{instance} dalam \dataset. Formula \accuracy{} didefinisikan sebagai perbandingan antara jumlah prediksi benar dengan total prediksi yang dibuat. Dalam konteks klasifikasi biner, \accuracy{} dihitung menggunakan matriks yang terdiri dari \emph{True Positive} (TP), \emph{True Negative} (TN), \emph{False Positive} (FP), dan \emph{False Negative} (FN). Persamaan \eqref{eq:accuracy} menunjukkan perhitungan \accuracy{} \parencite{jayaswal2020evalmetrics}. 
 
 \begin{equation}
     \label{eq:accuracy}
