@@ -45,13 +45,9 @@
 
 % Format citation
 \usepackage[utf8]{inputenc}
-\usepackage[style=windycity, backend=biber, language=bahasa]{biblatex}
-% \DeclareCiteCommand{\textciteyear}
-%   {}
-%   {\printnames{labelname}}
-%   {\multinamedelim}
-%   {\addspace\mkbibparens{\printfield{year}}}
-
+\usepackage[style=windycity, backend=biber, language=bahasa, ibidtracker=false]{biblatex}
+% \usepackage[style=windycity, backend=biber, language=bahasa, citetracker=false, ibidtracker=false, idemtracker=false]{biblatex}
+% \usepackage[authordate,backend=biber, language=bahasa]{biblatex-chicago}
 \DeclareCiteCommand{\textciteyear}
   {}
   {\bibhyperlink{\thefield{entrykey}}%
@@ -62,8 +58,6 @@
   }
   {\multinamedelim}
   {}
-% \DeclareLanguageMapping{bahasa-cms}{bahasa-cms}
-% \usepackage[authordate,backend=biber, language=bahasa]{biblatex-chicago}
 \DeclareFieldFormat
   [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
   {title}{``#1''}
