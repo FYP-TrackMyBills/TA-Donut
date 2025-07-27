@@ -1,7 +1,7 @@
 \section{Analisis Kebutuhan}
 \label{sec:analisis-kebutuhan}
 
-Subbab ini akan menjelaskan mengenai analisis kebutuhan sistem yang akan dikembangkan. Masalah yang ada pada sistem saat ini akan diidentifikasikan untuk kemudian menjadi pertimbangan penentuan kebutuhan fungsional dan non-fungsional sistem. Analisis kebutuhan tersebut kemudian digunakan untuk menentukan alternatif solusi yang akan diimplementasikan pada \autoref{subsec:alternatif-solusi}.
+Subbab ini menjelaskan mengenai analisis kebutuhan sistem yang akan dibangun. Masalah yang ada pada sistem saat ini diidentifikasikan untuk kemudian menjadi pertimbangan penentuan kebutuhan fungsional dan non-fungsional sistem. Analisis kebutuhan tersebut kemudian digunakan untuk menentukan alternatif solusi yang akan diimplementasikan pada \autoref{subsec:alternatif-solusi}.
 
 \subsection{Identifikasi Masalah Pengguna}
 \label{subsec:identifikasi-masalah-pengguna}
@@ -16,9 +16,9 @@ Subbab ini akan menjelaskan mengenai analisis kebutuhan sistem yang akan dikemba
 \hline
 P-01 & Pengguna merasa kesulitan untuk menyadari seberapa besar total pengeluaran mereka yang dapat terakumulasi dengan cepat dari transaksi mereka. \\
 \hline
-P-02 & Pengguna merasa kesulitan untuk mencatat pengeluaran secara manual dari berbagai bukti transaksi. Proses ini memakan waktu, rentan terhadap kesalahan input, dan seringkali tidak dilakukan secara konsisten. \\
+P-02 & Pengguna merasa kesulitan untuk mencatat pengeluaran secara manual dari berbagai bukti transaksi. Proses ini memakan waktu, rentan terhadap kesalahan input, dan sering kali tidak dilakukan secara konsisten. \\
 \hline
-P-03 & Pengguna merasa kesulitan untuk mengklasifikasikan dan mengelompokkan informasi dari bukti pembayaran yang tidak terstruktur sehingga pengguna kesulitan untuk memasukkan data ke dalam \emph{platform} keuangan. \\
+P-03 & Pengguna merasa kesulitan untuk memetakan dan mengelompokkan informasi dari bukti pembayaran yang tidak terstruktur sehingga pengguna kesulitan untuk memasukkan data ke dalam \emph{platform} keuangan. \\
 \hline
 \end{tabularx}
 \end{table}
@@ -30,7 +30,7 @@ P-03 & Pengguna merasa kesulitan untuk mengklasifikasikan dan mengelompokkan inf
 
 \subsection{Kebutuhan Fungsional}
 \label{subsec:kebutuhan-fungsional}
-Berdasarkan identifikasi masalah pengguna pada \autoref{subsec:identifikasi-masalah-pengguna} dan \autoref{sec:latar-belakang}, kebutuhan fungsional atau \emph{Functional Requirement} (FR) akan ditentukan dan dipenuhi sistem yang dibangun. Kebutuhan fungsional adalah kebutuhan mengenai fitur yang akan disediakan oleh sistem. Kebutuhan fungsional  sistem ini akan disajikan dalam bentuk tabel pada \autoref{tab:kebutuhan-fungsional}.
+Berdasarkan identifikasi masalah pengguna pada \autoref{subsec:identifikasi-masalah-pengguna} dan \autoref{sec:latar-belakang}, kebutuhan fungsional atau \emph{Functional Requirement} (FR) akan ditentukan dan dipenuhi oleh sistem yang dibangun. Kebutuhan fungsional adalah kebutuhan mengenai fitur yang akan disediakan oleh sistem. Kebutuhan fungsional  sistem ini akan disajikan dalam bentuk tabel pada \autoref{tab:kebutuhan-fungsional}.
 
 \begin{table}[h!]
 \caption{Kebutuhan Fungsional Sistem}
@@ -43,7 +43,7 @@ FR-01 & Sistem harus dapat menerima masukan berupa gambar bukti transaksi, yaitu
 \hline
 FR-02 & Sistem harus dapat memotong area relevan transaksi berdasarkan \newline keinginan pengguna dari gambar yang diunggah. \\
 \hline
-FR-03 & Sistem harus dapat mengekstrak dan mengklasifikasikan informasi \newline kunci, yaitu total pembayaran dan tipe transaksi dan target dari QRIS dan transfer dan total pembayaran dari struk pembayaran. \\
+FR-03 & Sistem harus dapat mengekstrak dan memetakan informasi \newline kunci, yaitu total pembayaran, tipe transaksi, dan target dari bukti QRIS dan transfer. Informasi kunci yang perlu dipetakan dari struk adalah total pembayaran \\
 \hline
 FR-04 & Sistem harus menampilkan hasil ekstraksi kepada pengguna dan menyediakan fungsi mengoreksi data jika terdapat ketidakakuratan. \\
 \hline

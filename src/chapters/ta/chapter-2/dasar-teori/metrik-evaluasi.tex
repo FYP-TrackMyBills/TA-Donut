@@ -13,7 +13,7 @@ Evaluasi kinerja sistem \ml{} memerlukan metrik yang komprehensif dan sesuai den
 \end{equation}
 \addcontentsline{loe}{myequations}{\protect\numberline{\theequation}Persamaan \accuracy}
 
-\precisionfl{} mengukur proporsi prediksi positif yang benar di antara semua prediksi positif yang dibuat model. Metrik ini sangat penting ketika biaya \emph{false positive} tinggi dalam aplikasi tertentu. Persamaan \eqref{eq:precision} menunjukkan perhitungan \precision. Perhitungan \precision{} didefinisikan sebagai rasio antara \emph{True Positive} (TP) dengan jumlah total prediksi positif yang dibuat, yaitu jumlah \emph{True Positive} ditambah \emph{False Positive} \parencite{jayaswal2020evalmetrics}. \precisionfl{} tinggi menunjukkan bahwa model meminimalkan \emph{false positive}, memastikan prediksi positif kemungkinan besar benar dan dapat diandalkan untuk pengambilan keputusan.
+\precisionfl{} mengukur proporsi prediksi positif yang benar di antara semua prediksi positif yang dibuat model. Metrik ini sangat penting ketika biaya \emph{false positive} tinggi dalam aplikasi tertentu. Persamaan \eqref{eq:precision} menunjukkan perhitungan \precision. \precisionfl{} tinggi menunjukkan bahwa model meminimalkan \emph{False Positive}. Dengan demikian, model dapat meningkatkan kemungkinan kebenaran prediksi positif sehingga hasil prediksi lebih dapat diandalkan untuk pengambilan keputusan.
 
 \begin{equation}
     \label{eq:precision}
@@ -21,7 +21,7 @@ Evaluasi kinerja sistem \ml{} memerlukan metrik yang komprehensif dan sesuai den
 \end{equation}
 \addcontentsline{loe}{myequations}{\protect\numberline{\theequation}Persamaan \precision}
 
-\recallfl{} mengukur proporsi \emph{instance} positif aktual yang berhasil diidentifikasi dengan benar oleh model. Metrik ini kritikal ketika biaya \emph{false negative} tinggi dalam sistem yang memerlukan deteksi lengkap. Persamaan \eqref{eq:recall} menunjukkan rumus yang dapat digunakan untuk menghitung \recall{} \parencite{jayaswal2020evalmetrics}.\recallfl{} tinggi berarti model menangkap sebagian besar \emph{instance} positif, meminimalkan kemungkinan melewatkan data penting yang harus dideteksi.
+\recallfl{} mengukur proporsi prediksi positif aktual yang berhasil diidentifikasi dengan benar oleh model. Metrik ini penting ketika biaya \emph{False Negative} tinggi dalam sistem yang memerlukan deteksi lengkap. Persamaan \eqref{eq:recall} menunjukkan rumus yang dapat digunakan untuk menghitung \recall{} \parencite{jayaswal2020evalmetrics}. Angka \recall{} tinggi menunjukkan bahwa model dapat menangkap sebagian besar prediksi positif. Dengan demikian, model meminimalkan kemungkinan adanya data penting yang terlewat dalam upaya prediksi.
 
 \begin{equation}
     \label{eq:recall}
@@ -29,7 +29,7 @@ Evaluasi kinerja sistem \ml{} memerlukan metrik yang komprehensif dan sesuai den
 \end{equation}
 \addcontentsline{loe}{myequations}{\protect\numberline{\theequation}Persamaan \recall}
 
-\fscore{} adalah rata-rata harmonik dari \precision{} dan \recall{}. \fscore{} memberikan ukuran seimbang yang mempertimbangkan kedua metrik secara setara. Persamaan \eqref{eq:fscore} menunjukkan rumus yang dapat digunakan untuk menghitung \fscore{} \parencite{jayaswal2020evalmetrics}. \fscore{} tinggi menunjukkan bahwa model tidak hanya akurat dalam prediksi positif tetapi juga menangkap sebagian besar \emph{instance} positif yang relevan. \fscore{} memerlukan \precision{} dan \recall{} tinggi untuk mencapai skor tinggi. \fscore{} akan menjadi nol jika salah satu dari \precision{} atau \recall{} adalah nol.
+\fscore{} adalah rata-rata harmonik dari \precision{} dan \recall{}. \fscore{} memberikan ukuran seimbang yang mempertimbangkan kedua metrik secara setara. Persamaan \eqref{eq:fscore} menunjukkan rumus yang dapat digunakan untuk menghitung \fscore{} \parencite{jayaswal2020evalmetrics}. \fscore{} tinggi menunjukkan bahwa model tidak hanya akurat dalam prediksi positif tetapi juga menangkap sebagian besar prediksi positif yang relevan. \fscore{} memerlukan \precision{} dan \recall{} tinggi untuk mencapai skor tinggi. \fscore{} akan menjadi nol jika salah satu dari \precision{} atau \recall{} adalah nol.
 
 \begin{equation}
     \label{eq:fscore}
@@ -41,7 +41,7 @@ Evaluasi kinerja sistem \ml{} memerlukan metrik yang komprehensif dan sesuai den
 
 \subsubsection{\mcer{} (\emph{Mean Character Error Rate})}
 
-\mcer{} adalah rata-rata \emph{Character Error Rate} (CER) di beberapa dokumen atau segmen teks yang memberikan ukuran komprehensif akurasi deteksi teks \parencite{neudecker2021survey}. Metrik ini sangat relevan untuk sistem pengenalan teks yang bergantung pada akurasi pengenalan karakter. Persamaan \eqref{eq:mcer} menunjukkan rumus yang digunakan untuk menghitung \mcer{} dengan $\text{CER}_i$ adalah \emph{Character Error Rate} untuk dokumen $i$. Metrik ini mengukur kesalahan pengenalan karakter pada tingkat granular dan memberikan informasi tentang akurasi pengenalan teks pada level karakter.
+\mcer{} adalah rata-rata \emph{Character Error Rate} (CER) di beberapa dokumen atau segmen teks yang memberikan ukuran komprehensif akurasi deteksi teks \parencite{neudecker2021survey}. Metrik ini sangat relevan untuk sistem pengenalan teks yang bergantung pada akurasi pengenalan karakter. Persamaan \eqref{eq:mcer} menunjukkan rumus yang digunakan untuk menghitung \mcer{}. Metrik ini mengukur kesalahan pengenalan karakter pada tingkat granular dan memberikan informasi tentang akurasi pengenalan teks pada level karakter.
 
 \begin{equation}
     \label{eq:mcer}
@@ -72,7 +72,7 @@ Persamaan \eqref{eq:cer} menunjukkan cara perhitungan CER dengan parameter yang 
 
 \emph{System Usability Scale} (SUS) adalah instrumen evaluasi usabilitas yang dikembangkan oleh Brooke pada tahun 1996 sebagai alat ukur cepat dan andal untuk mengevaluasi usabilitas sistem \parencite{brooke1996sus}. SUS terdiri dari sepuluh pertanyaan dengan skala \emph{Likert} lima poin yang dirancang untuk memberikan skor tunggal yang merepresentasikan penilaian subjektif pengguna terhadap usabilitas sistem. Instrumen ini telah menjadi salah satu metode evaluasi usabilitas yang paling banyak digunakan dalam interaksi manusia komputer karena kesederhanaan, reliabilitas, dan validitasnya \parencite{bangor2008empirical}.
 
-SUS menggunakan sepuluh pertanyaan standar yang mencakup aspek-aspek fundamental usabilitas, termasuk efektivitas, efisiensi, dan kepuasan pengguna. Lima pertanyaan dinyatakan secara positif dan lima lainnya secara negatif untuk mengurangi kemungkinan respons bias dan meningkatkan keandalan pengukuran. Setiap pertanyaan dinilai pada skala 1 hingga 5, dengan 1 menunjukkan "sangat tidak setuju" dan 5 menunjukkan "sangat setuju". Pertanyaan SUS meliputi penilaian terhadap keinginan menggunakan sistem secara teratur, kompleksitas sistem yang dirasakan, kemudahan penggunaan, kebutuhan dukungan teknis, integrasi fungsi sistem, inkonsistensi, kemudahan pembelajaran, dan kepercayaan diri pengguna dalam menggunakan sistem \parencite{brooke1996sus}.
+SUS menggunakan sepuluh pertanyaan standar yang mencakup aspek-aspek fundamental usabilitas, yaitu efektivitas, efisiensi, dan kepuasan pengguna. Lima pertanyaan dinyatakan secara positif dan lima lainnya secara negatif untuk mengurangi kemungkinan respons bias dan meningkatkan keandalan pengukuran. Setiap pertanyaan dinilai pada skala 1 hingga 5, dengan 1 menunjukkan "sangat tidak setuju" dan 5 menunjukkan "sangat setuju". Pertanyaan SUS meliputi penilaian terhadap keinginan menggunakan sistem secara teratur, kompleksitas sistem yang dirasakan, kemudahan penggunaan, kebutuhan dukungan teknis, integrasi fungsi sistem, inkonsistensi, kemudahan pembelajaran, dan kepercayaan diri pengguna dalam menggunakan sistem \parencite{brooke1996sus}.
 
 Perhitungan skor SUS mengikuti metodologi khusus untuk menghasilkan skor akhir antara 0 hingga 100. Untuk pertanyaan bernomor ganjil (pernyataan positif), skor dihitung dengan mengurangi 1 dari respons pengguna. Untuk pertanyaan bernomor genap (pernyataan negatif), skor dihitung dengan mengurangi respons pengguna dari 5. Jumlah total skor dari sepuluh pertanyaan kemudian dikalikan dengan 2,5 untuk menghasilkan skor SUS akhir. Persamaan \eqref{eq:sus-score} menunjukkan formula perhitungan skor SUS dengan $R_i$ adalah respons untuk pertanyaan $i$ \parencite{tullis2013measuring}.
 
@@ -86,4 +86,4 @@ Interpretasi skor SUS menggunakan \emph{benchmark} yang telah ditetapkan berdasa
 
 Keunggulan SUS sebagai instrumen evaluasi meliputi kemudahan administrasi, waktu pengisian yang singkat (2-5 menit), skor tunggal yang mudah dipahami, dan validitas yang telah terbukti melalui berbagai domain aplikasi \parencite{lewis2018sus}. SUS juga memungkinkan perbandingan usabilitas antar sistem yang berbeda dan \emph{benchmarking} terhadap standar industri.
 
-Dalam konteks evaluasi sistem \emph{mobile} untuk ekstraksi data pembayaran, SUS menjadi instrumen yang relevan untuk mengukur sejauh mana pengguna Gen Z dapat menggunakan aplikasi dengan mudah dan efektif. Evaluasi usabilitas dengan SUS dapat mengidentifikasi apakah antarmuka aplikasi memenuhi ekspektasi pengguna dalam hal kemudahan penggunaan, efisiensi proses ekstraksi data, dan kepuasan pengguna secara keseluruhan terhadap sistem yang dikembangkan.
+Dalam konteks evaluasi sistem \emph{mobile} untuk ekstraksi data pembayaran, SUS menjadi instrumen yang relevan untuk mengukur sejauh mana pengguna Gen Z dapat menggunakan aplikasi dengan mudah dan efektif. Evaluasi usabilitas dengan SUS dapat mengidentifikasi apakah antarmuka aplikasi memenuhi ekspektasi pengguna dalam hal kemudahan penggunaan, efisiensi proses ekstraksi data, dan kepuasan pengguna secara keseluruhan terhadap sistem yang dibangun.

@@ -7,36 +7,34 @@ Subbab ini akan menjelaskan mengenai desain konsep solusi yang akan digunakan pa
 \label{subsec:alternatif-solusi}
 Setiap alternatif solusi yang akan dijelaskan pada subbab ini merupakan alternatif yang dipertimbangkan untuk memenuhi kebutuhan ekstraksi data dokumen. Metode ekstraksi data dokumen adalah metode yang digunakan untuk mengekstrak data dari dokumen digital yang digunakan, yaitu struk dan bukti pembayaran. Alternatif solusi yang dapat dipertimbangkan dapat dibagi menjadi alternatif solusi yang memerlukan \ocr{} dan alternatif solusi yang tidak memerlukan \ocr. 
 
-\subsubsection{Alternatif Solusi yang Memerlukan OCR}
-\label{subsubsec:alternatif-solusi-memerlukan-ocr}
-Alternatif solusi yang memerlukan \ocr{} adalah alternatif solusi yang memerlukan proses ekstraksi teks dari gambar dokumen dengan menggunakan \ocr{} sebelum melakukan ekstraksi data. Proses ekstraksi teks ini biasanya dilakukan dengan menggunakan model \ocr{} yang telah dilatih sebelumnya. Beberapa alternatif solusi yang memerlukan \ocr{} antara lain:
-\begin{enumerate}
-    \item \layoutlm ~\\ Model ini adalah salah satu pelopor dalam menggabungkan informasi teks, tata letak, dan visual dari sebuah dokumen. Berbeda dengan model bahasa seperti \bert{} yang hanya memahami teks, \layoutlm{} memperkaya representasi token teks dengan menyertakan \textit{embedding} posisi 2D (koordinat x,y dari \emph{bounding box}) dan \textit{embedding} visual. Dengan demikian, model ini dapat memahami konteks yang berasal dari struktur dokumen. \layoutlm{} menjadi model yang sangat efektif untuk tugas ekstraksi informasi dari dokumen semi-terstruktur seperti formulir dan faktur \parencite{xu2020layoutlm}. 
-    \item \bert{} ~\\
-    \bert{} adalah model bahasa murni dan tidak memiliki kemampuan untuk memproses gambar atau tata letak secara inheren. Dalam alur kerja ekstraksi data dokumen, peran BERT berada di tahap \textit{downstream} setelah teks diekstrak oleh sistem \ocr. Teks mentah dari \ocr{} kemudian dimasukkan ke \bert{} untuk tugas-tugas \nlp{} seperti klasifikasi teks atau \emph{Named Entity Recognition} (NER). Jadi, \bert{} tidak mengekstrak data dari gambar, melainkan dari teks yang sudah diekstraksi \parencite{koroteev2021bert}. 
-\end{enumerate}
-
 \subsubsection{Alternatif Solusi yang Tidak Memerlukan OCR}
 \label{subsubsec:alternatif-solusi-tidak-memerlukan-ocr}
-Alternatif solusi yang tidak memerlukan \ocr{} adalah tidak memerlukan implementasi fungsi \ocr{} dan akan mengurangi \emph{pipeline} proses konversi dokumen. Dengan tidak ada implementasi \ocr, alternatif-alternatif solusi berikut mungkin memiliki keunggulan dalam hal efisiensi dan kecepatan. Akan tetapi, perlu adanya inovasi yang dapat menggantikan  kapabilitas \ocr{} untuk melakukan pengenalan karakter dari masukan yang diterima. Beberapa alternatif solusi yang tidak memerlukan \ocr{} adalah sebagai berikut.
+Alternatif solusi yang tidak memerlukan \ocr{} adalah tidak memerlukan implementasi fungsi \ocr{} dan akan menghilangkan \emph{pipeline} proses konversi dokumen. Dengan tidak ada implementasi \ocr, alternatif-alternatif solusi berikut mungkin memiliki keunggulan dalam hal efisiensi dan kecepatan. Akan tetapi, perlu adanya inovasi yang dapat menggantikan  kapabilitas \ocr{} untuk melakukan pengenalan karakter dari masukan yang diterima. Beberapa alternatif solusi yang tidak memerlukan \ocr{} adalah sebagai berikut.
 
 \begin{enumerate}
-    \item \donut{} ~\\ Model ini memperkenalkan pendekatan yang revolusioner karena tidak memerlukan modul \ocr{} yang terpisah. Secara teknis, Donut menggunakan arsitektur \textit{encoder-decoder} berbasis \transformer. \textit{Encoder}, biasanya \swin, memproses gambar dokumen secara langsung sebagai piksel, lalu \textit{decoder}, seperti \bart, menerjemahkan representasi visual tersebut langsung menjadi keluaran terstruktur, misalnya format \json, sesuai dengan instruksi yang diberikan. Kemampuannya untuk belajar dari gambar ke teks secara \textit{end-to-end} menjadikannya sangat fleksibel dan kuat untuk berbagai jenis dokumen tanpa bergantung pada \emph{pipeline} tambahan dengan penggunaan \ocr{} \parencite{kim2021donut}.
-
-    \item \templatematching{} ~\\ \templatematching{} adalah salah satu metode \cv yang menggeser sebuah gambar "templat" kecil di atas gambar sumber yang lebih besar. Pada setiap posisi, sebuah metrik kemiripan dihitung. Lokasi dengan skor kemiripan tertinggi dianggap sebagai posisi dari objek yang dicari. Metode ini cepat dan sederhana, namun kurang andal terhadap perubahan skala, rotasi, pencahayaan, atau deformasi pada objek \parencite{bradski2008learning}.
-
     \item \crnn ~\\ 
-    \crnn{} adalah arsitektur \dl{} yang menjadi standar de facto untuk pengenalan teks atau \ocr{} dan merupakan gabungan dari \cnn{} dan \rnn. \cnn{} berfungsi sebagai ekstraktor fitur visual yang kuat dari gambar teks. Fitur-fitur ini kemudian diolah sebagai sebuah urutan oleh \rnn, biasanya jenis LSTM, yang dapat memprediksi urutan karakter. Kombinasi ini sangat efektif untuk mengenali baris teks dengan berbagai gaya dan variasi \parencite{shi2016end}.
-
-    \item \yolo ~\\ \yolo{} adalah standar model yang digunakan dalam deteksi objek \textit{real-time}. Dalam konteks dokumen, \yolo{} tidak digunakan untuk membaca teks, melainkan untuk mendeteksi lokasi (\emph{bounding box}) dari elemen-elemen visual secara cepat, seperti tabel, gambar, logo, atau blok tanda tangan. \yolo{} cenderung kurang akurat untuk objek kecil atau tumpang tindih karena mekanismenya yang tidak melakukan pemrosesan berulang dibandingkan dengan alternatif lainny \parencite{diwan2023object}. 
-    
-    \item \rcnn{} ~\\ \rcnn{} dan keluarganya, yaitu Fast R-CNN, Faster R-CNN, adalah arsitektur deteksi objek dua tahap (\textit{two-stage detector}). Tahap pertama adalah menghasilkan "proposal wilayah", yaitu area-area potensial di mana objek mungkin berada. Tahap kedua adalah mengklasifikasikan setiap proposal ini menggunakan \cnn. Pendekatan dua tahap ini membuat \rcnn{} secara umum lebih akurat daripada \yolo, terutama untuk deteksi objek yang kompleks, namun dengan kecepatan yang lebih lambat. Dalam analisis dokumen, \rcnn{} digunakan untuk lokalisasi elemen visual yang memerlukan presisi tinggi \parencite{xie2021oriented}.
+    \crnn, gabungan \cnn{} dan \rnn, adalah arsitektur \dl{} yang menjadi standar untuk pengenalan teks. \cnn{} berfungsi sebagai ekstraktor fitur visual. Fitur-fitur ini kemudian diolah sebagai sebuah urutan oleh \rnn yang dapat memprediksi urutan karakter. Arsitektur ini bergantung pada model deteksi objek untuk mengidentifikasi dan memecah gambar agar dapat diterima \crnn{} untuk dibaca \parencite{shi2016end}. 
+    \item \donut{} ~\\ 
+    Model ini memperkenalkan pendekatan yang revolusioner karena tidak memerlukan modul \ocr{} yang terpisah. Secara garis besar, Donut menggunakan arsitektur \textit{encoder-decoder} berbasis \transformer. \textit{Encoder}, biasanya \swin, memproses gambar dokumen secara langsung sebagai piksel. \textit{Decoder}, seperti \bart, menerjemahkan representasi visual tersebut menjadi keluaran terstruktur, misalnya format \json, sesuai dengan instruksi yang diberikan. Kemampuannya untuk belajar dan mengonversi dari gambar ke teks secara \textit{end-to-end} menjadikannya sangat fleksibel dan kuat untuk berbagai jenis dokumen tanpa bergantung pada \emph{pipeline} tambahan dengan penggunaan \ocr{} \parencite{kim2021donut}.
 \end{enumerate}
+
+\subsubsection{Alternatif Solusi yang Memerlukan OCR}
+\label{subsubsec:alternatif-solusi-memerlukan-ocr}
+Tugas \ocr{} dalam alternatif ini adalah mengubah teks dari format gambar atau dokumen yang tidak terstruktur menjadi teks yang dapat dibaca dan diproses oleh mesin. Dengan demikian, hasil \ocr{} dapat digunakan sebagai masukan untuk model yang didefinisikan dalam alternatif solusi ini. Beberapa alternatif solusi yang memerlukan \ocr{} adalah sebagai berikut.
+\begin{enumerate}
+    \item \rcnn{} ~\\ \rcnn{} dan keluarganya, yaitu Fast R-CNN dan Faster R-CNN, adalah arsitektur deteksi objek dua tahap. Tahap pertama adalah menghasilkan "proposal wilayah", yaitu area-area potensial keberadaan objek. Tahap kedua adalah mengklasifikasikan setiap proposal ini menggunakan \cnn. Pendekatan dua tahap ini membuat \rcnn{} secara umum lebih akurat daripada \yolo. Hasil dari \rcnn{} berupa koordinat \emph{bounding box} digunakan oleh \ocr{} untuk menentukan lokasi yang perlu diekstrak \parencite{xie2021oriented}.
+    \item \yolo ~\\ \yolo{} adalah standar model yang digunakan dalam deteksi objek \textit{real-time}. Dalam konteks dokumen, \yolo{} tidak digunakan untuk membaca teks, melainkan untuk mendeteksi lokasi (\emph{bounding box}) dari elemen-elemen visual secara cepat, seperti tabel, gambar, logo, atau blok tanda tangan. Dengan lokasi tersebut, \ocr{} dapat mengekstrak data yang telah ditentukan. \yolo{} cenderung kurang akurat untuk objek kecil atau tumpang tindih karena mekanismenya yang tidak melakukan pemrosesan berulang dibandingkan dengan alternatif lainnya \parencite{diwan2023object}.
+    \item \layoutlm ~\\ Model ini adalah salah satu pelopor dalam menggabungkan informasi teks, tata letak, dan visual dari sebuah dokumen. Berbeda dengan model bahasa seperti \bert{} yang hanya memahami teks, \layoutlm{} memperkaya representasi token teks dengan menyertakan \textit{embedding} posisi 2D (koordinat x,y dari \emph{bounding box}) dan \textit{embedding} visual. Dengan demikian, model ini dapat memahami konteks yang berasal dari struktur dokumen. \layoutlm{} menjadi model yang sangat efektif untuk tugas ekstraksi informasi dari dokumen semi-terstruktur seperti formulir dan faktur \parencite{xu2020layoutlm}.
+    \item \templatematching{} ~\\ \templatematching{} adalah salah satu metode \cv{} yang menggeser sebuah gambar "templat" kecil di atas sumber yang lebih besar. Pada setiap posisi, metrik kemiripan dihitung. Lokasi dengan skor kemiripan tertinggi dianggap sebagai posisi objek yang dicari. \ocr{} kemudian akan digunakan pada posisi yang dianggap sebagai nilai dari objek. Metode ini cepat dan sederhana, namun kurang andal terhadap perubahan skala, rotasi, pencahayaan, atau deformasi pada objek \parencite{bradski2008learning}.
+    \item \bert{} ~\\
+    \bert{} adalah model bahasa murni dan tidak memiliki kemampuan untuk memproses gambar atau tata letak. Dalam alur kerja ekstraksi data dokumen, peran BERT berada di tahap \textit{downstream} setelah gambar dikonversi oleh sistem \ocr. Teks mentah dari \ocr{} kemudian dimasukkan ke \bert{} untuk tugas-tugas \nlp{} seperti klasifikasi teks atau \emph{Named Entity Recognition} (NER) \parencite{koroteev2021bert}. 
+\end{enumerate}
+
 
 \subsection{Analisis Penentuan Solusi}
 \label{subsec:analisis-penentuan-solusi}
 
-Subbab ini menjelaskan mengenai analisis yang digunakan untuk menentukan solusi yang digunakan pada sistem yang akan dibangun. Penulis menganalisis berbagai alternatif solusi yang telah diidentifikasi pada \autoref{subsec:alternatif-solusi} berdasarkan kriteria yang telah ditentukan sesuai dengan kebutuhan sistem. Hasil analisis digunakan untuk menentukan solusi yang paling sesuai untuk perancangan dan pengembangan sistem pada \autoref{chapter:desain-implementasi}. Penulis memulai dengan menganalisis kelebihan dan kekurangan yang digunakan dari setiap alternatif solusi dari subbab sebelumnya. Kelebihan dan kekurangan setiap alternatif solusi akan disajikan dalam bentuk tabel pada \autoref{tab:model-comparison}. 
+Subbab ini menjelaskan mengenai analisis yang digunakan untuk menentukan solusi yang digunakan pada sistem yang akan dibangun. Berbagai alternatif solusi yang telah diidentifikasi pada \autoref{subsec:alternatif-solusi} akan dianalisis berdasarkan kriteria yang telah ditentukan sesuai dengan kebutuhan sistem. Hasil analisis digunakan untuk menentukan solusi yang paling sesuai untuk perancangan dan pengembangan sistem pada \autoref{chapter:desain-implementasi}. Kelebihan dan kekurangan dari setiap alternatif solusi dari subbab sebelumnya akan ditentukan untuk kemudian digunakan sebagai bahan pertimbangan pemilihan alternatif solusi. Kelebihan dan kekurangan setiap alternatif solusi disajikan dalam bentuk tabel pada \autoref{tab:model-comparison}.
 
 % --- TABEL PERTAMA ---
 \begin{table}[h!]
@@ -48,33 +46,33 @@ Subbab ini menjelaskan mengenai analisis yang digunakan untuk menentukan solusi 
 \hline
 \textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
 \hline
-% --- CRNN ---
-\textbf{CRNN} &
+% --- Template Matching ---
+\textbf{Template Matching} &
 \begin{enumerate}
-    \item Cocok untuk pengenalan teks dalam gambar dengan format bervariasi
-    \item Gabungan \cnn{} dan \rnn
+    \item Cepat dan ringan untuk dokumen dengan pola seragam
+    \item Akurasi tinggi untuk dokumen dengan format tetap
+    \item Tidak memerlukan data pelatihan yang beragam
 \end{enumerate}
 &
 \begin{enumerate}
-    \item Tidak optimal untuk menangani elemen visual dan spasial dalam gambar
-    \item Hanya berfokus pada teks
+    \item Kurang fleksibel untuk berbagai variasi format dokumen
+    \item Variasi posisi dan kualitas dokumen menjadi tantangan
+    \item Memerlukan OCR sebagai asangan
 \end{enumerate}
 \\ \hline
-
-% --- BERT Model ---
-\textbf{BERT} &
+% --- LayoutLM Model ---
+\textbf{LayoutLM} &
 \begin{enumerate}
-    \item Cocok untuk dokumen yang lebih kompleks (tabel dan formulir)
+    \item Cocok untuk dokumen yang lebih kompleks dengan elemen tabel dan formulir
     \item Dapat digunakan untuk dokumen terstruktur dan semi-terstruktur
-    \item Merupakan \emph{pre-trained model} (PTM)
+    \item \emph{pre-trained model} (PTM) pada \dataset{} CORD-v2
 \end{enumerate}
 &
 \begin{enumerate}
-    \item Kurang cocok untuk dokumen dengan elemen visual atau spasial
     \item Memiliki ketergantungan pada OCR
+    \item Kurang optimal untuk dokumen dengan kualitas rendah
 \end{enumerate}
 \\ \hline
-
 \end{tabularx}
 \end{table}
 
@@ -103,32 +101,30 @@ Subbab ini menjelaskan mengenai analisis yang digunakan untuk menentukan solusi 
     \item Kurang optimal untuk dokumen dengan kualitas rendah
 \end{enumerate}
 \\ \hline
-% --- LayoutLM Model ---
-\textbf{LayoutLM} &
+% --- BERT Model ---
+\textbf{BERT} &
 \begin{enumerate}
-    \item Cocok untuk dokumen yang lebih kompleks dengan elemen tabel dan formulir
+    \item Cocok untuk dokumen yang lebih kompleks (tabel dan formulir)
     \item Dapat digunakan untuk dokumen terstruktur dan semi-terstruktur
-    \item Merupakan \textit{pre-trained model}
+    \item Merupakan \emph{pre-trained model} (PTM)
 \end{enumerate}
 &
 \begin{enumerate}
+    \item Kurang cocok untuk dokumen dengan elemen visual atau spasial
     \item Memiliki ketergantungan pada OCR
-    \item Kurang optimal untuk dokumen dengan kualitas rendah
 \end{enumerate}
 \\ \hline
-
-% --- Template Matching ---
-\textbf{Template Matching} &
+% --- CRNN ---
+\textbf{CRNN} &
 \begin{enumerate}
-    \item Cepat dan ringan untuk dokumen dengan pola seragam
-    \item Kemudahan implementasi
-    \item Tidak memerlukan data pelatihan yang beragam
+    \item Cocok untuk pengenalan teks dalam gambar dengan format bervariasi
+    \item Tidak bergantung pada \ocr
 \end{enumerate}
 &
 \begin{enumerate}
-    \item Kurang fleksibel untuk berbagai variasi format dokumen
-    \item Variasi posisi dan kualitas dokumen menjadi tantangan
-    \item Metode yang tergolong konvensional
+    \item Tidak optimal untuk menangani elemen visual dan spasial dalam gambar
+    \item Hanya berfokus pada teks
+    \item Bergantung pada model deteksi objek untuk memecah gambar
 \end{enumerate}
 \\ \hline
 
@@ -142,6 +138,7 @@ Subbab ini menjelaskan mengenai analisis yang digunakan untuk menentukan solusi 
 \begin{enumerate}
     \item Kurang efektif untuk tugas berbasis teks atau dokumen
     \item Tidak dirancang untuk dokumen dengan berbagai elemen teks
+    \item Bergantung pada \ocr{} untuk mengekstrak teks dari gambar
 \end{enumerate}
 \\ \hline
 % --- R-CNN ---
@@ -152,15 +149,15 @@ Subbab ini menjelaskan mengenai analisis yang digunakan untuk menentukan solusi 
 \end{enumerate}
 &
 \begin{enumerate}
-    \item Lebih lambat untuk melakukan pengenalan objek dibandingkan dengan YOLO
-    \item Membutuhkan pelatihan yang intens
-    \item Kurang cocok untuk melakukan pengenalan teks yang bervariasi
+    \item Berfokus untuk mengenal objek seperti YOLO
+    \item Tidak dirancang khusus untuk mengenal dokumen teks
+    \item Bergantung pada \ocr{} untuk mengekstrak teks dari gambar
 \end{enumerate}
 \\ \hline
 \end{tabularx}
 \end{table}
 
-Berdasarkan analisis pada \autoref{tab:model-comparison}, \donut{} dipilih sebagai solusi yang akan digunakan pada sistem yang akan dibangun. \donut{} memiliki kelebihan yang signifikan dibandingkan dengan alternatif solusi lainnya, yaitu tidak memerlukan ketergantungan pada \ocr{} dan telah terbukti baik untuk mengekstrak data dari gambar dokumen semi-terstruktur seperti formulir, faktor, dan kartu identitas. Selain itu, \donut{} juga merupakan model \sota{} \emph{end-to-end} yang telah digunakan pada berbagai penelitian terdahulu. Seluruh keunggulan \donut{} membuat \donut{} menjadi pilihan yang tepat untuk sistem yang akan dibangun. Tantangan yang perlu diperhatikan adalah kebutuhan komputasi dan data pelatihan yang cukup besar dan spesifik.
+Berdasarkan analisis pada \autoref{tab:model-comparison}, \donut{} dipilih sebagai solusi yang akan digunakan pada sistem yang akan dibangun. \donut{} memiliki kelebihan yang signifikan dibandingkan dengan alternatif solusi lainnya, yaitu tidak memerlukan ketergantungan pada \ocr. \donut{} juga telah terbukti baik untuk mengekstrak data dari gambar dokumen semi-terstruktur seperti formulir, faktur, dan kartu identitas. Selain itu, \donut{} juga merupakan model \sota{} \emph{end-to-end} yang telah digunakan pada berbagai penelitian terdahulu. Seluruh keunggulan \donut{} membuat \donut{} menjadi pilihan yang tepat untuk sistem yang akan dibangun. Tantangan yang perlu diperhatikan adalah kebutuhan komputasi dan data pelatihan yang cukup besar dan spesifik.
 
 
 % % --- TABEL KETIGA ---
