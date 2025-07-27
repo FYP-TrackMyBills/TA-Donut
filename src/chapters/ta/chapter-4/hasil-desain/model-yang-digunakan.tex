@@ -1,9 +1,9 @@
 \subsection{Model yang Digunakan}
 \label{subsec:model-yang-digunakan}
 
-Sistem TrackMyBills menggunakan dua jenis model yang menggunakan arsitektur model \donut{} yang telah disesuaikan dengan karakteristik dokumen pembayaran Indonesia. Dua jenis model ini digunakan karena perbedaan signifikan dari segi \emph{layout}, struktur informasi, dan visual pada dokumen bukti pembayaran QRIS dan transfer dan struk pembayaran.
+Sistem TrackMyBills menggunakan dua jenis model yang menggunakan arsitektur model \donut{} yang telah disesuaikan dengan karakteristik dokumen pembayaran Indonesia. Dua jenis model ini digunakan karena perbedaan signifikan dari segi \emph{layout}, struktur informasi, dan visual pada dokumen bukti pembayaran QRIS, transfer, dan struk pembayaran.
 
-Kedua model yang diimplementasikan menggunakan arsitektur \transformer{} yang menggabungkan \emph{vision encoder} dan \emph{text decoder} untuk memahami dokumen secara holistik. \donut{} menggunakan \swin{} sebagai \emph{vision encoder} untuk memproses informasi visual dokumen dan \bart{} sebagai \emph{text decoder} untuk menghasilkan keluaran terstruktur dalam format JSON. Kombinasi ini memungkinkan model untuk memahami tidak hanya teks yang terbaca, tetapi juga layout dan konteks visual dokumen secara keseluruhan.
+Kedua model yang diimplementasikan menggunakan arsitektur \donut{} yang menggabungkan \emph{vision encoder} dan \emph{text decoder} untuk memahami dokumen secara holistik. \donut{} menggunakan \swin{} sebagai \emph{vision encoder} untuk memproses informasi visual dokumen dan \bart{} sebagai \emph{text decoder} untuk menghasilkan keluaran terstruktur dalam format JSON. Kombinasi ini memungkinkan model untuk memahami tidak hanya teks yang terbaca, tetapi juga \emph{layout} dan konteks visual dokumen secara keseluruhan.
 
 % **Diagram yang disarankan**: Arsitektur dual-model dengan visualisasi jalur inference untuk setiap jenis dokumen, menunjukkan preprocessing, vision encoding, text decoding, dan postprocessing untuk masing-masing model.
 
@@ -12,7 +12,7 @@ Kedua model yang diimplementasikan menggunakan arsitektur \transformer{} yang me
 
 Model \donut{} QRIS-TF, disebut \textbf{\emph{custom model}} ke depannya, merupakan hasil \emph{fine-tuning} dari model \donutcord{} pada \dataset{} QRIS dan transfer. Model ini dilatih menggunakan \dataset{} yang dikumpulkan dari berbagai \emph{platform} pembayaran populer di Indonesia untuk mencakup variasi \emph{layout} dan format. Jumlah data yang digunakan untuk melakukan pelatihan adalah 257 sampel, sedangkan 56 sampel digunakan untuk melakukan validasi dan 99 sampel digunakan sebagai data uji.
 
-Konfigurasi model custom menggunakan \emph{task prompt} khusus \texttt{<s\_payment\_proof>} yang memberikan konteks spesifik untuk jenis dokumen yang akan diproses. Model ini memiliki jumlah \emph{vocabulary} yang diperluas dengan 14 token spesial baru yang disesuaikan dengan informasi yang perlu diekstrak dari bukti pembayaran QRIS dan transfer, yang terdiri dari:
+Konfigurasi \emph{custom model} menggunakan \emph{task prompt} khusus \texttt{<s\_payment\_proof>} yang memberikan konteks spesifik untuk jenis dokumen yang akan diproses. Model ini memiliki jumlah \emph{vocabulary} yang diperluas dengan 14 token spesial baru yang disesuaikan dengan informasi yang perlu diekstrak dari bukti pembayaran QRIS dan transfer, yang terdiri dari:
 \begin{enumerate}
     \item \texttt{<s\_total\_amount>} dan \texttt{</s\_total\_amount>} untuk nominal pembayaran.
     \item \texttt{<s\_transaction\_time>} dan \texttt{</s\_transaction\_time>} untuk waktu transaksi.
@@ -32,7 +32,7 @@ Model dilatih dengan menambahkan 14 token spesial ke dalam \emph{vocabulary} mod
 \item \emph{Weight decay}: 0,01
 \end{enumerate}
 
-Selama pelatihan, \emph{weight} dari setiap token spesial diatur untuk mengadaptasikan model untuk mengenali atribut relevan yang sesuai dengan tugas ekstraksi model. Selama pelatihan, model akan mencoba untuk memprediksi atribut dari masukan gambar yang diberikan dan mengkalkulasikan perbedaan antara prediksi dan \emph{ground truth} yang telah ditentukan. Hasil kalkulasi akan digunakan untuk mengubah \emph{weight} dari token spesial yang digunakan. Proses ini dilakukan berulang kali selama 30 \emph{epoch}. Pelatihan baru akan dihentikan saat \emph{validation loss} tidak berubah atau mengalami perubahan yang sangat sedikit selama 3 \emph{epoch} berturut-turut.
+Selama pelatihan, \emph{weight} dari setiap token spesial diatur untuk mengadaptasikan model untuk mengenali atribut relevan yang sesuai dengan tugas ekstraksi model. Model kemudian akan mencoba untuk memprediksi atribut dari masukan gambar yang diberikan dan mengkalkulasikan perbedaan antara prediksi dan \emph{ground truth} yang telah ditentukan. Hasil kalkulasi akan digunakan untuk mengubah \emph{weight} dari token spesial yang digunakan. Proses ini dilakukan berulang kali selama 30 \emph{epoch}. Pelatihan baru akan dihentikan saat \emph{validation loss} tidak berubah atau mengalami perubahan yang sangat sedikit selama 3 \emph{epoch} berturut-turut.
 
 \emph{Training Loss}, \emph{loss} yang dikalkulasikan terhadap data pelatihan, berubah dari 3,7252 menjadi 0,0769 dan \emph{Validation Loss}, \emph{loss} yang dikalkulasikan terhadap data validasi, berubah dari 5,563 menjadi 0,5836. Kedua variabel ini perlu dikontrol untuk memastikan bahwa model tidak mengalami \emph{overfitting} pada data pelatihan. Jika \emph{Training Loss} terus berkurang dan \emph{Validation Loss} malah terus bertambah selama pelatihan, hal tersebut menjadi indikasi kuat terjadinya \emph{overfitting}. Hasil pelatihan menunjukkan bahwa model dapat belajar dengan baik dari data yang diberikan dan dapat menghasilkan keluaran yang sesuai dengan atribut yang diharapkan.
 
@@ -41,7 +41,7 @@ Selama pelatihan, \emph{weight} dari setiap token spesial diatur untuk mengadapt
 
 PTM \donut{} \texttt{naver-clova-ix/donut-base-finetuned-cord-v2} digunakan sebagai model dasar, disebut \textbf{\emph{base model}} ke depannya. Karena \emph{base model} adalah sebuah PTM, model ini bukanlah artefak dari sistem. PTM ini telah di-\emph{fine-tune} pada \dataset{} CORD-v2 sehingga telah memiliki pemahaman yang baik terhadap struktur dan format struk pembayaran yang umum digunakan untuk dokumen struk pembayaran tanpa proses \emph{fine-tuning} tambahan. \datasetfl{} CORD-v2 memiliki kekurangan, yaitu \dataset{} yang digunakan memiliki bagian \emph{header} dan \emph{footer} yang di-\emph{blur} untuk memudahkan model memahami isi dokumen. \datasetfl{} CORD-v2 memiliki 800 sampel pelatihan, 100 sampel validasi, dan 100 sampel uji yang digunakan untuk melatih model \donut{} pada format struk pembayaran.
 
-Konfigurasi \emph{base model} menggunakan \emph{task prompt} \texttt{<s\_cord-v2>} untuk melakukan tugas ekstraksi informasi dari struk pembayaran. Informasi yang diekstrak dari struk pembayaran beragam hingga \emph{level bounding box} tiap atribut. Informasi yang digunakan dari seluruh data ekstraksi tersebut terbatas pada:
+Konfigurasi \emph{base model} menggunakan \emph{task prompt} \texttt{<s\_cord-v2>} untuk melakukan tugas ekstraksi dari struk pembayaran. Informasi yang diekstrak dari struk pembayaran sangat terperinci hingga \emph{level bounding box} atribut. Informasi yang digunakan dari seluruh data ekstraksi tersebut terbatas pada atribut relevan sebagai berikut.
 \begin{enumerate}
     \item \texttt{<s\_menu>} dan \texttt{</s\_menu>} untuk daftar menu dengan atribut berikut.
     \begin{enumerate}

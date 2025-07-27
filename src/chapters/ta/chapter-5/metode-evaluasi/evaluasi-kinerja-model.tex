@@ -11,9 +11,9 @@ Evaluasi kinerja model dilakukan dengan membandingkan hasil prediksi model denga
         \hline
         \textbf{Kategori} & \textbf{Definisi} \\ \hline
         \emph{True Positive} (TP) & Seluruh atribut yang ada di \emph{Ground Truth} (GT) terprediksi dengan nilai yang benar. \\ \hline
-        \emph{False Positive} (FP) & Terdapat atribut yang ada di GT dengan nilai yang tidak kosong, tetapi tidak muncul di hasil prediksi atau muncul dengan nilai kosong. \\ \hline
-        \emph{False Negative} (FN) & Terdapat atribut yang ada di GT dengan nilai yang tidak kosong, tetapi tidak muncul di hasil prediksi atau muncul dengan nilai kosong. \\ \hline
-        \emph{True Negative} (TN) & Terdapat atribut yang tidak ada di GT dan tidak muncul di hasil prediksi. \\ \hline
+        \emph{False Positive} (FP) & Terdapat atribut yang \textbf{tidak} ada di GT, tetapi \textbf{muncul} di hasil prediksi. \\ \hline
+        \emph{False Negative} (FN) & Terdapat atribut yang \emph{ada} di GT dengan nilai yang tidak kosong, tetapi diprediksi dengan salah (kosong, tidak terprediksi, atau tidak sesuai dengan GT). \\ \hline
+        \emph{True Negative} (TN) & Terdapat atribut yang tidak ada di GT dan tidak muncul di hasil prediksi. Metrik ini jarang digunakan untuk evaluasi pada ekstraksi informasi dokumen. \\ \hline
     \end{tabularx}
 \end{table}
 
