@@ -16,15 +16,15 @@ Subbab ini menjelaskan mengenai analisis kebutuhan sistem yang akan dibangun. Ma
 \hline
 P-01 & Pengguna merasa kesulitan untuk menyadari seberapa besar total pengeluaran mereka yang dapat terakumulasi dengan cepat dari transaksi mereka. \\
 \hline
-P-02 & Pengguna merasa kesulitan untuk mencatat pengeluaran secara manual dari berbagai bukti transaksi. Proses ini memakan waktu, rentan terhadap kesalahan input, dan sering kali tidak dilakukan secara konsisten. \\
+P-02 & Pengguna merasa kesulitan untuk mencatat pengeluaran secara manual dari berbagai bukti transaksi. Proses ini memakan waktu, rentan terhadap kesalahan input. \\
 \hline
-P-03 & Pengguna merasa kesulitan untuk memetakan dan mengelompokkan informasi dari bukti pembayaran yang tidak terstruktur sehingga pengguna kesulitan untuk memasukkan data ke dalam \emph{platform} keuangan. \\
+P-03 & Pengguna merasa kesulitan untuk memetakan informasi dari bukti pembayaran yang tidak terstruktur sehingga data tidak masuk dengan tepat pada \emph{platform} keuangan. \\
 \hline
 \end{tabularx}
 \end{table}
 % \begin{enumerate}
 %     \item Pengguna merasa kesulitan untuk menyadari seberapa besar total pengeluaran mereka yang dapat terakumulasi dengan cepat dari transaksi mereka.
-%     \item Pengguna merasa kesulitan untuk mencatat pengeluaran secara manual dari berbagai bukti transaksi. Proses ini memakan waktu, rentan terhadap kesalahan input, dan seringkali tidak dilakukan secara konsisten.
+%     \item Pengguna merasa kesulitan untuk mencatat pengeluaran secara manual dari berbagai bukti transaksi. Proses ini memakan waktu, rentan terhadap kesalahan input
 %     \item Pengguna merasa kesulitan untuk mengklasifikasikan dan mengelompokkan informasi dari bukti pembayaran yang tidak terstruktur sehingga pengguna kesulitan untuk memasukkan data ke dalam \emph{platform} keuangan.
 % \end{enumerate}
 
@@ -35,19 +35,19 @@ Berdasarkan identifikasi masalah pengguna pada \autoref{subsec:identifikasi-masa
 \begin{table}[h!]
 \caption{Kebutuhan Fungsional Sistem}
 \label{tab:kebutuhan-fungsional}
-\begin{tabularx}{\linewidth}{|l|X|}
+\begin{tabularx}{\linewidth}{|l|X|l|}
 \hline
-\textbf{Kode} & \textbf{Kebutuhan Fungsional} \\
+\textbf{Kode} & \textbf{Kebutuhan Fungsional} & \textbf{Kode P}\\
 \hline
-FR-01 & Sistem harus dapat menerima masukan berupa gambar bukti transaksi, yaitu struk fisik cetakan dan tangkapan layar bukti pembayaran digital, yaitu QRIS dan transfer. \\
+FR-01 & Sistem harus dapat menerima masukan berupa gambar bukti transaksi, yaitu struk fisik cetakan dan tangkapan layar bukti pembayaran digital, yaitu QRIS dan transfer. & P-02\\
 \hline
-FR-02 & Sistem harus dapat memotong area relevan transaksi berdasarkan \newline keinginan pengguna dari gambar yang diunggah. \\
+FR-02 & Sistem harus dapat memotong area relevan transaksi berdasarkan keinginan pengguna dari gambar yang diunggah. & P-02\\
 \hline
-FR-03 & Sistem harus dapat mengekstrak dan memetakan informasi \newline kunci, yaitu total pembayaran, tipe transaksi, dan target dari bukti QRIS dan transfer. Informasi kunci yang perlu dipetakan dari struk adalah total pembayaran \\
+FR-03 & Sistem harus dapat mengekstrak dan memetakan informasi kunci setiap bukti transaksi, yaitu total pembayaran. & P-02, P-03\\
 \hline
-FR-04 & Sistem harus menampilkan hasil ekstraksi kepada pengguna dan menyediakan fungsi mengoreksi data jika terdapat ketidakakuratan. \\
+FR-04 & Sistem harus menampilkan hasil ekstraksi kepada pengguna dan menyediakan fungsi mengoreksi data jika terdapat ketidakakuratan. & P-02\\
 \hline
-FR-05 & Sistem harus dapat menunjukkan total pengeluaran pengguna dan menampilkan total pengeluaran per kategori. \\
+FR-05 & Sistem harus dapat menunjukkan total pengeluaran pengguna dan menampilkan total pengeluaran per kategori. & P-01 \\
 \hline
 \end{tabularx}
 \end{table}

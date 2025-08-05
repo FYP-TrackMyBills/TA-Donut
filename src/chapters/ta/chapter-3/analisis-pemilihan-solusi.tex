@@ -1,11 +1,11 @@
 \section{Analisis Pemilihan Solusi}
 \label{sec:analisis-pemilihan-solusi}
 
-Subbab ini akan menjelaskan mengenai desain konsep solusi yang akan digunakan pada sistem yang akan dikembangkan. Penulis akan mengeksplorasi berbagai alternatif solusi yang dapat digunakan untuk memenuhi kebutuhan sistem yang telah diidentifikasi pada \autoref{sec:analisis-kebutuhan}. Setiap alternatif solusi akan dianalisis berdasarkan kriteria yang telah ditentukan sesuai dengan kebutuhan sistem dan tugas akhir ini.
+Subbab ini akan menjelaskan mengenai desain konsep solusi yang akan digunakan pada sistem yang akan dibangun. Berbagai alternatif solusi yang dapat digunakan dieksplorasi untuk memenuhi kebutuhan sistem yang telah diidentifikasi pada \autoref{sec:analisis-kebutuhan}. Setiap alternatif solusi dianalisis berdasarkan kriteria yang telah ditentukan sesuai dengan kebutuhan sistem dan tugas akhir ini.
 
 \subsection{Alternatif Solusi}
 \label{subsec:alternatif-solusi}
-Setiap alternatif solusi yang akan dijelaskan pada subbab ini merupakan alternatif yang dipertimbangkan untuk memenuhi kebutuhan ekstraksi data dokumen. Metode ekstraksi data dokumen adalah metode yang digunakan untuk mengekstrak data dari dokumen digital yang digunakan, yaitu struk dan bukti pembayaran. Alternatif solusi yang dapat dipertimbangkan dapat dibagi menjadi alternatif solusi yang memerlukan \ocr{} dan alternatif solusi yang tidak memerlukan \ocr. 
+Setiap alternatif solusi yang dijelaskan pada subbab ini merupakan alternatif yang dipertimbangkan untuk memenuhi kebutuhan sistem dan masalah yang dihadapi oleh pengguna. Metode ekstraksi data dokumen adalah metode yang digunakan untuk mengekstrak data dari dokumen digital yang digunakan, yaitu struk dan bukti pembayaran. Alternatif solusi yang dapat dipertimbangkan dapat dibagi menjadi alternatif solusi yang memerlukan \ocr{} dan alternatif solusi yang tidak memerlukan \ocr. 
 
 \subsubsection{Alternatif Solusi yang Tidak Memerlukan OCR}
 \label{subsubsec:alternatif-solusi-tidak-memerlukan-ocr}
@@ -56,8 +56,7 @@ Subbab ini menjelaskan mengenai analisis yang digunakan untuk menentukan solusi 
 &
 \begin{enumerate}
     \item Kurang fleksibel untuk berbagai variasi format dokumen
-    \item Variasi posisi dan kualitas dokumen menjadi tantangan
-    \item Memerlukan OCR sebagai asangan
+    \item Memerlukan OCR sebagai pasangan
 \end{enumerate}
 \\ \hline
 % --- LayoutLM Model ---
@@ -97,8 +96,8 @@ Subbab ini menjelaskan mengenai analisis yang digunakan untuk menentukan solusi 
 &
 \begin{enumerate}
     \item Memerlukan data pelatihan dalam jumlah besar
-    \item Membutuhkan kebutuhan komputasi yang tinggi untuk pelatihan
-    \item Kurang optimal untuk dokumen dengan kualitas rendah
+    \item Membutuhkan sumber daya komputasi yang tinggi
+    \item Kurang optimal untuk dokumen dengan kualitas rendah tanpa pelatihan tambahan
 \end{enumerate}
 \\ \hline
 % --- BERT Model ---
@@ -145,7 +144,7 @@ Subbab ini menjelaskan mengenai analisis yang digunakan untuk menentukan solusi 
 \textbf{R-CNN} &
 \begin{enumerate}
     \item Lebih akurat mendeteksi objek pada gambar yang kompleks dibandingkan dengan YOLO
-    \item Cocok untuk dokumen dengan elemen visual yang signifikan
+    \item Cocok untuk dokumen dengan elemen visual yang besar
 \end{enumerate}
 &
 \begin{enumerate}
