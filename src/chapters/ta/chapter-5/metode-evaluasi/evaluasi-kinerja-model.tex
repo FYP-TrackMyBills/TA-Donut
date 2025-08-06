@@ -29,44 +29,54 @@ Penentuan bobot untuk setiap atribut yang diekstrak menggunakan pendekatan \emph
 
 \begin{table}[h!]
     \centering
-    \caption{Klasifikasi Tingkat Risiko Setiap Metrik Pembobotan}
+    \caption{Klasifikasi Tingkat Risiko untuk Setiap Kriteria Evaluasi}
     \label{tab:risk-classification}
-    \begin{tabularx}{\textwidth}{|p{3cm}|p{1.5cm}|X|}
+    % --- THE FIX IS HERE ---
+    % We use the standard `tabular` environment
+    % and the `m{width}` column type for vertical centering.
+    \begin{tabular}{|m{3cm}|l|m{7.5cm}|}
         \hline
-        \textbf{Tingkat Risiko} & \textbf{Bobot} & \textbf{Karakteristik} \\ \hline
-        Risiko Tinggi & 3.0 & TINGGI \newline  impact pada ketiga kriteria \\ \hline
-        Risiko Menengah & 2.0 & TINGGI \newline  impact pada satu kriteria, SEDANG pada lainnya \\ \hline
-        Risiko Rendah & 1.0 & RENDAH-SEDANG impact pada semua kriteria \\ \hline
-    \end{tabularx}
+        \textbf{Kriteria} & \textbf{Tingkat Risiko} & \textbf{Definisi} \\ \hline
+        
+        \multirow{2}{=}{Dampak Bisnis} & TINGGI & Kesalahan langsung mempengaruhi keputusan finansial atau akurasi pencatatan keuangan \\ \cline{2-3}
+        & RENDAH & Tidak mempengaruhi keputusan finansial atau analisis pengeluaran utama \\ \hline
+        
+        % Note: I removed the manual \newline. The m{} column handles wrapping.
+        \multirow{2}{=}{Dampak Pengalaman Pengguna} & TINGGI & Tidak ada mekanisme verifikasi alternatif atau kesalahan sulit dideteksi melalui konteks \\ \cline{2-3}
+        & RENDAH & Kesalahan mudah dideteksi atau tidak mengganggu fungsionalitas sistem \\ \hline
+
+        \multirow{2}{=}{Biaya Pemulihan Kesalahan} & TINGGI & Memerlukan upaya signifikan untuk memverifikasi dan memperbaiki kesalahan \\ \cline{2-3}
+        & RENDAH & Mudah diverifikasi, dikoreksi, atau diabaikan tanpa dampak signifikan \\ \hline
+    \end{tabular}
 \end{table}
 
 \begin{table}[h!]
     \centering
-    \caption{Analisis Risk-Impact untuk \emph{Base Model}}
+    \caption{Analisis \emph{Risk-Impact} untuk \emph{Base Model}}
     \label{tab:risk-impact-base-model}
-    \begin{tabularx}{\textwidth}{|p{1.5cm}|p{1cm}|X|X|X|}
+    \begin{tabularx}{\textwidth}{|p{3cm}|p{1cm}|p{2cm}|p{2.5cm}|X|}
         \hline
-        \textbf{Atribut} & \textbf{Bobot} & \textbf{Dampak Bisnis} & \textbf{Dampak Pengalaman Pengguna} & \textbf{Biaya Kesalahan} \\ \hline
-        Total transaksi & 2.0 & TINGGI \newline Kesalahan nominal langsung mempengaruhi pencatatan pengeluaran & RENDAH \newline Pelacakan kesalahan dapat dilakukan dengan mengkalkulasikan harga setiap barang & RENDAH \newline Mudah dikoreksi dengan menghitung ulang dari detail item yang tersedia \\ \hline
-        Nama menu & 1.0 & RENDAH \newline Kesalahan nama tidak mempengaruhi perhitungan finansial & RENDAH \newline Pengguna dapat mengenali item berdasarkan konteks pembelian & RENDAH \newline Mudah dikoreksi secara manual berdasarkan ingatan pengguna \\ \hline
-        Jumlah menu & 1.0 & SEDANG \newline  Mempengaruhi verifikasi total jika dikombinasikan dengan harga & RENDAH \newline Inkonsistensi dapat dideteksi dengan membandingkan total transaksi & RENDAH \newline Mudah diverifikasi dan dikoreksi berdasarkan struk fisik \\ \hline
-        Harga menu & 1.0 & SEDANG \newline  Mempengaruhi verifikasi total jika dikombinasikan dengan jumlah & RENDAH \newline Inkonsistensi dapat dideteksi dengan membandingkan total transaksi & RENDAH \newline Mudah diverifikasi dan dikoreksi berdasarkan struk fisik \\ \hline
+        \textbf{Atribut} & \textbf{Bobot} & \textbf{Dampak Bisnis} & \textbf{Dampak Pengalaman Pengguna} & \textbf{Biaya Pemulihan Kesalahan} \\ \hline
+        Total transaksi & 2.0 & TINGGI & TINGGI & RENDAH \\ \hline
+        Nama menu & 1.0 & RENDAH & RENDAH & RENDAH \\ \hline
+        Jumlah menu & 1.0 & RENDAH & RENDAH & RENDAH \\ \hline
+        Harga menu & 1.0 & RENDAH & RENDAH & RENDAH \\ \hline
     \end{tabularx}
 \end{table}
 
 \begin{table}[h!]
     \centering
-    \caption{Analisis Penentuan Bobot Atribut \emph{Custom Model}}
+    \caption{Analisis \emph{Risk-Impact} untuk \emph{Custom Model}}
     \label{tab:risk-impact-custom-model}
-    \begin{tabularx}{\textwidth}{|p{1.5cm}|p{1cm}|X|X|X|}
+    \begin{tabularx}{\textwidth}{|p{3cm}|p{1cm}|p{2cm}|p{2.5cm}|X|}
         \hline
-        \textbf{Atribut} & \textbf{Bobot} & \textbf{Dampak Bisnis} & \textbf{Dampak Pengalaman Pengguna} & \textbf{Biaya Kesalahan} \\ \hline
-        Total transaksi & 3.0 & TINGGI \newline Kesalahan nominal langsung mempengaruhi akurasi pencatatan keuangan & TINGGI \newline Tidak ada mekanisme verifikasi alternatif, pengguna harus mempercayai hasil sepenuhnya & TINGGI \newline Memerlukan upaya signifikan untuk memverifikasi melalui riwayat transaksi bank atau aplikasi pembayaran \\ \hline
-        Target transaksi & 2.0 & SEDANG \newline  Mempengaruhi kategorisasi pengeluaran dan identifikasi merchant & SEDANG \newline  Kesalahan dapat dideteksi jika nama merchant tidak familiar & RENDAH \newline  Relatif mudah dikoreksi berdasarkan pengetahuan pengguna tentang transaksi \\ \hline
-        Tipe transaksi & 2.0 & SEDANG \newline  Mempengaruhi analisis pola spending dan fee calculation & SEDANG \newline  Kesalahan dapat dideteksi melalui konteks aplikasi yang digunakan & RENDAH \newline  Mudah dikoreksi berdasarkan riwayat aplikasi pembayaran \\ \hline
-        Aplikasi & 1.0 & RENDAH \newline  Tidak mempengaruhi keputusan finansial utama & RENDAH \newline Kesalahan mudah dideteksi berdasarkan interface yang digunakan & RENDAH \newline  Mudah dikoreksi berdasarkan ingatan pengguna \\ \hline
-        Waktu transaksi & 1.0 & RENDAH \newline  Tidak mempengaruhi analisis pengeluaran utama & RENDAH \newline  Kesalahan tidak mengganggu fungsi pencatatan & RENDAH \newline  Mudah diabaikan atau dikoreksi jika diperlukan \\ \hline
-        ID transaksi & 1.0 & RENDAH \newline  Hanya digunakan untuk audit trail, tidak mempengaruhi decision making & RENDAH \newline  Kesalahan tidak mengganggu pengalaman pengguna dalam pencatatan & RENDAH \newline  Mudah diabaikan karena tidak digunakan untuk analisis sehari-hari \\ \hline
+        \textbf{Atribut} & \textbf{Bobot} & \textbf{Dampak Bisnis} & \textbf{Dampak Pengalaman Pengguna} & \textbf{Biaya Pemulihan Kesalahan} \\ \hline
+        Total transaksi & 3.0 & TINGGI & TINGGI & TINGGI \\ \hline
+        Target transaksi & 2.0 & TINGGI & TINGGI & RENDAH \\ \hline
+        Tipe transaksi & 2.0 & TINGGI & TINGGI & RENDAH \\ \hline
+        Aplikasi & 1.0 & RENDAH & RENDAH & RENDAH \\ \hline
+        Waktu transaksi & 1.0 & RENDAH & RENDAH & RENDAH \\ \hline
+        ID transaksi & 1.0 & RENDAH & RENDAH & RENDAH \\ \hline
     \end{tabularx}
 \end{table}
 
