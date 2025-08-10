@@ -1,96 +1,294 @@
-\chapter{Contoh Data dan Hasil Evaluasi}
+\chapter{Contoh Data dan Hasil Ekstraksi}
 \label{chapter:contoh-data}
 
-\section{Hasil Evaluasi Model pada Data QRIS}
+\section{Hasil Ekstraksi Model pada Data QRIS BCA}
 
-\begin{table}[htbp]
+\begin{table}[h!]
     \centering
-    \begin{tabularx}{\textwidth}{|p{4.2cm}|X|X|}
-        \hline
-        \textbf{Data Gambar} & \textbf{Kondisi} & \textbf{Hasil Ekstraksi} \\ \hline
-        \includegraphics[width=0.25\textwidth]{images/contoh-data/qris-1.jpg} & 
-         & 
-         \\ \hline
-        \includegraphics[width=0.25\textwidth]{images/contoh-data/qris-2.jpg} & 
-         & 
-         \\ \hline
+    \begin{tabularx}{\textwidth}{m{0.3\textwidth} X}
+        \includegraphics[width=\linewidth]{images/contoh-data/qris-1.jpg}
+        & 
+        Bukti pembayaran QRIS dari aplikasi BCA. Gambar ini tidak memiliki informasi \texttt{transaction\_identifier} yang eksplisit, sehingga hasil ekstraksi untuk atribut tersebut kosong. Gambar berupa tangkapan layar dari aplikasi myBCA. Transaksi ditujukan kepada BP DAGO dengan metode pembayaran QRIS sejumlah Rp 37.446,- pada 25 Juni 2025 pukul 11:37:52 WIB. Gambar tertangkap jelas dan tidak buram. \\
     \end{tabularx}
 \end{table}
 
-\begin{table}[htbp]
+\textbf{Hasil Ekstraksi:}
+\begin{lstlisting}[style=jsonstyle]
+    {
+      "total_amount": "37446",
+      "transaction_time": "2025-06-25T11:37:52Z",
+      "transaction_identifier": "",
+      "type": "QRIS",
+      "target_name": "BP DAGO",
+      "application": "BCA"
+    }
+\end{lstlisting}
+
+\clearpage
+
+\section{Hasil Ekstraksi Model pada Data QRIS Gopay}
+
+\begin{table}[h!]
     \centering
-    \begin{tabularx}{\textwidth}{|p{4.2cm}|X|X|}
-        \hline
-        \textbf{Data Gambar} & \textbf{Kondisi} & \textbf{Hasil Ekstraksi} \\ \hline
-        \includegraphics[width=0.25\textwidth]{images/contoh-data/qris-3.jpg} & 
-         & 
-         \\ \hline
-        \includegraphics[width=0.25\textwidth]{images/contoh-data/qris-4.jpg} & 
-         & 
-         \\ \hline
+    \begin{tabularx}{\textwidth}{m{0.3\textwidth} X}
+        \includegraphics[width=\linewidth]{images/contoh-data/qris-2.jpg}
+        & 
+        Bukti pembayaran QRIS dari aplikasi Gopay. Gambar ini tidak memiliki informasi \texttt{transaction\_identifier} dan \texttt{transaction\_time} yang eksplisit, sehingga hasil ekstraksi untuk atribut tersebut diharapkan kosong. Gambar berupa tangkapan layar dari aplikasi Gopay. Transaksi ditujukan kepada IOH - OTTOCASH dengan metode pembayaran QRIS sejumlah Rp 69.000,-. Gambar tertangkap jelas dan tidak buram. \\
     \end{tabularx}
 \end{table}
 
-\newpage
+\textbf{Hasil Ekstraksi:}
+\begin{lstlisting}[style=jsonstyle]
+    {
+      "total_amount": "69000",
+      "transaction_time": "",
+      "transaction_identifier": "",
+      "type": "QRIS",
+      "target_name": "IOH - OTTOCASH",
+      "application": "Gopay"
+    }
+\end{lstlisting}
 
-\section{Hasil Evaluasi Model pada Data Transfer}
+\clearpage
 
-\begin{table}[htbp]
+\section{Hasil Ekstraksi Model pada Data QRIS Neobank}
+
+\begin{table}[h!]
     \centering
-    \begin{tabularx}{\textwidth}{|p{4.2cm}|X|X|X|}
-        \hline
-        \textbf{Data Gambar} & \textbf{Kondisi} & \textbf{Hasil Ekstraksi} \\ \hline
-        \includegraphics[width=0.3\textwidth]{images/contoh-data/tf-1.jpg} & 
-         & 
-         \\ \hline
-        \includegraphics[width=0.3\textwidth]{images/contoh-data/tf-2.jpg} & 
-         & 
-         \\ \hline
+    \begin{tabularx}{\textwidth}{m{0.3\textwidth} X}
+        \includegraphics[width=\linewidth]{images/contoh-data/qris-3.jpg}
+        & 
+        Bukti pembayaran QRIS dari aplikasi Neobank dengan informasi lengkap. Gambar berupa tangkapan layar dari aplikasi Neobank. Transaksi ditujukan kepada TUNAS PADI dengan metode pembayaran QRIS sejumlah Rp 47.197,-. Gambar tertangkap jelas dan tidak buram. \\
     \end{tabularx}
 \end{table}
 
-\begin{table}[htbp]
+\textbf{Hasil Ekstraksi:}
+\begin{lstlisting}[style=jsonstyle]
+    {
+      "total_amount": "47197",
+      "transaction_time": "2025-05-28T12:53:59Z",
+      "transaction_identifier": "250528276959053530",
+      "type": "QRIS",
+      "target_name": "TUNAS PADI",
+      "application": "Neobank"
+    }
+\end{lstlisting}
+
+\clearpage
+
+\section{Hasil Ekstraksi Model pada Data QRIS Seabank}
+
+\begin{table}[h!]
     \centering
-    \begin{tabularx}{\textwidth}{|p{4.2cm}|X|X|}
-        \hline
-        \textbf{Data Gambar} & \textbf{Kondisi} & \textbf{Hasil Ekstraksi}\\ \hline
-        \includegraphics[width=0.3\textwidth]{images/contoh-data/tf-3.jpg} & 
-         & 
-         \\ \hline
-        \includegraphics[width=0.3\textwidth]{images/contoh-data/tf-4.jpg} & 
-         & 
-         \\ \hline
+    \begin{tabularx}{\textwidth}{m{0.3\textwidth} X}
+        \includegraphics[width=\linewidth]{images/contoh-data/qris-4.jpg}
+        & 
+        Bukti pembayaran QRIS dari aplikasi Seabank tanpa atribut \texttt{transaction\_time}, sehingga atribut tersebut tidak tercantum. Gambar berupa tangkapan layar dari aplikasi Seabank. Transaksi ditujukan kepada Kantin Hj. Yus, Dago dengan metode pembayaran QRIS sejumlah Rp 21.000,-. Gambar tertangkap jelas dan tidak buram. \\
     \end{tabularx}
 \end{table}
 
-\newpage
+\textbf{Hasil Ekstraksi:}
+\begin{lstlisting}[style=jsonstyle]
+    {
+      "total_amount": "21000",
+      "transaction_identifier": "202505294350586852278",
+      "type": "QRIS",
+      "target_name": "Kantin Hj Yus, Dago",
+      "application": "Seabank"
+    }
+\end{lstlisting}
 
-\section{Hasil Evaluasi Model pada Data Struk}
+\clearpage
 
-\begin{table}[htbp]
+\section{Hasil Ekstraksi Model pada Data Transfer BCA}
+
+\begin{table}[h!]
     \centering
-    \begin{tabularx}{\textwidth}{|p{4.2cm}|X|X|}
-        \hline
-        \textbf{Data Gambar} & \textbf{Kondisi} & \textbf{Hasil Ekstraksi}\\ \hline
-        \includegraphics[width=0.3\textwidth]{images/contoh-data/struk-1.jpg} & 
-         & 
-         \\ \hline
-        \includegraphics[width=0.3\textwidth]{images/contoh-data/struk-2.jpg} & 
-         & 
-         \\ \hline
-        \includegraphics[width=0.3\textwidth]{images/contoh-data/struk-3.jpg} & 
-         & 
-         \\ \hline
+    \begin{tabularx}{\textwidth}{m{0.3\textwidth} X}
+        \includegraphics[width=\linewidth]{images/contoh-data/tf-1.jpg}
+        & 
+        Bukti pembayaran transfer dari aplikasi BCA tanpa atribut \texttt{transaction\_identifier}, sehingga atribut tersebut tidak tercantum. Gambar berupa tangkapan layar dari aplikasi BCA. Transaksi ditujukan kepada MATTHEW NIK dengan metode pembayaran transfer sejumlah Rp 23.000,-. Gambar tertangkap jelas dan tidak buram. \\
     \end{tabularx}
 \end{table}
 
-\begin{table}[htbp]
+\textbf{Hasil Ekstraksi:}
+\begin{lstlisting}[style=jsonstyle]
+    {
+      "total_amount": "23000",
+      "transaction_time": "2025-05-04T18:47:51Z",
+      "type": "transfer",
+      "target_name": "MATTHEW NIK",
+      "application": "BCA"
+    }
+\end{lstlisting}
+
+\clearpage
+
+\section{Hasil Ekstraksi Model pada Data Transfer Gopay}
+
+\begin{table}[h!]
     \centering
-    \begin{tabularx}{\textwidth}{|p{4.2cm}|X|X|}
-        \hline
-        \textbf{Data Gambar} & \textbf{Kondisi} & \textbf{Hasil Ekstraksi}\\ \hline
-        \includegraphics[width=0.3\textwidth]{images/contoh-data/struk-4.jpg} & 
-         & 
-         \\ \hline
+    \begin{tabularx}{\textwidth}{m{0.3\textwidth} X}
+        \includegraphics[width=\linewidth]{images/contoh-data/tf-2.jpg}
+        & 
+        Bukti pembayaran transfer dari aplikasi Gopay tanpa atribut \texttt{transaction\_identifier}, sehingga atribut tersebut tidak tercantum. Gambar berupa tangkapan layar dari aplikasi Gopay. Transaksi ditujukan kepada Fellie dengan metode pembayaran transfer sejumlah Rp 158.000,-. Gambar tertangkap jelas dan tidak buram. \\
     \end{tabularx}
 \end{table}
+
+\textbf{Hasil Ekstraksi:}
+\begin{lstlisting}[style=jsonstyle]
+    {
+      "total_amount": "158000",
+      "transaction_time": "2025-05-31T21:30:00Z",
+      "transaction_identifier": "0420250531143",
+      "type": "transfer",
+      "target_name": "Fellie",
+      "application": "Gopay"
+    }
+\end{lstlisting}
+
+\clearpage
+
+\section{Hasil Ekstraksi Model pada Data Transfer Seabank}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabularx}{\textwidth}{m{0.3\textwidth} X}
+        \includegraphics[width=\linewidth]{images/contoh-data/tf-3.jpg}
+        & 
+        Bukti pembayaran transfer dari aplikasi Seabank dengan informasi lengkap. Gambar berupa tangkapan layar dari aplikasi Seabank. Transaksi ditujukan kepada Fery Kurniawan dengan metode pembayaran transfer sejumlah Rp 30.000,-. Gambar tertangkap jelas dan tidak buram. \\
+    \end{tabularx}
+\end{table}
+
+\textbf{Hasil Ekstraksi:}
+\begin{lstlisting}[style=jsonstyle]
+    {
+      "total_amount": "30000",
+      "transaction_time": "2025-05-08T19:38:00Z",
+      "transaction_identifier": "20250508435036451926",
+      "type": "transfer",
+      "target_name": "Fery Kurniawan",
+      "application": "Seabank"
+    }
+\end{lstlisting}
+
+\clearpage
+
+\section{Hasil Ekstraksi Model pada Data Transfer Neobank}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabularx}{\textwidth}{m{0.3\textwidth} X}
+        \includegraphics[width=\linewidth]{images/contoh-data/tf-4.jpg}
+        & 
+        Bukti pembayaran transfer dari aplikasi Neobank tanpa informasi \texttt{transaction\_identifier} dan \texttt{transaction\_time}. Gambar berupa tangkapan layar dari aplikasi Neobank. Transaksi ditujukan kepada VINCENT FRANSTYO dengan metode pembayaran transfer sejumlah Rp 500.000,-. Gambar tertangkap jelas dan tidak buram. Hasil ekstraksi salah memprediksi \texttt{transaction\_identifier} dengan mencantumkan nilai yang tidak sesuai. \\
+    \end{tabularx}
+\end{table}
+
+\textbf{Hasil Ekstraksi:}
+\begin{lstlisting}[style=jsonstyle]
+    {
+      "total_amount": "500000",
+      "transaction_identifier": "901600674722",
+      "type": "transfer",
+      "target_name": "VINCENT FRANSTYO",
+      "application": "Neobank"
+    }
+\end{lstlisting}
+
+\clearpage
+
+\section{Hasil Ekstraksi Model pada Data Struk}
+\includegraphics[width=.3\linewidth]{images/contoh-data/struk-lil-buram.jpg}
+
+\textbf{Deskripsi:}
+Gambar struk dari restoran yang berisi beberapa menu yang dipesan. Gambar ini memiliki informasi lengkap mengenai nama menu, jumlah, dan harga. Gambar sedikit buram dan terdiri dari 3 \emph{item}. Gambar berasal dari \dataset{} CORD-v2 dengan total pembayaran Rp 91.000,-.
+
+\textbf{Hasil Ekstraksi:}
+\begin{lstlisting}[style=jsonstyle]
+    {
+      "menu": [
+        {
+          "nm": "J.STB PROMO",
+          "price": "17500"
+        },
+        {
+          "nm": "Y.B.BAT",
+          "price": "46000"
+        },
+        {
+          "nm": "Y.BASO PROM",
+          "price": "27500"
+        }
+      ],
+      "total": {
+        "total_price": "91000"
+      }
+    }
+\end{lstlisting}
+
+\includegraphics[width=.3\linewidth]{images/contoh-data/struk-3.jpg}
+
+\textbf{Deskripsi:}
+Gambar ini memiliki informasi lengkap mengenai nama menu, jumlah, dan harga, dan total. Gambar tidak buram dan tertangkap jelas dengan kamera.
+
+\textbf{Hasil Ekstraksi:}
+\begin{lstlisting}[style=jsonstyle]
+    {
+      "menu": [
+        {
+          "nm": "Bintang Bremer",
+          "cnt": "1",
+          "price": "59,000"
+        },
+        {
+          "nm": "Chicken H-H",
+          "cnt": "1",
+          "price": "190,000"
+        },
+        {
+          "nm": "Ades",
+          "cnt": "1",
+          "price": "10,000"
+        }
+      ],
+      "total": {
+        "total_price": "302,016"
+      }
+    }
+\end{lstlisting}
+
+\clearpage
+
+\includegraphics[width=.3\linewidth]{images/contoh-data/struk-lecek.jpg}
+
+\textbf{Deskripsi:}
+Gambar ini memiliki informasi lengkap mengenai nama menu, jumlah, dan harga, dan total. Struk dalam kondisi tidak baik dan pencahayaan tidak terlalu terang. Terdapat sedikit kesalahan pada hasil ekstraksi.
+
+\textbf{Hasil Ekstraksi:}
+\begin{lstlisting}[style=jsonstyle]
+    {
+      "menu": [
+        {
+          "nm": "ICE BLAOKCOFFE",
+          "cnt": "2",
+          "price": "82,000"
+        },
+        {
+          "nm": "AVOCAD COFFEE",
+          "cnt": "1",
+          "price": "61,000"
+        },
+        {
+          "nm": "Ode CHINEN KATSU FF",
+          "cnt": "1",
+          "price": "51,000"
+        }
+      ],
+      "total": {
+        "total_price": "174.600",
+      }
+    }
+\end{lstlisting}
+
+\clearpage

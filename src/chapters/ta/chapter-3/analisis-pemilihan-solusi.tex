@@ -7,9 +7,9 @@ Subbab ini akan menjelaskan mengenai desain konsep solusi yang akan digunakan pa
 \label{subsec:alternatif-solusi}
 Setiap alternatif solusi yang dijelaskan pada subbab ini merupakan alternatif yang dipertimbangkan untuk memenuhi kebutuhan sistem dan masalah yang dihadapi oleh pengguna. Metode ekstraksi data dokumen adalah metode yang digunakan untuk mengekstrak data dari dokumen digital yang digunakan, yaitu struk dan bukti pembayaran. Alternatif solusi yang dapat dipertimbangkan dapat dibagi menjadi alternatif solusi yang memerlukan \ocr{} dan alternatif solusi yang tidak memerlukan \ocr. 
 
-\subsubsection{Alternatif Solusi yang Tidak Memerlukan OCR}
-\label{subsubsec:alternatif-solusi-tidak-memerlukan-ocr}
-Alternatif solusi yang tidak memerlukan \ocr{} adalah tidak memerlukan implementasi fungsi \ocr{} dan akan menghilangkan \emph{pipeline} proses konversi dokumen. Dengan tidak ada implementasi \ocr, alternatif-alternatif solusi berikut mungkin memiliki keunggulan dalam hal efisiensi dan kecepatan. Akan tetapi, perlu adanya inovasi yang dapat menggantikan  kapabilitas \ocr{} untuk melakukan pengenalan karakter dari masukan yang diterima. Beberapa alternatif solusi yang tidak memerlukan \ocr{} adalah sebagai berikut.
+\subsubsection{Alternatif Solusi Ekstraksi}
+\label{subsubsec:alternatif-solusi-ekstraksi}
+Solusi ekstraksi terbagi menjadi ekstraksi menggunakan \ocr{} dan ekstraksi yang tidak menggunakan \ocr. Ekstraksi yang tidak memerlukan \ocr{} adalah tidak memerlukan implementasi fungsi \ocr{} dan akan menghilangkan \emph{pipeline} proses konversi dokumen. Dengan tidak ada implementasi \ocr, alternatif-alternatif solusi berikut mungkin memiliki keunggulan dalam hal efisiensi dan kecepatan. Akan tetapi, perlu adanya inovasi yang dapat menggantikan  kapabilitas \ocr{} untuk melakukan pengenalan karakter dari masukan yang diterima. Beberapa alternatif solusi yang tidak memerlukan \ocr{} adalah sebagai berikut.
 
 \begin{enumerate}
     \item \crnn ~\\ 
@@ -18,8 +18,6 @@ Alternatif solusi yang tidak memerlukan \ocr{} adalah tidak memerlukan implement
     Model ini memperkenalkan pendekatan yang revolusioner karena tidak memerlukan modul \ocr{} yang terpisah. Secara garis besar, Donut menggunakan arsitektur \textit{encoder-decoder} berbasis \transformer. \textit{Encoder}, biasanya \swin, memproses gambar dokumen secara langsung sebagai piksel. \textit{Decoder}, seperti \bart, menerjemahkan representasi visual tersebut menjadi keluaran terstruktur, misalnya format \json, sesuai dengan instruksi yang diberikan. Kemampuannya untuk belajar dan mengonversi dari gambar ke teks secara \textit{end-to-end} menjadikannya sangat fleksibel dan kuat untuk berbagai jenis dokumen tanpa bergantung pada \emph{pipeline} tambahan dengan penggunaan \ocr{} \parencite{kim2021donut}.
 \end{enumerate}
 
-\subsubsection{Alternatif Solusi yang Memerlukan OCR}
-\label{subsubsec:alternatif-solusi-memerlukan-ocr}
 Tugas \ocr{} dalam alternatif ini adalah mengubah teks dari format gambar atau dokumen yang tidak terstruktur menjadi teks yang dapat dibaca dan diproses oleh mesin. Dengan demikian, hasil \ocr{} dapat digunakan sebagai masukan untuk model yang didefinisikan dalam alternatif solusi ini. Beberapa alternatif solusi yang memerlukan \ocr{} adalah sebagai berikut.
 \begin{enumerate}
     \item \rcnn{} ~\\ \rcnn{} dan keluarganya, yaitu Fast R-CNN dan Faster R-CNN, adalah arsitektur deteksi objek dua tahap. Tahap pertama adalah menghasilkan "proposal wilayah", yaitu area-area potensial keberadaan objek. Tahap kedua adalah mengklasifikasikan setiap proposal ini menggunakan \cnn. Pendekatan dua tahap ini membuat \rcnn{} secara umum lebih akurat daripada \yolo. Hasil dari \rcnn{} berupa koordinat \emph{bounding box} digunakan oleh \ocr{} untuk menentukan lokasi yang perlu diekstrak \parencite{xie2021oriented}.
@@ -30,11 +28,25 @@ Tugas \ocr{} dalam alternatif ini adalah mengubah teks dari format gambar atau d
     \bert{} adalah model bahasa murni dan tidak memiliki kemampuan untuk memproses gambar atau tata letak. Dalam alur kerja ekstraksi data dokumen, peran BERT berada di tahap \textit{downstream} setelah gambar dikonversi oleh sistem \ocr. Teks mentah dari \ocr{} kemudian dimasukkan ke \bert{} untuk tugas-tugas \nlp{} seperti klasifikasi teks atau \emph{Named Entity Recognition} (NER) \parencite{koroteev2021bert}. 
 \end{enumerate}
 
+\subsubsection{Alternatif Perangkat Pemrosesan Inferensi}
+\label{subsubsec:alternatif-perangkat-pemrosesan-inferensi}
+
+Pada solusi yang melibatkan model \ml{}, perangkat yang digunakan untuk memroses inferensi merupakan faktor penting yang dapat mempengaruhi kinerja sistem. Terdapat dua alternatif utama untuk melakukan inferensi model, yaitu inferensi pada \emph{server} dan inferensi pada perangkat. Kedua pendekatan ini memiliki karakteristik, kelebihan, dan kekurangan yang berbeda yang dapat mempengaruhi kinerja, pengalaman pengguna, dan implementasi sistem secara keseluruhan.
+
+\begin{enumerate}
+\item Inferensi pada \emph{server} (\emph{server-side inference}) ~\\
+Inferensi pada \emph{server} adalah pendekatan yang menjalankan model pada \emph{server} atau infrastruktur yang terpisah dari perangkat klien. Dalam pendekatan ini, aplikasi \emph{mobile} mengirimkan data yang diperlukan ke \emph{server} melalui API dan \emph{server} melakukan proses inferensi menggunakan model yang telah dilatih. Hasil inferensi kemudian dikirim kembali ke aplikasi \emph{mobile} untuk ditampilkan kepada pengguna. Pendekatan ini memungkinkan penggunaan model yang lebih besar dan kompleks karena tidak terbatas pada kapasitas perangkat klien.
+\item Inferensi pada perangkat (\emph{on-device inference}) ~\\
+Inferensi pada perangkat adalah pendekatan di mana model dijalankan langsung pada perangkat klien, yaitu pada \emph{smartphone} yang digunakan. Dalam pendekatan ini, model yang telah dilatih disimpan secara lokal pada aplikasi \emph{mobile} dan inferensi dilakukan menggunakan sumber daya komputasi yang tersedia pada perangkat tersebut. Pendekatan ini memungkinkan aplikasi untuk berfungsi tanpa memerlukan koneksi internet dan mengamankan data karena tidak perlu proses pengiriman data ke \emph{server}.
+\end{enumerate}
 
 \subsection{Analisis Penentuan Solusi}
 \label{subsec:analisis-penentuan-solusi}
+Subbab ini menjelaskan mengenai analisis yang digunakan untuk menentukan solusi yang akan digunakan pada sistem yang akan dibangun. Alternatif solusi yang telah diidentifikasi dianalisis berdasarkan kriteria yang telah ditentukan untuk mencapai kebutuhan sistem yang telah didefinisikan. Kelebihan dan kekurangan dari setiap alternatif solusi digunakan sebagai bahan pertimbangan pemilihan alternatif solusi.
+\subsubsection{Analisis Penentuan Model}
+\label{subsubsec:analisis-penentuan-model}
 
-Subbab ini menjelaskan mengenai analisis yang digunakan untuk menentukan solusi yang digunakan pada sistem yang akan dibangun. Berbagai alternatif solusi yang telah diidentifikasi pada \autoref{subsec:alternatif-solusi} akan dianalisis berdasarkan kriteria yang telah ditentukan sesuai dengan kebutuhan sistem. Hasil analisis digunakan untuk menentukan solusi yang paling sesuai untuk perancangan dan pengembangan sistem pada \autoref{chapter:desain-implementasi}. Kelebihan dan kekurangan dari setiap alternatif solusi dari subbab sebelumnya akan ditentukan untuk kemudian digunakan sebagai bahan pertimbangan pemilihan alternatif solusi. Kelebihan dan kekurangan setiap alternatif solusi disajikan dalam bentuk tabel pada \autoref{tab:model-comparison}.
+Subbab ini menjelaskan mengenai analisis yang digunakan untuk menentukan model yang digunakan pada sistem yang akan dibangun. Berbagai alternatif model yang telah diidentifikasi pada \autoref{subsec:alternatif-solusi} akan dianalisis berdasarkan kriteria yang telah ditentukan sesuai dengan kebutuhan sistem. Hasil analisis digunakan untuk menentukan model yang paling sesuai untuk perancangan dan pengembangan sistem pada \autoref{chapter:desain-implementasi}. Kelebihan dan kekurangan dari setiap alternatif model dari subbab sebelumnya akan ditentukan untuk kemudian digunakan sebagai bahan pertimbangan pemilihan alternatif model. Kelebihan dan kekurangan setiap alternatif model disajikan dalam bentuk tabel pada \autoref{tab:model-comparison}.
 
 % --- TABEL PERTAMA ---
 \begin{table}[h!]
@@ -156,18 +168,56 @@ Subbab ini menjelaskan mengenai analisis yang digunakan untuk menentukan solusi 
 \end{tabularx}
 \end{table}
 
-Berdasarkan analisis pada \autoref{tab:model-comparison}, \donut{} dipilih sebagai solusi yang akan digunakan pada sistem yang akan dibangun. \donut{} memiliki kelebihan yang signifikan dibandingkan dengan alternatif solusi lainnya, yaitu tidak memerlukan ketergantungan pada \ocr. \donut{} juga telah terbukti baik untuk mengekstrak data dari gambar dokumen semi-terstruktur seperti formulir, faktur, dan kartu identitas. Selain itu, \donut{} juga merupakan model \sota{} \emph{end-to-end} yang telah digunakan pada berbagai penelitian terdahulu. Seluruh keunggulan \donut{} membuat \donut{} menjadi pilihan yang tepat untuk sistem yang akan dibangun. Tantangan yang perlu diperhatikan adalah kebutuhan komputasi dan data pelatihan yang cukup besar dan spesifik.
+Berdasarkan analisis pada \autoref{tab:model-comparison}, \donut{} dipilih sebagai solusi yang akan digunakan pada sistem yang akan dibangun. \donut{} memiliki kelebihan yang signifikan dibandingkan dengan alternatif solusi lainnya, yaitu tidak memerlukan ketergantungan pada \ocr. \donut{} juga telah terbukti baik untuk mengekstrak data dari gambar dokumen semi-terstruktur seperti formulir, faktur, dan kartu identitas. Selain itu, \donut{} juga merupakan model \sota{} \emph{end-to-end} yang telah digunakan pada berbagai penelitian terdahulu. Seluruh keunggulan \donut{} membuat \donut{} menjadi pilihan yang tepat untuk sistem yang akan dibangun. Tantangan yang perlu diperhatikan adalah kebutuhan komputasi dan data pelatihan yang besar. 
 
+\subsubsection{Analisis Penentuan Perangkat Pemrosesan Inferensi}
+\label{subsubsec:analisis-penentuan-perangkat-pemrosesan-inferensi}
 
-% % --- TABEL KETIGA ---
-% \begin{table}[h!]
-% \ContinuedFloat % Perintah ini mencegah nomor tabel bertambah
-% \caption{Perbandingan kelebihan dan kekurangan model (lanjutan)}
-% % Mengatur agar list tidak memakan banyak ruang vertikal
-% \setlist[enumerate]{itemsep=0mm, topsep=1mm, nosep}
-% \begin{tabularx}{\linewidth}{|p{2cm}|X|X|}
-% \hline
-% \textbf{Model} & \textbf{Kelebihan} & \textbf{Kekurangan} \\
-% \hline
-% \end{tabularx}
-% \end{table}
+Setelah menetapkan \donut{} sebagai model yang akan digunakan, langkah selanjutnya adalah menentukan perangkat pemrosesan inferensi yang optimal untuk implementasi sistem. \autoref{tab:inference-device-comparison} menunjukkan perbandingan sistematis antara inferensi berbasis server dan inferensi berbasis perangkat.
+
+\begin{table}[h!]
+\caption{Perbandingan perangkat pemrosesan inferensi}
+\label{tab:inference-device-comparison}
+\begin{tabularx}{\linewidth}{|p{3cm}|p{2cm}|p{2cm}|X|}
+\hline
+\textbf{Kriteria} & \textbf{\emph{Server-side}} & \textbf{\emph{On-device}} & \textbf{Keterangan} \\
+\hline
+\textbf{Konektivitas} & Wajib & Opsional & Koneksi ke \emph{server} diperlukan untuk melakukan inferensi. \\
+\hline
+\textbf{Latensi} & Tinggi & Rendah & Pengembalian data dipengaruhi latensi jaringan pada \emph{server}. \\
+\hline
+\textbf{Privasi data} & Rendah & Tinggi & Data sensitif tidak meninggalkan perangkat pengguna pada pendekatan \emph{on-device}. \\
+\hline
+\textbf{Fleksibilitas} & Tinggi & Terbatas & Model yang digunakan fleksibel untuk disesuaikan dengan pendekatan \emph{server-side}. \\
+\hline
+\textbf{Performa komputasi} & Lebih mumpuni & Bervariasi & \emph{Server} dapat memanfaatkan perangkat keras khusus. Pendekatan \emph{on-device} terbatas pada spesifikasi perangkat klien. \\
+\hline
+\textbf{Ukuran aplikasi} & Rendah & Tinggi & \emph{Server} dapat mengelola model tanpa batasan klien. \\
+\hline
+\textbf{Keberhasilan implementasi} & Tinggi & Rendah & Pendekatan \emph{server-side} telah terbukti pada berbagai skenario, sedangkan model \emph{mobile} belum tersedia. \\
+\hline
+\end{tabularx}
+\end{table}
+
+% Berdasarkan analisis pada \autoref{tab:inference-device-comparison}, dapat dilihat bahwa setiap pendekatan memiliki karakteristik yang berbeda untuk setiap kriteria evaluasi. Dari aspek konektivitas, inferensi berbasis server memerlukan koneksi internet yang stabil untuk dapat berfungsi, sementara inferensi berbasis perangkat dapat beroperasi secara offline. Hal ini memberikan keunggulan signifikan bagi on-device inference dalam hal keandalan, terutama untuk aplikasi mobile yang digunakan dalam berbagai kondisi konektivitas.
+
+% Aspek latensi menunjukkan perbedaan mencolok antara kedua pendekatan. Server-side inference mengalami latensi yang lebih tinggi karena harus melalui proses transmisi data melalui jaringan, pemrosesan di server, dan pengiriman hasil kembali ke perangkat. Sebaliknya, on-device inference memberikan respons yang lebih cepat karena seluruh pemrosesan dilakukan secara lokal tanpa ketergantungan pada kecepatan jaringan.
+
+% Dalam hal privasi data, on-device inference memiliki keunggulan absolut karena data dokumen pembayaran yang sensitif tidak pernah meninggalkan perangkat pengguna. Ini sangat penting mengingat sifat sensitif dari data dokumen finansial yang diproses oleh aplikasi. Server-side inference memerlukan transmisi data melalui jaringan yang berpotensi menimbulkan risiko keamanan meskipun telah menggunakan enkripsi.
+
+% Dari segi fleksibilitas model, server-side inference memiliki keunggulan karena dapat menggunakan model yang lebih besar dan kompleks tanpa dibatasi oleh kapasitas perangkat mobile. Namun, kemajuan teknologi mobile AI dan teknik optimasi model telah membuat gap ini semakin mengecil, memungkinkan deployment model yang cukup powerful pada perangkat mobile.
+
+% Aspek biaya operasional menunjukkan perbedaan jangka panjang yang signifikan. Server-side inference memerlukan investasi berkelanjutan untuk infrastruktur server, biaya komputasi cloud, dan bandwidth. Sebaliknya, on-device inference memiliki struktur biaya yang lebih predictable dengan investasi utama pada tahap development dan optimasi model.
+
+% \textbf{Kesimpulan Pemilihan Perangkat Pemrosesan Inferensi}
+
+Berdasarkan evaluasi komprehensif menggunakan tabel perbandingan kriteria pada \autoref{tab:inference-device-comparison}, inferensi pada \emph{server} dipilih sebagai solusi yang akan digunakan pada sistem yang akan dibangun. Keputusan ini didasarkan pada faktor-faktor berikut.
+\begin{enumerate}
+    \item Kinerja ~\\
+    Inferensi pada \emph{server} memungkinkan penggunaan model yang lebih besar. Hal ini menunjukkan tidak ada kebutuhan untuk mengorbankan akurasi model demi efisiensi komputasi pada perangkat \emph{mobile}. Model yang lebih besar dapat menangani variasi dokumen yang lebih kompleks dan memberikan hasil yang lebih akurat.
+    \item Fleksibilitas ~\\
+    Dengan inferensi pada \emph{server}, model dapat diperbarui dan ditingkatkan secara terpusat tanpa perlu mengirim pembaruan ke setiap perangkat pengguna. Ini memungkinkan sistem untuk berjalan tanpa perlu mengganggu pengalaman pengguna dengan pembaruan aplikasi.
+    \item Ukuran dan performa aplikasi ~\\
+    Inferensi pada \emph{server} mengurangi ukuran aplikasi yang perlu diunduh oleh pengguna. Model yang besar tidak perlu disimpan di perangkat, sehingga menghemat ruang penyimpanan pada perangkat dan meningkatkan performa aplikasi klien.
+\end{enumerate}
+

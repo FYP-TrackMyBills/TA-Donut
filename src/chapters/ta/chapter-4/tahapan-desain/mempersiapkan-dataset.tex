@@ -3,7 +3,9 @@
 
 Persiapan \dataset{} merupakan tahapan kritis dalam pengembangan sistem ekstraksi data pembayaran. Strategi persiapan \dataset{} dirancang untuk memastikan kualitas dan representativitas data yang akan digunakan untuk melatih model \donut{} yang telah disesuaikan dengan domain pembayaran Indonesia.
 
-\datasetfl{} yang disiapkan mencakup gambar bukti pembayaran dari berbagai jenis aplikasi pembayaran digital dan struk kertas. \datasetfl{} struk kertas yang digunakan untuk melatih model \donut{} adalah \dataset{} CORD-v2\footnote{\href{https://huggingface.co/datasets/naver-clova-ix/cord-v2}{https://huggingface.co/datasets/naver-clova-ix/cord-v2}} (\emph{Consolidated Receipt Dataset for Post-OCR Parsing}). \datasetfl{} ini dibagi menjadi 800 data latih, 100 data validasi, dan 100 data uji. \datasetfl{} ini digunakan untuk melatih model \donut{} agar dapat mengenali dan mengekstrak informasi dari struk pembayaran. \datasetfl{} ini memiliki keterbatasan, yaitu memiliki bagian yang di-\emph{blur}. Keterbatasan ini membuat \donut{} mengalami kesulitan untuk memprediksi struk pembayaran yang penuh.
+\datasetfl{} yang disiapkan mencakup gambar bukti pembayaran dari berbagai jenis aplikasi pembayaran digital dan struk kertas. \datasetfl{} struk kertas yang digunakan untuk melatih model \donut{} adalah \dataset{} CORD-v2\footnote{\href{https://huggingface.co/datasets/naver-clova-ix/cord-v2}{https://huggingface.co/datasets/naver-clova-ix/cord-v2}} (\emph{Consolidated Receipt Dataset for Post-OCR Parsing}). 
+
+\datasetfl{} CORD-v2 dibagi menjadi 800 data latih, 100 data validasi, dan 100 data uji. \datasetfl{} ini digunakan untuk melatih model \donut{} agar dapat mengenali dan mengekstrak informasi dari struk pembayaran. \datasetfl{} ini memiliki keterbatasan, yaitu memiliki bagian yang diburami. Keterbatasan ini membuat \donut{} mengalami kesulitan untuk memprediksi struk pembayaran yang penuh. Pelatihan ini menghasilkan model \donut{} yang dapat mengenali dan mengekstrak informasi dari struk pembayaran dengan baik, meskipun terdapat bagian yang diburami.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1\textwidth]{images/dataset-preparation-flow.png}
@@ -11,7 +13,9 @@ Persiapan \dataset{} merupakan tahapan kritis dalam pengembangan sistem ekstraks
     \label{fig:dataset-preparation-flow}
 \end{figure}
 
-\datasetfl{} yang digunakan untuk melatih model \donut{} adalah \dataset{} QRIS dan transfer yang berisi gambar bukti pembayaran dari berbagai aplikasi pembayaran digital seperti SeaBank, Neobank, BCA, dan \gopay{} yang perlu dipersiapkan secara sistematis. \autoref{fig:dataset-preparation-flow} menunjukkan alur kerja sistematis dalam persiapan \dataset. Proses dimulai dengan melakukan transaksi melalui aplikasi pembayaran dan mengumpukan gambar bukti pembayaran dari berbagai sumber, yaitu aplikasi pembayaran digital (SeaBank, Neobank, BCA, dan \gopay). Total \dataset{} yang dikumpulkan adalah 412 gambar bukti pembayaran QRIS dan transfer dengan format dan jenis dokumen yang bervariasi.
+\datasetfl{} yang digunakan untuk melatih model \donut{} adalah \dataset{} QRIS dan transfer yang berisi gambar bukti pembayaran dari berbagai aplikasi pembayaran digital seperti SeaBank, Neobank, BCA, dan \gopay{} yang perlu dipersiapkan secara sistematis. Model \donut{} dasar yang akan digunakan adalah model \donut{} yang telah di-\emph{fine-tuned} pada \dataset{} CORD-v2 karena domain dan bahasa yang sama, yaitu domain pembayaran dengan bahasa Indonesia. Dengan menggunakan model dasar ini, model \donut{} dapat lebih cepat beradaptasi dengan data QRIS dan transfer.
+
+\autoref{fig:dataset-preparation-flow} menunjukkan alur kerja sistematis dalam persiapan \dataset. Proses dimulai dengan melakukan transaksi melalui aplikasi pembayaran dan mengumpulkan gambar bukti pembayaran dari berbagai sumber, yaitu aplikasi pembayaran digital (SeaBank, Neobank, BCA, dan \gopay). Total \dataset{} yang dikumpulkan adalah 412 gambar bukti pembayaran QRIS dan transfer dengan format dan jenis dokumen yang bervariasi.
 
 Gambar bukti pembayaran yang telah dikumpulkan kemudian dianotasi secara manual. Proses anotasi dilakukan secara manual untuk menandai informasi penting pada gambar dan memastikan bahwa data yang dianotasikan sesuai. Atribut yang dianotasikan adalah sebagai berikut.
 \begin{enumerate}
