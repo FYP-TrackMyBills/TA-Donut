@@ -1,21 +1,20 @@
-\section{Pendahuluan}
+\section{Introduction}
 
-\subsection{Latar Belakang}
-QRIS (Quick Response Code Indonesian Standard) menjadi metode pembayaran digital yang semakin populer di Indonesia, khususnya di kalangan Generasi Z. Bank Indonesia melaporkan bahwa pada April 2024, jumlah pengguna QRIS mencapai 48,12 juta dengan total nilai transaksi Rp 31,65 triliun \cite{CNNqris2024}. Sebanyak 38\% Gen Z menggunakan QRIS dalam kehidupan sehari-hari, sementara 57\% dari Gen Z lebih memilih transaksi nontunai \cite{qris2023goodstats,jawapos2024qris}.
+\subsection{Background}
+Quick Response Code Indonesian Standard (QRIS) has become an increasingly popular digital payment method in Indonesia, particularly among Generation Z. Bank Indonesia reported that as of April 2024, the number of QRIS users reached 48.12 million with a total transaction value of Rp 31.65 trillion \cite{CNNqris2024}. As many as 38\% of Gen Z use QRIS in their daily lives, while 57\% of Gen Z prefer non-cash transactions \cite{qris2023goodstats,jawapos2024qris}.
 
-Meskipun telah mengadopsi teknologi pembayaran digital, Gen Z menghadapi tantangan dalam pengelolaan keuangan pribadi. Studi \cite{johan2021effect} terhadap 521 mahasiswa Indonesia menunjukkan bahwa 84\% mahasiswa yang belum mendapat pengetahuan finansial tidak melakukan pencatatan pengeluaran, bahkan 78\% yang telah mendapat pengetahuan finansial masih belum mencatat pengeluaran mereka. Permasalahan serupa terjadi secara global, dimana Gen Z merasa kesulitan mengontrol pengeluaran digital yang "hanya beberapa klik" \cite{lewis2019follow}.
+Despite adopting digital payment technology, Gen Z faces challenges in personal financial management. A study by \cite{johan2021effect} involving 521 Indonesian students showed that 84\% of students who had not received financial knowledge did not record their expenses, and even 78\% of those who had received financial knowledge still did not record their expenses. Similar problems occur globally, where Gen Z feels difficulty controlling digital expenses that are "just a few clicks" \cite{lewis2019follow}.
 
-Salah satu penyebab kesulitan pencatatan adalah kompleksitas klasifikasi informasi pada bukti pembayaran yang menyebabkan pencatatan manual menjadi tidak terstruktur dan rentan kesalahan \cite{kaye2014money}. Mengingat 75\% Gen Z menggunakan perangkat mobile sebagai gawai utama \cite{Campfire2024GenZ}, diperlukan solusi mobile-first yang dapat mengotomatisasi proses pencatatan pengeluaran.
+One cause of recording difficulties is the complexity of classifying information on payment receipts, which makes manual recording unstructured and error-prone \cite{kaye2014money}. Considering that 75\% of Gen Z use mobile devices as their primary gadgets \cite{Campfire2024GenZ}, a mobile-first solution is needed that can automate the expense recording process.
 
-\subsection{Kontribusi Penelitian}
-Penelitian ini mengembangkan sistem pencatatan pengeluaran berbasis mobile yang menggunakan teknologi Computer Vision dan Deep Learning tanpa OCR untuk mengekstrak data dari bukti pembayaran. Kontribusi utama meliputi:
+The rise of QRIS adoption has created a unique challenge for Gen Z financial management. Traditional expense tracking methods that worked for cash transactions become inadequate when dealing with the volume and variety of digital payment receipts. Each QRIS transaction generates a digital receipt with varying formats depending on the payment application used, such as GoPay, SeaBank, Neobank, or BCA. Similarly, bank transfer receipts and printed paper receipts from merchants each have different layouts and information structures. This format diversity makes manual data entry time-consuming and prone to classification errors.
 
-\begin{enumerate}
-    \item Pengembangan sistem TrackMyBills berbasis Flutter untuk Gen Z dengan antarmuka yang intuitif
-    \item Implementasi model Donut end-to-end untuk ekstraksi data dari dokumen pembayaran tanpa OCR
-    \item Pengembangan dua model khusus: fine-tuning pada dataset CORD-v2 untuk struk pembayaran dan dataset custom QRIS-TF untuk dokumen pembayaran digital
-    \item Evaluasi komprehensif meliputi pengujian fungsionalitas, kinerja model, dan pengalaman pengguna menggunakan metrik SUS
-\end{enumerate}
+Research in behavioral economics shows that the psychological disconnect between digital payments and actual money spending, known as the "payment depreciation effect," makes it easier for young adults to overspend without realizing it. Gen Z, having grown up with digital technology, is particularly susceptible to this effect. The convenience of digital payments, while beneficial for commerce, creates a challenge for financial awareness and expense tracking discipline.
 
-\subsection{Struktur Paper}
-Paper ini disusun sebagai berikut: Bagian II membahas penelitian terkait dan dasar teori. Bagian III menjelaskan desain dan implementasi sistem. Bagian IV menyajikan hasil evaluasi komprehensif. Bagian V menyimpulkan penelitian dan saran pengembangan selanjutnya.
+\subsection{Research Contribution}
+This research develops a mobile-based expense tracking system that uses Computer Vision and Deep Learning technology without OCR to extract data from payment receipts. The main contributions include the development of TrackMyBills, a Flutter-based system for Gen Z with an intuitive interface, implementation of the end-to-end Donut model for payment document data extraction without OCR, development of two specialized models through fine-tuning on the CORD-v2 dataset for receipt payments and a custom QRIS-TF dataset for digital payment documents, and comprehensive evaluation including functionality testing, model performance, and user experience assessment using SUS metrics.
+
+The research addresses a significant gap in existing financial technology solutions by specifically targeting the unique needs and behaviors of Gen Z users in Indonesia. Unlike existing expense tracking applications that require manual data entry or rely on bank API integration, this system provides an intermediate solution that automates data extraction while maintaining user control and privacy. The system's design philosophy emphasizes ease of use, visual appeal, and workflow efficiency that aligns with Gen Z expectations for mobile applications.
+
+\subsection{Paper Structure}
+This paper is organized as follows: Section II discusses related research and theoretical foundations. Section III explains the system design and implementation methodology. Section IV presents comprehensive evaluation results including functionality testing, model performance analysis, and user experience assessment. Section V concludes the research and provides recommendations for future development.

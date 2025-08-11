@@ -1,37 +1,35 @@
-\section{Kesimpulan dan Saran}
+\section{Conclusion and Future Work}
 
-\subsection{Kesimpulan}
-Penelitian ini berhasil mengembangkan sistem pencatatan pengeluaran berbasis mobile TrackMyBills yang menggunakan model Donut untuk ekstraksi data dari bukti pembayaran QRIS, transfer, dan struk tanpa OCR. Berdasarkan evaluasi komprehensif yang dilakukan, dapat disimpulkan sebagai berikut:
+\subsection{Research Summary}
+This research successfully developed TrackMyBills, a mobile-based expense tracking system addressing Generation Z users' needs in Indonesia's digital payment landscape. The system leverages computer vision and deep learning technologies through the Donut model to automate data extraction from payment receipts without OCR preprocessing.
 
-\begin{enumerate}
-    \item \textbf{Fungsionalitas Sistem}: Seluruh 19 skenario pengujian fungsionalitas berhasil dijalankan dengan baik, menunjukkan bahwa sistem dapat menangani berbagai jenis input dan kasus penggunaan sesuai dengan spesifikasi yang ditetapkan.
-    
-    \item \textbf{Kinerja Model}: Kedua model yang dikembangkan menunjukkan performa yang memuaskan. Base model (CORD-v2) mencapai F1-score 84,68\% dengan MCER 18,85\%, sementara custom model (QRIS-TF) mencapai F1-score 81,50\% dengan MCER 17,20\% dan precision sempurna 100\%.
-    
-    \item \textbf{Pengalaman Pengguna}: Evaluasi menggunakan System Usability Scale (SUS) menghasilkan skor rata-rata 71,83, melampaui ambang batas standar usability (68). Sebanyak 73,3\% responden memberikan penilaian positif, dengan 80\% menyatakan akan menggunakan aplikasi untuk mempermudah pencatatan pengeluaran.
-    
-    \item \textbf{Kontribusi Teknologi}: Pendekatan end-to-end menggunakan model Donut terbukti efektif untuk ekstraksi data dokumen finansial tanpa memerlukan tahap OCR yang dapat menimbulkan error propagation.
-    
-    \item \textbf{Dampak Behavioral}: 60\% responden merasa akan menjadi lebih disiplin dalam mencatat pengeluaran dengan adanya aplikasi TrackMyBills, menunjukkan potensi dampak positif terhadap kebiasaan pengelolaan keuangan Gen Z.
-\end{enumerate}
+The dual-model architecture effectively handles diverse document types. The base model, fine-tuned on CORD-v2 dataset, achieves weighted F1-score of 84.68\% and MCER of 18.85\% for paper receipts. The custom model, trained on QRIS-TF dataset, achieves perfect precision (100\%) with weighted F1-score of 81.50\% and MCER of 17.20\% for digital payment documents. These performance metrics demonstrate practical accuracy for expense tracking applications.
 
-Hasil penelitian ini membuktikan bahwa teknologi Computer Vision dan Deep Learning dapat diimplementasikan secara efektif untuk mengatasi masalah pencatatan pengeluaran manual yang dihadapi Gen Z dalam era pembayaran digital.
+Comprehensive evaluation validates system effectiveness across multiple dimensions. Functional testing confirms 100\% success across 19 test scenarios, demonstrating reliable operation under various conditions. User experience assessment through SUS methodology yields average score of 71.83, significantly exceeding the standard threshold of 68, with 73.3\% of participants rating above acceptability and 80\% expressing adoption intentions.
 
-\subsection{Saran Pengembangan Selanjutnya}
-Berdasarkan hasil evaluasi dan limitasi yang ditemukan, penelitian selanjutnya dapat difokuskan pada area-area berikut:
+\subsection{Technical Contributions}
+The adoption of Donut model for financial document processing represents methodological innovation eliminating error propagation inherent in traditional OCR-based pipelines. The end-to-end learning approach enables robust representations working effectively with mobile-captured images of varying quality and conditions. The dual-model strategy addresses format diversity in modern payment ecosystems while maintaining computational efficiency.
 
-\begin{enumerate}
-    \item \textbf{Unified Model}: Mengembangkan satu model tunggal yang dapat menangani semua jenis dokumen pembayaran (QRIS, transfer, dan struk) dengan task prompt yang sesuai untuk mengurangi kompleksitas sistem.
-    
-    \item \textbf{Dataset Enhancement}: Memperbesar dan memperbanyak variasi dataset, terutama untuk dokumen pembayaran digital, agar model dapat menangani format yang lebih beragam dengan akurasi yang lebih tinggi.
-    
-    \item \textbf{Holistic Document Understanding}: Mengembangkan model yang dapat memahami dokumen secara holistik tanpa memerlukan cropping manual, dengan melatih pada dataset yang mencakup seluruh konteks dokumen.
-    
-    \item \textbf{Fitur Lanjutan}: Menambahkan fitur integrasi dengan layanan perbankan, penyimpanan cloud, dan analisis pengeluaran berbasis AI untuk memberikan insight yang lebih mendalam kepada pengguna.
-    
-    \item \textbf{Cross-Platform Support}: Mengembangkan versi iOS dan web application untuk menjangkau audiens yang lebih luas.
-    
-    \item \textbf{Real-world Deployment}: Melakukan studi longitudinal untuk mengukur dampak jangka panjang aplikasi terhadap kebiasaan pengelolaan keuangan pengguna dalam kondisi penggunaan sehari-hari.
-\end{enumerate}
+The integration of Flutter mobile development with FastAPI backend services demonstrates practical deployment of deep learning applications for consumer use. The architecture balances computational requirements with user experience expectations, providing responsive performance while leveraging cloud-based processing. The comprehensive evaluation framework provides a template for assessing similar systems combining technical performance with user experience requirements.
 
-Pengembangan lebih lanjut diharapkan dapat meningkatkan akurasi ekstraksi, memperluas cakupan dokumen yang dapat diproses, dan memberikan solusi yang lebih komprehensif untuk kebutuhan pengelolaan keuangan digital Gen Z di Indonesia.
+\subsection{Implications and Impact}
+Research findings have significant implications for digital payment and FinTech applications in Indonesia and similar emerging markets. The demonstrated effectiveness of automated expense tracking suggests opportunities for integration with existing financial applications. The behavioral impact findings indicate that reducing friction in financial management tasks can significantly improve user engagement with financial planning activities among younger demographics.
+
+The perfect precision achieved by the custom model demonstrates feasibility of highly accurate automated processing for financial data, enabling sophisticated financial analytics and budgeting applications. The zero false positive rate provides foundation for building user trust in automated financial data processing systems.
+
+\subsection{Limitations}
+Several limitations provide opportunities for future research. The custom dataset size of 200 samples constrains model generalization capabilities, requiring larger-scale data collection for improved edge case handling. The current requirement for manual image cropping in some scenarios indicates opportunities for improving end-to-end automation. Attribute-level performance variations, particularly for complex fields like transaction IDs, suggest opportunities for specialized model architectures or training strategies.
+
+The focus on Indonesian payment applications limits international applicability, requiring transfer learning strategies for adaptation to other markets. Performance variations across different document types and quality conditions indicate needs for more robust preprocessing and model architectures.
+
+\subsection{Future Directions}
+Several promising research directions emerge from this work. Development of unified model architecture handling multiple document types through task-specific prompting could reduce computational overhead while improving performance through shared learning. Integration with banking APIs and financial service platforms could eliminate receipt-based extraction needs while providing comprehensive transaction coverage.
+
+Advanced analytics and budgeting capabilities represent significant opportunities for enhancing user value beyond basic expense tracking. Machine learning approaches for spending pattern analysis, budget optimization, and financial goal setting could provide personalized insights encouraging better financial decision-making. Real-time processing capabilities could enable immediate feedback based on spending patterns or budget thresholds.
+
+Edge computing approaches using on-device model inference could provide privacy benefits while reducing latency. Research into model compression and optimization techniques would enable high-quality inference on mobile hardware. Longitudinal studies examining long-term impact of automated expense tracking on financial behavior would provide valuable insights into the system's effectiveness as financial wellness tool.
+
+Integration of emerging technologies such as augmented reality for receipt scanning, voice interfaces for expense categorization, and blockchain technologies for transaction verification could further enhance system capabilities. These advanced interaction modalities could position the system at the forefront of financial technology innovation while maintaining focus on user needs and practical utility.
+
+\subsection{Final Remarks}
+The TrackMyBills system represents successful integration of advanced machine learning technologies with practical user needs in modern digital payment ecosystems. The research demonstrates that sophisticated document understanding capabilities can be made accessible to general users through thoughtful system design and user experience optimization. The positive evaluation results across technical performance, functionality, and user satisfaction validate the approach and suggest significant potential for real-world deployment and impact in improving financial awareness and management among Gen Z users.
