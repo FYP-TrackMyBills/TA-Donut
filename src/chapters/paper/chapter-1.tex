@@ -1,4 +1,21 @@
+\section{Pendahuluan}
 
-\section{Introduction}
-This document is a model and instructions for \LaTeX.
-Please observe the conference page limits.
+\subsection{Latar Belakang}
+QRIS (Quick Response Code Indonesian Standard) menjadi metode pembayaran digital yang semakin populer di Indonesia, khususnya di kalangan Generasi Z. Bank Indonesia melaporkan bahwa pada April 2024, jumlah pengguna QRIS mencapai 48,12 juta dengan total nilai transaksi Rp 31,65 triliun \cite{CNNqris2024}. Sebanyak 38\% Gen Z menggunakan QRIS dalam kehidupan sehari-hari, sementara 57\% dari Gen Z lebih memilih transaksi nontunai \cite{qris2023goodstats,jawapos2024qris}.
+
+Meskipun telah mengadopsi teknologi pembayaran digital, Gen Z menghadapi tantangan dalam pengelolaan keuangan pribadi. Studi \cite{johan2021effect} terhadap 521 mahasiswa Indonesia menunjukkan bahwa 84\% mahasiswa yang belum mendapat pengetahuan finansial tidak melakukan pencatatan pengeluaran, bahkan 78\% yang telah mendapat pengetahuan finansial masih belum mencatat pengeluaran mereka. Permasalahan serupa terjadi secara global, dimana Gen Z merasa kesulitan mengontrol pengeluaran digital yang "hanya beberapa klik" \cite{lewis2019follow}.
+
+Salah satu penyebab kesulitan pencatatan adalah kompleksitas klasifikasi informasi pada bukti pembayaran yang menyebabkan pencatatan manual menjadi tidak terstruktur dan rentan kesalahan \cite{kaye2014money}. Mengingat 75\% Gen Z menggunakan perangkat mobile sebagai gawai utama \cite{Campfire2024GenZ}, diperlukan solusi mobile-first yang dapat mengotomatisasi proses pencatatan pengeluaran.
+
+\subsection{Kontribusi Penelitian}
+Penelitian ini mengembangkan sistem pencatatan pengeluaran berbasis mobile yang menggunakan teknologi Computer Vision dan Deep Learning tanpa OCR untuk mengekstrak data dari bukti pembayaran. Kontribusi utama meliputi:
+
+\begin{enumerate}
+    \item Pengembangan sistem TrackMyBills berbasis Flutter untuk Gen Z dengan antarmuka yang intuitif
+    \item Implementasi model Donut end-to-end untuk ekstraksi data dari dokumen pembayaran tanpa OCR
+    \item Pengembangan dua model khusus: fine-tuning pada dataset CORD-v2 untuk struk pembayaran dan dataset custom QRIS-TF untuk dokumen pembayaran digital
+    \item Evaluasi komprehensif meliputi pengujian fungsionalitas, kinerja model, dan pengalaman pengguna menggunakan metrik SUS
+\end{enumerate}
+
+\subsection{Struktur Paper}
+Paper ini disusun sebagai berikut: Bagian II membahas penelitian terkait dan dasar teori. Bagian III menjelaskan desain dan implementasi sistem. Bagian IV menyajikan hasil evaluasi komprehensif. Bagian V menyimpulkan penelitian dan saran pengembangan selanjutnya.
