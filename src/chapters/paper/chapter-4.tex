@@ -1,15 +1,14 @@
-\section{Evaluation Results and Analysis}
+\section{Evaluation}
 
-\subsection{Evaluation Methodology}
-The TrackMyBills system evaluation follows a three-dimensional approach encompassing functional validation, model performance assessment, and user experience measurement. This comprehensive methodology ensures the system meets both technical performance standards and real-world usability requirements for Gen Z users, aligning with the Design Science Research Methodology framework.
+This research employs a comprehensive three-dimensional evaluation approach encompassing functional validation, model performance assessment, and user experience measurement to ensure the TrackMyBills system meets both technical performance standards and real-world usability requirements for Generation Z users.
 
 \subsection{Functional Requirements Evaluation}
-Functional testing encompasses 19 comprehensive test scenarios covering the complete user workflow from image input through transaction storage. All scenarios include specific preconditions, execution steps, and success criteria to ensure thorough system coverage.
+Comprehensive functional testing encompasses 19 test scenarios covering the complete user workflow from image input through transaction storage. All scenarios include specific preconditions, execution steps, and success criteria to ensure thorough system coverage.
 
 \begin{table}[htbp]
 \centering
-\caption{Summary of Functional Testing Results}
-\label{tab:functional-summary}
+\caption{Functional Testing Results Summary}
+\label{tab:functional-results}
 \begin{tabular}{|l|c|c|}
 \hline
 \textbf{Testing Category} & \textbf{Scenarios} & \textbf{Success Rate} \\
@@ -26,179 +25,72 @@ Application Navigation & 2 & 100\% \\
 \end{tabular}
 \end{table}
 
-Results demonstrate complete functional compliance across all scenarios. The system successfully handles diverse input sources including camera capture and gallery selection, processes various image formats while rejecting unsupported types, and manages user-directed image cropping and automatic processing workflows. Data validation confirms proper handling of user modifications and error prevention, while storage testing validates both successful operations and appropriate error handling.
+Results demonstrate complete functional compliance across all scenarios. The system successfully handles diverse input sources, processes various image formats, manages user-directed workflows, and validates proper error handling mechanisms.
 
 \subsection{Model Performance Evaluation}
+The evaluation assesses two specialized Donut models: a base model fine-tuned on CORD-v2 dataset for paper receipts and a custom model trained on QRIS-TF dataset for Indonesian digital payment documents.
 
 \subsubsection{Base Model Performance}
-The base model, fine-tuned on CORD-v2 dataset, demonstrates strong performance for paper receipt processing. Evaluation on 98 total transaction samples and 275-368 menu item samples reveals consistent accuracy across extraction tasks.
+The base model demonstrates strong performance for paper receipt processing, evaluated on 98 transaction samples and 275-368 menu item samples.
 
 \begin{table}[htbp]
 \centering
 \caption{Base Model Performance Metrics}
-\label{tab:base-model-results}
+\label{tab:base-model}
 \begin{tabular}{|l|c|c|c|c|c|}
 \hline
 \textbf{Metric} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \textbf{MCER} \\
 \hline
-Weighted & 73.43\% & 90.53\% & 79.53\% & 84.68\% & 18.85\% \\
-Unweighted & 72.33\% & 89.85\% & 78.77\% & 83.94\% & 20.40\% \\
+Results & 73.43\% & 90.53\% & 79.53\% & 84.68\% & 18.85\% \\
 \hline
 \end{tabular}
 \end{table}
 
-The base model achieves impressive weighted precision of 90.53\%, indicating rare false positive predictions valuable for expense tracking applications. The F1-score of 84.68\% represents strong precision-recall balance suitable for practical deployment. Total transaction amount extraction performs exceptionally with 83.67\% accuracy and 6.86\% MCER, making it highly reliable for primary expense tracking use cases.
+The base model achieves impressive precision of 90.53\%, indicating rare false positive predictions valuable for expense tracking applications. The F1-score of 84.68\% represents strong precision-recall balance suitable for practical deployment. Total transaction amount extraction performs exceptionally with 83.67\% accuracy, making it highly reliable for primary expense tracking use cases.
+
+\subsubsection{Custom Model Performance}
+The custom model, trained on QRIS-TF dataset, addresses Indonesian digital payment document processing challenges across 93-99 samples per attribute.
 
 \begin{table}[htbp]
 \centering
-\caption{Base Model Detailed Attribute-Level Performance Analysis}
-\label{tab:base-model-detail}
+\caption{Custom Model Performance Metrics}
+\label{tab:custom-model}
 \begin{tabular}{|l|c|c|c|c|c|}
 \hline
-\textbf{Attribute Type} & \textbf{Sample Count} & \textbf{TP} & \textbf{FP} & \textbf{FN} & \textbf{MCER} \\
+\textbf{Metric} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \textbf{MCER} \\
 \hline
-Total Transaction Amount & 98 & 82 & 3 & 13 & 6.86\% \\
-Menu Item Names & 275 & 174 & 24 & 77 & 29.41\% \\
-Menu Item Prices & 368 & 274 & 27 & 67 & 20.15\% \\
-Menu Item Quantities & 275 & 216 & 24 & 35 & 29.27\% \\
+Results & 68.78\% & 100.00\% & 68.78\% & 81.50\% & 17.20\% \\
 \hline
 \end{tabular}
 \end{table}
 
-Detailed attribute-level analysis reveals significant performance variation across different information types, reflecting the varying complexity and visual consistency of different receipt elements. Total transaction amount extraction achieves exceptional performance with 83.67\% accuracy (82 true positives out of 98 samples) and remarkably low 6.86\% MCER, making this extraction highly reliable for primary expense tracking applications where total amount accuracy is paramount for budget management and financial planning.
+The custom model achieves perfect precision (100\%) across all evaluated attributes, indicating extremely conservative and reliable extraction behavior. This eliminates false positive errors that are particularly problematic for financial applications. The F1-score of 81.50\% remains strong despite conservative approach, and the mean Character Error Rate of 17.20\% represents slight improvement over the base model.
 
-The extremely low false positive rate of only 3 instances across 98 samples indicates that the model demonstrates conservative extraction behavior for critical financial information, preferring to occasionally miss transaction amounts rather than generate incorrect monetary values that could significantly impact user financial calculations and decisions.
+\subsubsection{Comparative Analysis}
+Both models demonstrate complementary strengths justifying the dual-model architectural approach. The base model excels in comprehensive information extraction from paper receipts, while the custom model prioritizes accuracy over completeness for digital payment documents. The perfect precision of the custom model ensures user confidence in extracted financial information, while the base model provides superior recall for detailed receipt analysis.
 
-Menu-related attribute extraction presents more challenging characteristics, reflecting the inherent complexity of extracting detailed itemized information from receipts with varying layouts, font sizes, and print quality levels. Menu price extraction performs optimally among the three menu attributes with 74.46\% accuracy and 20.15\% MCER, providing sufficient reliability for users who require detailed expense breakdowns and spending pattern analysis.
-
-The higher MCER values for menu names (29.41\%) and quantities (29.27\%) reflect the increased difficulty of extracting text-heavy and numerical information from receipt formats that often employ small fonts, compressed layouts, and variable formatting approaches. Despite these challenges, the extraction accuracy remains practically sufficient for users who want comprehensive transaction details while providing clear feedback about extraction confidence levels.
-
-\subsection{Custom Model Performance Analysis for Indonesian Digital Payments}
-The custom model, specifically trained on our novel QRIS-TF dataset, addresses the unique characteristics and challenges associated with Indonesian digital payment document processing. Comprehensive evaluation across 93-99 samples per attribute reveals distinctive performance patterns that differ significantly from the base model, featuring notably perfect precision characteristics combined with more conservative recall behavior optimized for financial application requirements.
+\subsection{User Experience Evaluation}
+User experience evaluation employs the System Usability Scale (SUS) methodology with 15 Generation Z participants representing the target demographic.
 
 \begin{table}[htbp]
 \centering
-\caption{Custom Model Overall Performance Metrics}
-\label{tab:custom-model-results}
-\begin{tabular}{|l|c|c|c|c|c|}
-\hline
-\textbf{Metric Type} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \textbf{MCER} \\
-\hline
-Weighted Average & 68.78\% & 100.00\% & 68.78\% & 81.50\% & 17.20\% \\
-Unweighted Average & 64.79\% & 100.00\% & 64.79\% & 78.63\% & 17.94\% \\
-\hline
-\end{tabular}
-\end{table}
-
-The custom model's perfect precision (100\%) across all evaluated attributes represents an extraordinary achievement that indicates extremely conservative and reliable extraction behavior. The model generates predictions only when confidence levels reach exceptionally high thresholds, effectively eliminating false positive errors that are particularly problematic for financial applications where incorrect information can lead to serious user consequences including budget miscalculations and financial planning errors.
-
-This conservative approach results in lower recall rates compared to the base model, as the system occasionally fails to extract information that is present in documents when confidence levels fall below stringent thresholds. However, the weighted F1-score of 81.50\% remains exceptionally strong despite this conservative approach, suggesting that the model successfully balances accuracy and coverage considerations for practical financial applications where precision is prioritized over completeness.
-
-The MCER performance of 17.20\% represents slight improvement over the base model, indicating that when the custom model does generate extraction predictions, the character-level accuracy is remarkably high. This characteristic proves particularly important for financial applications where small character errors in monetary amounts, dates, or transaction identifiers can have significant practical consequences for expense tracking accuracy and user confidence.
-
-\begin{table}[htbp]
-\centering
-\caption{Custom Model Detailed Attribute-Level Performance Analysis}
-\label{tab:custom-model-detail}
-\begin{tabular}{|l|c|c|c|c|c|}
-\hline
-\textbf{Attribute Type} & \textbf{Sample Count} & \textbf{TP} & \textbf{FP} & \textbf{FN} & \textbf{MCER} \\
-\hline
-Total Transaction Amount & 99 & 68 & 0 & 31 & 18.90\% \\
-Transaction Timestamp & 79 & 30 & 0 & 49 & 12.79\% \\
-Transaction Identifier & 93 & 20 & 0 & 73 & 42.23\% \\
-Transaction Type & 99 & 91 & 0 & 8 & 9.09\% \\
-Payment Application & 99 & 91 & 0 & 8 & 28.28\% \\
-Transaction Target & 99 & 68 & 0 & 31 & 15.84\% \\
-\hline
-\end{tabular}
-\end{table}
-
-Comprehensive attribute-level analysis reveals substantial performance differences across different information types, reflecting the varying complexity and consistency of different elements within Indonesian digital payment documents. Transaction type and payment application extraction achieve exceptional accuracy of 91.92\% (91 true positives out of 99 samples) with remarkably low MCER of 9.09\%, indicating that the model reliably identifies these categorical attributes that are crucial for expense categorization and spending pattern analysis.
-
-Total transaction amount extraction achieves 68.69\% accuracy (68 out of 99 samples), which while lower than the base model performance, still provides substantial practical utility for expense tracking applications. The 18.90\% MCER indicates that extracted amounts require minimal correction procedures when successfully identified, making the system practical for users who prioritize accuracy over complete information coverage.
-
-Transaction target extraction demonstrates similar performance patterns with 68.69\% accuracy and 15.84\% MCER, successfully capturing merchant information or payment recipient details for the majority of processed transactions. This information proves valuable for expense categorization and spending pattern recognition applications.
-
-Transaction timestamp extraction presents moderate challenges with 37.97\% accuracy (30 out of 79 samples), reflecting the substantial complexity involved in extracting temporal information from diverse digital receipt formats that employ varying date and time representation standards across different payment applications and merchant systems.
-
-Transaction identifier extraction represents the most challenging attribute with only 21.51\% accuracy (20 out of 93 samples), which aligns with expectations given the complexity and high variability of transaction identifier formats across different Indonesian payment systems. These identifiers often consist of long alphanumeric sequences that are difficult to distinguish from other numerical information present in payment documents.
-
-Despite lower accuracy levels for some challenging attributes, the perfect zero false positive rate across all attributes ensures that users can maintain complete confidence in extracted information when it is provided by the system. This reliability characteristic enables users to trust automated extraction results while understanding that manual verification or completion may be required for some transaction details.
-
-\subsection{Comparative Model Analysis and Performance Trade-offs}
-Comprehensive comparison between the base model and custom model reveals complementary strengths and performance trade-offs that strongly justify the dual-model architectural approach implemented in the TrackMyBills system. Each model demonstrates optimal performance characteristics for specific document types and user requirements, enabling the system to provide superior overall performance compared to single-model approaches.
-
-The base model demonstrates superior overall recall performance (79.53\% versus 68.78\%) and F1-score characteristics (84.68\% versus 81.50\%), making it significantly more effective for comprehensive information extraction from traditional paper receipts where complete data coverage is prioritized over conservative accuracy approaches. The base model's training on diverse paper receipt formats enables robust generalization across different merchant types and receipt design variations commonly encountered in retail environments.
-
-Conversely, the custom model's perfect precision performance eliminates the risk of false information extraction, which represents a crucial advantage for financial applications where accuracy is paramount and incorrect information can have serious practical consequences for user financial planning and decision-making processes. The custom model's conservative extraction approach aligns optimally with financial application requirements where missing some information is preferable to providing incorrect data.
-
-The MCER comparison (18.85\% versus 17.20\%) demonstrates that both models achieve highly acceptable character-level accuracy with the custom model performing slightly better. This difference, while numerically small, proves meaningful for financial data applications where character-level precision directly impacts practical usability and user confidence in automated extraction results.
-
-Both models demonstrate remarkably consistent performance across weighted and unweighted metric calculations, indicating balanced behavior across different attribute types and sample distributions. This consistency suggests that neither model exhibits significant bias toward specific information types or document characteristics, enabling reliable performance across diverse usage scenarios.
-
-The specialized nature of each model effectively addresses distinct document processing challenges encountered in contemporary expense tracking scenarios. Paper receipts processed by the base model typically feature structured layouts with relatively consistent information placement patterns, enabling higher recall rates and more comprehensive information extraction. Digital payment documents processed by the custom model exhibit substantially greater format variability and lower information density, justifying the more conservative extraction approach that prioritizes accuracy over completeness.
-
-\subsection{User Experience Evaluation and Behavioral Impact Assessment}
-
-\subsubsection{System Usability Scale Assessment and Statistical Analysis}
-Comprehensive user experience evaluation employs the established System Usability Scale (SUS) methodology with 15 carefully selected Generation Z participants who represent the target demographic for the TrackMyBills system. Participants completed standardized usage scenarios that encompassed the complete expense tracking workflow from initial image capture through final transaction storage and subsequent retrieval operations.
-
-\begin{table}[htbp]
-\centering
-\caption{SUS Score Distribution and User Acceptance Analysis}
-\label{tab:sus-distribution}
-\begin{tabular}{|l|c|c|}
-\hline
-\textbf{Score Range Category} & \textbf{Participant Count} & \textbf{Percentage Distribution} \\
-\hline
-85-100 (Excellent) & 3 & 20.0\% \\
-70-84 (Good) & 8 & 53.3\% \\
-50-69 (Acceptable) & 4 & 26.7\% \\
-0-49 (Poor) & 0 & 0.0\% \\
-\hline
-\textbf{Total Participants} & \textbf{15} & \textbf{100.0\%} \\
-\hline
-\end{tabular}
-\end{table}
-
-The SUS evaluation results demonstrate exceptional user acceptance with an average score of 71.83, significantly exceeding the established industry standard usability threshold of 68 points. This performance level indicates that the TrackMyBills system achieves "good" usability classification according to established SUS interpretation guidelines, suggesting strong potential for successful user adoption and sustained usage.
-
-The score distribution analysis reveals that 73.3\% of participants (11 out of 15) rated the system above the acceptability threshold, with 20\% providing excellent ratings and 53.3\% providing good ratings. Notably, no participants rated the system as poor, indicating consistent positive user experience across the complete evaluation group regardless of individual technology experience levels or expense tracking familiarity.
-
-\begin{table}[htbp]
-\centering
-\caption{Detailed SUS Statistical Analysis and Performance Metrics}
-\label{tab:sus-statistics}
+\caption{SUS Evaluation Results}
+\label{tab:sus-results}
 \begin{tabular}{|l|c|}
 \hline
-\textbf{Statistical Measure} & \textbf{Calculated Value} \\
+\textbf{SUS Metric} & \textbf{Value} \\
 \hline
-Mean Score & 71.83 \\
+Average Score & 71.83 \\
 Median Score & 70.00 \\
-Highest Individual Score & 85.00 \\
-Lowest Individual Score & 50.00 \\
 Standard Deviation & 9.78 \\
-Score Range Span & 35.00 \\
+Participants Above Threshold (68) & 73.3\% \\
 \hline
 \end{tabular}
 \end{table}
 
-Statistical analysis reveals a tightly clustered score distribution with standard deviation of 9.78, indicating remarkably consistent user experience quality across participants with diverse technology backgrounds and expense tracking experience levels. The close alignment between mean (71.83) and median (70.00) scores suggests a normal distribution pattern without significant outliers that could skew interpretation of overall user satisfaction levels.
+The SUS evaluation demonstrates exceptional user acceptance with an average score of 71.83, significantly exceeding the established industry standard threshold of 68 points. This performance indicates "good" usability classification with strong potential for successful user adoption. Score distribution analysis reveals that 73.3\% of participants rated the system above the acceptability threshold, with no participants providing poor ratings.
 
-The score range spanning 35 points from acceptable to excellent categories demonstrates that even participants who provided the lowest ratings still found the system fundamentally usable and functional. This finding suggests that the system successfully addresses basic usability requirements while providing enhanced experience quality for users who align closely with the target demographic characteristics and preferences.
+Qualitative feedback analysis reveals that 80\% of participants expressed definitive willingness to incorporate TrackMyBills into their regular expense tracking routines. Participants consistently highlighted substantial advantages of automated data extraction compared to manual entry methods, identifying automation as the primary factor encouraging more consistent expense tracking behavior. Behavioral impact assessment indicates that 60\% of participants believe the system would significantly improve their expense tracking discipline and consistency.
 
-\subsubsection{Qualitative Feedback Analysis and Behavioral Impact Assessment}
-Beyond quantitative SUS measurements, participants provided comprehensive qualitative feedback through structured interviews and detailed open-ended questionnaire responses. The feedback collection process systematically explored user attitudes toward expense tracking technologies, technology adoption intentions, behavioral change expectations, and specific system feature preferences that influence long-term usage sustainability.
-
-Adoption intention analysis reveals remarkably strong user interest in the TrackMyBills system, with 80\% of participants expressing definitive willingness to incorporate the system into their regular expense tracking routines. This high adoption intention rate correlates positively with SUS scores and suggests that the system successfully addresses genuine user needs while providing sufficient value proposition to motivate sustained usage behaviors.
-
-Participants consistently highlighted the substantial advantages of automated data extraction compared to manual entry methods used in competing expense tracking applications. The automation capability was identified as the primary factor that would encourage more consistent expense tracking behavior, addressing one of the fundamental barriers to effective financial management among Generation Z users.
-
-Behavioral impact assessment indicates that 60\% of participants believe the TrackMyBills system would significantly improve their expense tracking discipline and consistency. This finding proves particularly significant given the identified problem of poor expense tracking habits among Generation Z users documented in existing research literature. Participants noted that the reduced friction of expense recording makes them substantially more likely to consistently track spending patterns, potentially leading to improved financial awareness and more effective budget management behaviors.
-
-Feature preference feedback emphasizes the critical importance of visual design quality and workflow efficiency in determining user satisfaction levels. Participants consistently praised the intuitive interface design, logical workflow progression from image capture through transaction storage, and responsive interaction feedback that creates confidence in system reliability and accuracy.
-
-The ability to review and edit extracted information before final storage was identified as a crucial feature that builds user confidence in automated extraction accuracy while providing necessary control over financial data quality. Participants appreciated the balance between automation convenience and user control that enables verification without requiring extensive manual correction procedures.
-
-Areas for improvement identified through qualitative feedback include requests for enhanced categorization options that support more granular expense classification, potential integration capabilities with existing banking applications for comprehensive financial management, and improved extraction accuracy for specific receipt types that presented challenges during evaluation sessions. These suggestions align closely with technical evaluation findings and provide clear direction for future development priorities and enhancement strategies.
+\subsection{Evaluation Summary}
+The comprehensive evaluation validates the TrackMyBills system effectiveness across technical performance and user experience dimensions. Functional testing confirms 100\% success rate across all scenarios, while model evaluation demonstrates strong performance characteristics suited for practical expense tracking applications. The base model achieves 84.68\% F1-score with 18.85\% mean Character Error Rate, while the custom model attains 81.50\% F1-score with perfect precision and 17.20\% mean Character Error Rate. User experience evaluation exceeds industry standards with 71.83 SUS score, indicating successful alignment with Generation Z preferences and strong adoption potential for automated expense tracking applications.
