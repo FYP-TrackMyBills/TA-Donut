@@ -39,7 +39,7 @@ The base model demonstrates strong performance for paper receipt processing, eva
 \label{tab:base-model}
 \begin{tabular}{|l|c|c|c|c|c|}
 \hline
-\textbf{Metric} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \textbf{MCER} \\
+\textbf{Metric} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \textbf{mCER} \\
 \hline
 Results & 73.43\% & 90.53\% & 79.53\% & 84.68\% & 18.85\% \\
 \hline
@@ -57,7 +57,7 @@ The custom model, trained on QRIS-TF dataset, addresses Indonesian digital payme
 \label{tab:custom-model}
 \begin{tabular}{|l|c|c|c|c|c|}
 \hline
-\textbf{Metric} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \textbf{MCER} \\
+\textbf{Metric} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \textbf{mCER} \\
 \hline
 Results & 68.78\% & 100.00\% & 68.78\% & 81.50\% & 17.20\% \\
 \hline
@@ -72,21 +72,21 @@ Both models demonstrate complementary strengths justifying the dual-model archit
 \subsection{User Experience Evaluation}
 User experience evaluation employs the System Usability Scale (SUS) methodology with 15 Generation Z participants representing the target demographic.
 
-\begin{table}[htbp]
-\centering
-\caption{SUS Evaluation Results}
-\label{tab:sus-results}
-\begin{tabular}{|l|c|}
-\hline
-\textbf{SUS Metric} & \textbf{Value} \\
-\hline
-Average Score & 71.83 \\
-Median Score & 70.00 \\
-Standard Deviation & 9.78 \\
-Participants Above Threshold (68) & 73.3\% \\
-\hline
-\end{tabular}
-\end{table}
+% \begin{table}[htbp]
+% \centering
+% \caption{SUS Evaluation Results}
+% \label{tab:sus-results}
+% \begin{tabular}{|l|c|}
+% \hline
+% \textbf{SUS Metric} & \textbf{Value} \\
+% \hline
+% Average Score & 71.83 \\
+% Median Score & 70.00 \\
+% Standard Deviation & 9.78 \\
+% Participants Above Threshold (68) & 73.3\% \\
+% \hline
+% \end{tabular}
+% \end{table}
 
 The SUS evaluation demonstrates exceptional user acceptance with an average score of 71.83, significantly exceeding the established industry standard threshold of 68 points. This performance indicates "good" usability classification with strong potential for successful user adoption. Score distribution analysis reveals that 73.3\% of participants rated the system above the acceptability threshold, with no participants providing poor ratings.
 
