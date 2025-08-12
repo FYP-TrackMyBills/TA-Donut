@@ -184,11 +184,11 @@ Setelah menetapkan \donut{} sebagai model yang akan digunakan, langkah selanjutn
 \hline
 \textbf{Konektivitas} & Wajib & Opsional & Koneksi ke \emph{server} diperlukan untuk melakukan inferensi. \\
 \hline
-\textbf{Latensi} & Tinggi & Rendah & Pengembalian data dipengaruhi latensi jaringan pada \emph{server}. \\
+\textbf{Latensi} & Tinggi & Rendah & Kecepatan penerimaan data dipengaruhi latensi jaringan pada pendekatan \emph{server}. \\
 \hline
 \textbf{Privasi data} & Rendah & Tinggi & Data sensitif tidak meninggalkan perangkat pengguna pada pendekatan \emph{on-device}. \\
 \hline
-\textbf{Fleksibilitas} & Tinggi & Terbatas & Model yang digunakan tidak terbatas pada kapabilitas perangkat keras yang digunakan klien. \\
+\textbf{Fleksibilitas} & Tinggi & Terbatas & Model yang digunakan tidak terbatas pada kapabilitas perangkat keras klien. \\
 \hline
 \textbf{Performa komputasi} & Lebih mumpuni & Bervariasi & \emph{Server} dapat memanfaatkan perangkat keras khusus. Pendekatan \emph{on-device} terbatas pada spesifikasi perangkat klien. \\
 \hline
@@ -217,7 +217,7 @@ Berdasarkan evaluasi komprehensif menggunakan tabel perbandingan kriteria pada \
     Inferensi pada \emph{server} memungkinkan penggunaan model yang lebih besar. Hal ini menunjukkan tidak ada kebutuhan untuk mengorbankan akurasi model demi efisiensi komputasi pada perangkat \emph{mobile}. Model yang lebih besar dapat menangani variasi dokumen yang lebih kompleks dan memberikan hasil yang lebih akurat.
     \item Fleksibilitas ~\\
     Dengan inferensi pada \emph{server}, model dapat diperbarui dan ditingkatkan secara terpusat tanpa perlu mengirim pembaruan ke setiap perangkat pengguna. Ini memungkinkan sistem untuk berjalan tanpa perlu mengganggu pengalaman pengguna dengan pembaruan aplikasi.
-    \item Ukuran dan performa aplikasi ~\\
-    Inferensi pada \emph{server} mengurangi ukuran aplikasi yang perlu diunduh oleh pengguna. Model yang besar tidak perlu disimpan di perangkat sehingga menghemat ruang penyimpanan pada perangkat dan meningkatkan performa aplikasi klien.
+    \item Ukuran dan kecepatan kinerja aplikasi ~\\
+    Inferensi pada \emph{server} mengurangi ukuran aplikasi yang perlu diunduh oleh pengguna. Model yang besar tidak perlu disimpan di perangkat sehingga menghemat ruang penyimpanan pada perangkat dan meningkatkan kecepatan kinerja aplikasi klien.
 \end{enumerate}
 

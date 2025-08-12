@@ -38,13 +38,12 @@ Penentuan bobot untuk setiap atribut yang diekstrak menggunakan pendekatan \emph
         \hline
         \textbf{Kriteria} & \textbf{Tingkat Risiko} & \textbf{Definisi} \\ \hline
         
-        \multirow{2}{=}{Dampak Bisnis} & TINGGI & Kesalahan langsung mempengaruhi keputusan finansial atau akurasi pencatatan keuangan \\ \cline{2-3}
-        & RENDAH & Tidak mempengaruhi keputusan finansial atau analisis pengeluaran utama \\ \hline
+        \multirow{2}{=}{Dampak Bisnis} & TINGGI & Kesalahan pada ekstraksi data dapat langsung mempengaruhi keputusan finansial atau analisis pencatatan keuangan \\ \cline{2-3}
+        & RENDAH & Tidak terlalu mempengaruhi keputusan finansial atau analisis pengeluaran utama \\ \hline
         
         % Note: I removed the manual \newline. The m{} column handles wrapping.
-        \multirow{2}{=}{Dampak Pengalaman Pengguna} & TINGGI & Tidak ada mekanisme verifikasi alternatif atau kesalahan sulit dideteksi melalui konteks \\ \cline{2-3}
+        \multirow{2}{=}{Dampak Pengalaman Pengguna} & TINGGI & Tidak ada mekanisme verifikasi alternatif atau kesalahan sulit dideteksi tanpa konteks dan data pendukung yang cukup \\ \cline{2-3}
         & RENDAH & Kesalahan mudah dideteksi atau tidak mengganggu fungsionalitas sistem \\ \hline
-
         \multirow{2}{=}{Biaya Pemulihan Kesalahan} & TINGGI & Memerlukan upaya signifikan untuk memverifikasi dan memperbaiki kesalahan \\ \cline{2-3}
         & RENDAH & Mudah diverifikasi, dikoreksi, atau diabaikan tanpa dampak signifikan \\ \hline
     \end{tabular}
