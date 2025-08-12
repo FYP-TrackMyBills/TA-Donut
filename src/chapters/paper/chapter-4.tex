@@ -1,37 +1,39 @@
 \section{Evaluation}
 
-This research employs a comprehensive three-dimensional evaluation approach encompassing functional validation, model performance assessment, and user experience measurement to ensure the TrackMyBills system meets both technical performance standards and real-world usability requirements for Generation Z users.
+This research employs a comprehensive three-dimensional evaluation approach encompassing functional validation, model performance assessment, and user experience measurement to ensure the system meets both technical performance standards and real-world usability requirements.
 
 \subsection{Functional Requirements Evaluation}
-Comprehensive functional testing encompasses 19 test scenarios covering the complete user workflow from image input through transaction storage. All scenarios include specific preconditions, execution steps, and success criteria to ensure thorough system coverage.
+Comprehensive functional testing encompasses 19 test scenarios covering the complete user workflows. All scenarios include specific preconditions, execution steps, and success criteria to ensure thorough system coverage. 
 
-\begin{table}[htbp]
-\centering
-\caption{Functional Testing Results Summary}
-\label{tab:functional-results}
-\begin{tabular}{|l|c|c|}
-\hline
-\textbf{Testing Category} & \textbf{Scenarios} & \textbf{Success Rate} \\
-\hline
-Image Input and Upload & 8 & 100\% \\
-Image Preprocessing & 2 & 100\% \\
-Data Extraction & 1 & 100\% \\
-Data Validation and Editing & 4 & 100\% \\
-Transaction Storage & 2 & 100\% \\
-Application Navigation & 2 & 100\% \\
-\hline
-\textbf{Total} & \textbf{19} & \textbf{100\%} \\
-\hline
-\end{tabular}
-\end{table}
+Results demonstrate complete functional compliance across all scenarios with a little note given for each workflow to be evaluated in future work. The system successfully handles diverse input sources, processes various image formats, manages user-directed workflows, and validates proper error handling mechanisms.
 
-Results demonstrate complete functional compliance across all scenarios. The system successfully handles diverse input sources, processes various image formats, manages user-directed workflows, and validates proper error handling mechanisms.
+% \begin{table}[htbp]
+% \centering
+% \caption{Functional Testing Results Summary}
+% \label{tab:functional-results}
+% \begin{tabular}{|l|c|c|}
+% \hline
+% \textbf{Testing Category} & \textbf{Scenarios} & \textbf{Success Rate} \\
+% \hline
+% Image Input and Upload & 8 & 100\% \\
+% Image Preprocessing & 2 & 100\% \\
+% Data Extraction & 1 & 100\% \\
+% Data Validation and Editing & 4 & 100\% \\
+% Transaction Storage & 2 & 100\% \\
+% Application Navigation & 2 & 100\% \\
+% \hline
+% \textbf{Total} & \textbf{19} & \textbf{100\%} \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+
 
 \subsection{Model Performance Evaluation}
 The evaluation assesses two specialized Donut models: a base model fine-tuned on CORD-v2 dataset for paper receipts and a custom model trained on QRIS-TF dataset for Indonesian digital payment documents.
 
 \subsubsection{Base Model Performance}
-The base model demonstrates strong performance for paper receipt processing, evaluated on 98 transaction samples and 275-368 menu item samples.
+The base model demonstrates strong performance for paper receipt processing, evaluated on 98 transaction samples and 368 menu item samples.
 
 \begin{table}[htbp]
 \centering
@@ -46,10 +48,10 @@ Results & 73.43\% & 90.53\% & 79.53\% & 84.68\% & 18.85\% \\
 \end{tabular}
 \end{table}
 
-The base model achieves impressive precision of 90.53\%, indicating rare false positive predictions valuable for expense tracking applications. The F1-score of 84.68\% represents strong precision-recall balance suitable for practical deployment. Total transaction amount extraction performs exceptionally with 83.67\% accuracy, making it highly reliable for primary expense tracking use cases.
+The base model achieves impressive precision of 90.53\%, indicating rare false positive predictions valuable for expense tracking applications. The F1-score of 84.68\% represents strong precision-recall balance suitable for practical deployment. The mCER of 18.85\% reflects the model's ability to minimize character-level errors, further enhancing its reliability for text extraction tasks.
 
 \subsubsection{Custom Model Performance}
-The custom model, trained on QRIS-TF dataset, addresses Indonesian digital payment document processing challenges across 93-99 samples per attribute.
+The model trained on QRIS-TF dataset, addresses Indonesian digital payment document processing challenges across 79-99 samples per attribute.
 
 \begin{table}[htbp]
 \centering
@@ -64,13 +66,13 @@ Results & 68.78\% & 100.00\% & 68.78\% & 81.50\% & 17.20\% \\
 \end{tabular}
 \end{table}
 
-The custom model achieves perfect precision (100\%) across all evaluated attributes, indicating extremely conservative and reliable extraction behavior. This eliminates false positive errors that are particularly problematic for financial applications. The F1-score of 81.50\% remains strong despite conservative approach, and the mean Character Error Rate of 17.20\% represents slight improvement over the base model.
+The custom model achieves perfect precision (100\%) across all evaluated attributes, indicating extremely conservative and reliable extraction behavior. This eliminates false positive errors that are particularly problematic for financial applications. The F1-score of 81.50\% remains strong despite conservative approach, and the mCER of 17.20\% represents the model reliability in minimizing character-level errors.
 
 \subsubsection{Comparative Analysis}
 Both models demonstrate complementary strengths justifying the dual-model architectural approach. The base model excels in comprehensive information extraction from paper receipts, while the custom model prioritizes accuracy over completeness for digital payment documents. The perfect precision of the custom model ensures user confidence in extracted financial information, while the base model provides superior recall for detailed receipt analysis.
 
 \subsection{User Experience Evaluation}
-User experience evaluation employs the System Usability Scale (SUS) methodology with 15 Generation Z participants representing the target demographic.
+User experience evaluation employs the System Usability Scale (SUS) methodology with 15 Gen Z participants representing the target demographic.
 
 % \begin{table}[htbp]
 % \centering
@@ -88,9 +90,9 @@ User experience evaluation employs the System Usability Scale (SUS) methodology 
 % \end{tabular}
 % \end{table}
 
-The SUS evaluation demonstrates exceptional user acceptance with an average score of 71.83, significantly exceeding the established industry standard threshold of 68 points. This performance indicates "good" usability classification with strong potential for successful user adoption. Score distribution analysis reveals that 73.3\% of participants rated the system above the acceptability threshold, with no participants providing poor ratings.
+The SUS evaluation demonstrates exceptional user acceptance with an average score of 71.83, significantly exceeding the established industry standard threshold of 68 points. This performance indicates "good" usability classification with strong potential for successful user adoption.
 
 Qualitative feedback analysis reveals that 80\% of participants expressed definitive willingness to incorporate TrackMyBills into their regular expense tracking routines. Participants consistently highlighted substantial advantages of automated data extraction compared to manual entry methods, identifying automation as the primary factor encouraging more consistent expense tracking behavior. Behavioral impact assessment indicates that 60\% of participants believe the system would significantly improve their expense tracking discipline and consistency.
 
 \subsection{Evaluation Summary}
-The comprehensive evaluation validates the TrackMyBills system effectiveness across technical performance and user experience dimensions. Functional testing confirms 100\% success rate across all scenarios, while model evaluation demonstrates strong performance characteristics suited for practical expense tracking applications. The base model achieves 84.68\% F1-score with 18.85\% mean Character Error Rate, while the custom model attains 81.50\% F1-score with perfect precision and 17.20\% mean Character Error Rate. User experience evaluation exceeds industry standards with 71.83 SUS score, indicating successful alignment with Generation Z preferences and strong adoption potential for automated expense tracking applications.
+The comprehensive evaluation validates the TrackMyBills system effectiveness across technical performance and user experience dimensions. Functional testing confirms 100\% success rate across all scenarios, while model evaluation demonstrates strong performance characteristics suited for practical expense tracking applications. The base model achieves 84.68\% F1-score with 18.85\% mean Character Error Rate, while the custom model attains 81.50\% F1-score with perfect precision and 17.20\% mean Character Error Rate. User experience evaluation exceeds industry standards with 71.83 SUS score, indicating successful alignment with Gen Z preferences and strong adoption potential for automated expense tracking applications.
